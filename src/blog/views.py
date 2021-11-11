@@ -39,8 +39,18 @@ def blog_create_view(request):
     return render(request, template_name, context)
 
 
-def blog_update_view(request, post_id):
-    pass
+def blog_edit_view(request, post_id):
+    old = get_object_or_404(BlogPost, id=post_id)
+    form = CreateBlogPost(request.POST or None, instance=old)
+    if form.is_valid():
+        form.save()
+
+    template_name = 'pages/create_post.html'
+    context = {'title': f'edit: {old.title}',
+               'form': form,
+               }
+
+    return render(request, template_name, context)
 
 
 def blog_delete_view(request, post_id):
