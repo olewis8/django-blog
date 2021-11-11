@@ -13,6 +13,7 @@ def blog_list_view(request):
 def blog_detail_view(request):
     template_name = 'pages/blog_detail.html'
     context = {'title': 'blog post',
+               'author': 'author',
                'content': 'content goes here'
                }
 
