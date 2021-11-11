@@ -8,3 +8,12 @@ def blog_list_view(request):
     context = {}
 
     return render(request, template_name, context)
+
+
+def blog_detail_view(request):
+    template_name = 'pages/blog_detail.html'
+    context = {'title': 'blog post',
+               'content': 'content goes here'
+               }
+
+    return render(request, template_name, context)
