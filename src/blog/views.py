@@ -29,7 +29,6 @@ def blog_detail_view(request, post_id):
 def blog_create_view(request):
     form = CreateBlogPost(request.POST or None)
     if form.is_valid():
-        print('awooga')
         form.save()
 
     template_name = 'pages/create_post.html'
