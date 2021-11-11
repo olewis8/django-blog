@@ -4,8 +4,11 @@ from .models import BlogPost
 
 
 def blog_list_view(request):
+    qs = BlogPost.objects.all()
+
     template_name = 'pages/blog_list.html'
-    context = {}
+    context = {'title': 'blog',
+               'object_list': qs, }
 
     return render(request, template_name, context)
 

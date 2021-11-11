@@ -2,6 +2,10 @@
 
 {% block content %}
 
-<h1>blog</h1>
+<h1>{{ title }}</h1>
+
+{% for object in object_list %}
+  {% include 'pages/list-inline.html' with blog_post=object %}
+{% endfor %}
 
 {% endblock %}
