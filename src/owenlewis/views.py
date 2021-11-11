@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from .forms import ContactForm
+
 
 def home_view(request):
     template_name = 'pages/home.html'
@@ -18,8 +20,11 @@ def about_view(request):
 
 
 def contact_view(request):
-    template_name = 'pages/contact.html'
+    form = ContactForm(request.POST or None)
+
+    template_name = 'form.html'
     context = {'title': 'contact me',
+               'form': form,
                }
 
     return render(request, template_name, context)
