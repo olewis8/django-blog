@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
+from .forms import CreateBlogPost
 from .models import BlogPost
 
 
@@ -23,3 +24,25 @@ def blog_detail_view(request, post_id):
                }
 
     return render(request, template_name, context)
+
+
+def blog_create_view(request):
+    form = CreateBlogPost(request.POST or None)
+    if form.is_valid():
+        print('awooga')
+        form.save()
+
+    template_name = 'pages/create_post.html'
+    context = {'title': 'new post',
+               'form': form,
+               }
+
+    return render(request, template_name, context)
+
+
+def blog_update_view(request, post_id):
+    pass
+
+
+def blog_delete_view(request, post_id):
+    pass
