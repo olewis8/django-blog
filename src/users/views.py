@@ -4,7 +4,22 @@ from django.contrib import messages
 
 
 def login_view(request):
-    template_name = 'authenticate/login.html'
-    context = {'title': 'log in'}
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            return redirect('home')
+        else:
+            return redirect('login')
+
+    else:
+        template_name = 'authenticate/login.html'
+        context = {'title': 'log in'}
+
+        return render(request, template_name, context)
 
     return render(request, template_name, context)
