@@ -24,8 +24,11 @@ from .views import (home_view,
 urlpatterns = [
     path('', home_view),
     path('about/', about_view),
-    path('blog/', include('blog.urls')),
     path('contact/', contact_view),
     path('login/', login_view),
     path('admin/', admin.site.urls),
+
+    path('blog/', include('blog.urls')),
+    path('users/', include('users.urls')),
+    path('users/', include('django.contrib.auth.urls')),
 ]
