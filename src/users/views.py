@@ -22,4 +22,13 @@ def login_view(request):
 
         return render(request, template_name, context)
 
+
+def logout_view(request):
+    template_name = 'authenticate/logout.html'
+    context = {'title': 'log out'}
+
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')
+
     return render(request, template_name, context)
