@@ -5,8 +5,14 @@ from .forms import ContactForm
 
 def home_view(request):
     template_name = 'pages/home.html'
-    context = {'title': 'home',
+    context = {'title': 'hello world,,,',
+               'message': '',
                }
+
+    if request.user.is_authenticated:
+        context = {'title': 'hello world,,,',
+                   'message': 'ur logged in',
+                   }
 
     return render(request, template_name, context)
 
