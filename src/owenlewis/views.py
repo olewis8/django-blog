@@ -28,11 +28,3 @@ def contact_view(request):
                }
 
     return render(request, template_name, context)
-
-
-def login_view(request):
-    template_name = 'pages/login.html'
-    context = {'title': 'login',
-               }
-
-    return render(request, template_name, context)
