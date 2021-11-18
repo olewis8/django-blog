@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import CreateBlogPost
@@ -26,6 +27,7 @@ def blog_detail_view(request, post_id):
     return render(request, template_name, context)
 
 
+@login_required
 def blog_create_view(request):
     form = CreateBlogPost(request.POST or None)
     if form.is_valid():
@@ -41,6 +43,7 @@ def blog_create_view(request):
     return render(request, template_name, context)
 
 
+@login_required
 def blog_edit_view(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
     form = CreateBlogPost(request.POST or None, instance=old)
@@ -55,6 +58,7 @@ def blog_edit_view(request, post_id):
     return render(request, template_name, context)
 
 
+@login_required
 def blog_delete_view(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
 

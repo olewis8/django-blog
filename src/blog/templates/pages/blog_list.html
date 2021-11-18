@@ -8,8 +8,10 @@
   {% include 'pages/list-inline.html' with blog_post=object %}
 {% endfor %}
 
-<h6>
-  <a href='new/'>new post</a>
-</h6>
+{% if user.is_authenticated %}
+  <h6>
+    <a href='new/'>new post</a>
+  </h6>
+{% endif %}
 
 {% endblock %}

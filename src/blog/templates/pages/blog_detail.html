@@ -6,9 +6,11 @@
 <h5>by {{ author }}</h5>
 <p>{{ content | linebreaks }}</p>
 
-<h6>
-  <a href='edit/'>edit</a>
-  <a href='delete/'>delete</a>
-</h6>
+{% if user.is_authenticated %}
+  <h6>
+    <a href='edit/'>edit</a>
+    <a href='delete/'>delete</a>
+  </h6>
+{% endif %}
 
 {% endblock %}
