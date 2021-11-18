@@ -2,16 +2,22 @@
 
 {% block content %}
 
-<h1>{{ title }}</h1>
+<div class='container'>
+  <h1>{{ title }}</h1>
+</div>
 
-{% for object in object_list %}
-  {% include 'pages/list-inline.html' with blog_post=object %}
-{% endfor %}
+<div class='container'>
+  {% for object in object_list %}
+    {% include 'pages/list-inline.html' with blog_post=object %}
+  {% endfor %}
+</div>
 
-{% if user.is_authenticated %}
-  <h6>
-    <a href='new/'>new post</a>
-  </h6>
-{% endif %}
+<div class='container'>
+  {% if user.is_authenticated %}
+    <h6>
+      <a href='new/'>new post</a>
+    </h6>
+  {% endif %}
+</div>
 
 {% endblock %}

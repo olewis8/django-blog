@@ -1,6 +1,7 @@
 <div class='card'>
   <div class='card-body'>
-    <h5 class='card-title'>{{ blog_post.title }}</h5>
+    <h4 class='card-title'>{{ blog_post.title }}</h4>
+    <h6 class='card-title'>by {{ blog_post.author }}</h6>
     <p class="card-text">{{ blog_post.content | truncatewords:30 | lower }}</p>
     <a href='{{ blog_post.get_absolute_url }}' class="btn btn-primary">read</a>
   </div>
