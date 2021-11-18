@@ -2,9 +2,14 @@
 
 {% block content %}
 
-<h1>{{ title }}</h1>
-<h5>by {{ author }}</h5>
-<p>{{ content | linebreaks }}</p>
+<div class='card'>
+  <div class='card-body'>
+    <h1 class='card-title'>{{ title }}</h1>
+    <h5 class='card-title'>by {{ author }}</h5>
+    <p class="card-text">{{ content | linebreaks | lower }}</p>
+  </div>
+</div>
+
 
 {% if user.is_authenticated %}
   <h6>
