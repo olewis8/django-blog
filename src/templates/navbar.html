@@ -37,7 +37,7 @@
                 {{ user.username }}
               </a>
               <ul class="dropdown-menu dropdown-menu">
-                <li><a class="dropdown-item" href="#">profile</a></li>
+                <li><a class="dropdown-item" href={{ user.profile.get_profile_url }}>profile</a></li>
                 <li><a class="dropdown-item" href="#">settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/users/logout">log out</a></li>
