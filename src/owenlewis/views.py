@@ -9,11 +9,6 @@ def home_view(request):
                'message': '',
                }
 
-    if request.user.is_authenticated:
-        context = {'title': 'hello world,,,',
-                   'message': 'ur logged in',
-                   }
-
     return render(request, template_name, context)
 
 
