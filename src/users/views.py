@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, render, redirect
 
 
 def login_view(request):
@@ -24,6 +26,7 @@ def login_view(request):
         return render(request, template_name, context)
 
 
+@login_required
 def logout_view(request):
     template_name = 'authenticate/logout.html'
     context = {'title': 'log out'}
@@ -54,5 +57,15 @@ def register_view(request):
     template_name = 'authenticate/register.html'
     context = {'title': 'create account',
                'form': form}
+
+    return render(request, template_name, context)
+
+
+@login_required
+def profile_view(request, username):
+    user = get_object_or_404(User, username=username)
+
+    template_name = 'pages/profile.html'
+    context = {'user': user}
 
     return render(request, template_name, context)
