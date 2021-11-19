@@ -6,3 +6,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=50, blank=True)
     location = models.CharField(max_length=30, blank=True)
+
+    def get_profile_absolute_url(self):
+        return f'/users/{self.user.username}'
