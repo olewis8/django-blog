@@ -4,9 +4,9 @@
 
 <h1>{{ title }}</h1>
 
-<form method='POST'> {% csrf_token %} 
+<form method='POST'> {% csrf_token %}
   {{ form.as_p }}
-  <input type='submit' value='save'/>
+  <input type='submit' class='btn btn-outline-primary' value='save'/>
 </form>
 
 {% endblock %}
