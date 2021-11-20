@@ -49,6 +49,7 @@ def blog_edit_view(request, post_id):
     form = CreateBlogPost(request.POST or None, instance=old)
     if form.is_valid():
         form.save()
+        return redirect(f'/blog/{post_id}')
 
     template_name = 'pages/create_post.html'
     context = {'title': f'edit: {old.title}',
