@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import CreateBlogPost
@@ -46,6 +47,10 @@ def blog_create_view(request):
 @login_required
 def blog_edit_view(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
+
+    if str(request.user) != str(old.author):
+        return HttpResponse('Unauthorized', status=401)
+
     form = CreateBlogPost(request.POST or None, instance=old)
     if form.is_valid():
         form.save(author=request.user)
@@ -62,6 +67,9 @@ def blog_edit_view(request, post_id):
 @login_required
 def blog_delete_view(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
+
+    if str(request.user) != str(post.author):
+        return HttpResponse('Unauthorized', status=401)
 
     if request.method == 'POST':
         post.delete()
