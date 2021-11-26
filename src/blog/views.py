@@ -31,7 +31,7 @@ def blog_detail_view(request, post_id):
 def blog_create_view(request):
     form = CreateBlogPost(request.POST or None)
     if form.is_valid():
-        form.save()
+        form.save(author=request.user)
 
         return redirect('blog')
 
@@ -48,7 +48,7 @@ def blog_edit_view(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
     form = CreateBlogPost(request.POST or None, instance=old)
     if form.is_valid():
-        form.save()
+        form.save(author=request.user)
         return redirect(f'/blog/{post_id}')
 
     template_name = 'pages/create_post.html'
