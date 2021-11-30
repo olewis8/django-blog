@@ -24,4 +24,5 @@ class CreateBlogPost(forms.ModelForm):
         if modified is not None:
             m.modified = modified
 
+        m.edited = True
         m.save()

@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 from .forms import CreateBlogPost
 from .models import BlogPost
@@ -20,9 +21,7 @@ def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
 
     template_name = 'pages/blog_detail.html'
-    context = {'title': blog_post.title,
-               'author': blog_post.author,
-               'content': blog_post.content,
+    context = {'blog_post': blog_post,
                }
 
     return render(request, template_name, context)
@@ -54,7 +53,7 @@ def blog_edit_view(request, post_id):
     form = CreateBlogPost(request.POST or None, instance=old)
 
     if form.is_valid():
-        form.save()
+        form.save(modified=timezone.now())
         return redirect(f'/blog/{post_id}')
 
     template_name = 'pages/create_post.html'

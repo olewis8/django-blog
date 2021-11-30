@@ -6,14 +6,18 @@
   <!-- this is to be eventually replaced by include list-inline.html -->
   <div class='card'>
     <div class='card-body'>
-      <h1 class='card-title'>{{ title }}</h1>
-      <h5 class='card-title'>by {{ author }}</h5>
-      <p class="card-text">{{ content | linebreaks | lower }}</p>
+      <h1 class='card-title'>{{ blog_post.title }}</h1>
+      <h6 class='card-title'><small class='text-muted'>{{ blog_post.created  }}</small></h6>
+      <h5 class='card-title'>by {{ blog_post.author }}</h5>
+      <p class="card-text">{{ blog_post.content | linebreaks | lower }}</p>
+      {% if blog_post.edited %}
+        <h6 class='card-title'><small class='text-muted'>last edited {{ blog_post.modified  }}</small></h6>
+      {% endif %}
     </div>
   </div>
 </div>
 
-{% if user.is_authenticated and user.username == author %}
+{% if user.is_authenticated and user.username == blog_post.author %}
   <div class='container'>
     <a role="button" class="btn btn-outline-secondary" href='edit/'>edit</a>
     <a role="button" class="btn btn-outline-danger" href='delete/'>delete</a>
