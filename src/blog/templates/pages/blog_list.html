@@ -10,7 +10,7 @@
 
 <div class='container'>
   <div class='row gy-3'>
-    {% for object in object_list %}
+    {% for object in object_list reversed %}
       {% include 'pages/list-inline.html' with blog_post=object %}
     {% endfor %}
   </div>
