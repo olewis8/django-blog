@@ -9,8 +9,9 @@ class BlogPost(models.Model):
     def get_absolute_url(self):
         return f'/blog/{self.id}'
 
-    def save(self, **kwargs):
-        if 'author' in kwargs and self.author is None:
-            self.author = kwargs.pop('author')
-
-        super(BlogPost, self).save(**kwargs)
+    # def save(self, **kwargs):
+    #
+    #     if 'author' in kwargs and self.author is None:
+    #         self.author = kwargs.pop('author')
+    #
+    #     super(BlogPost, self).save(**kwargs)
