@@ -52,8 +52,9 @@ def blog_edit_view(request, post_id):
         return HttpResponse('Unauthorized', status=401)
 
     form = CreateBlogPost(request.POST or None, instance=old)
+
     if form.is_valid():
-        form.save(author=request.user)
+        form.save()
         return redirect(f'/blog/{post_id}')
 
     template_name = 'pages/create_post.html'

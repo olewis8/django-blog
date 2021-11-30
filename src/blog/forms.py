@@ -15,9 +15,7 @@ class CreateBlogPost(forms.ModelForm):
 
         m = super(CreateBlogPost, self).save(commit=False, **kwargs)
 
-        print(f'm.author {type(m.author)}')
-        print(f'author {author}')
-
         if m.author == '' and author is not None:
             m.author = author
-            m.save()
+
+        m.save()
