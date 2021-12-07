@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class='row-md-6' data-masonry='{"percentPosition": true }'>
+    {% for object in qs %}
+      <div class='col-md-3 py-2'>
+        {% include 'elements/wall-card.html' with card=object %}
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

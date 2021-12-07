@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'direct_messages',
     'users',
+    'wall',
 ]
 
 MIDDLEWARE = [
