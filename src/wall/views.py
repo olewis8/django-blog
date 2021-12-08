@@ -12,3 +12,9 @@ def home_view(request):
     context = {'qs': qs}
 
     return render(request, template_name, context)
+
+def create_view(request):
+    template_name = ''
+    context = {}
+
+    return render(request, template_name, context)
