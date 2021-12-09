@@ -27,4 +27,10 @@
   </div>
 {% endif %}
 
+
+<!-- comment section -->
+<div class='container py-3'>
+  {% include 'list-comments.html' with comments=comments %}
+</div>
+
 {% endblock %}

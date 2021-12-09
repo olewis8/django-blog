@@ -1,6 +1,8 @@
 <div class='card'>
-  <h4 class='card-title'>comments</h4>
-  {% for comment in comments %}
-    {% include 'comment.html' with comment=comment %}
-  {% endfor %}
+  <div class='card-body'>
+    <h3 class='card-title'>comments</h3>
+    {% for comment in comments %}
+      {% include 'comment.html' with comment=comment %}
+    {% endfor %}
+  </div>
 </div>

@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from .forms import CreateBlogPost
 from .models import BlogPost
+from comments.models import Comment
 
 
 def blog_list_view(request):
@@ -19,9 +20,11 @@ def blog_list_view(request):
 
 def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
+    comments = blog_post.comment_set.all()
 
     template_name = 'pages/blog_detail.html'
     context = {'blog_post': blog_post,
+               'comments': comments,
                }
 
     return render(request, template_name, context)
