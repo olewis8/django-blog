@@ -3,5 +3,15 @@
     <h5 class="card-title"><a href="/users/{{comment.user}}">{{ comment.user }}</a></h5>
     <small class='text-muted'>{{ comment.created }}</small>
     <p class="card-text">{{ comment.text }}</p>
+    {% if user.is_authenticated and user.username == comment.user %}
+      <small class='text-muted' onclick="delete()">delete</small>
+    {% endif %}
+
+    <script>
+      function delete(){
+        alert("this will be an ajax request");
+      }
+    </script>
+
   </div>
 </div>
