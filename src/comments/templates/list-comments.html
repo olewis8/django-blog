@@ -2,14 +2,22 @@
   <div class='card-body'>
     <h3 class='card-title'>comments</h3>
 
-    <div class="card">
-      <div class="card-body">
-        <form method='POST'> {% csrf_token %}
-          {{ form.as_p }}
-          <input type='submit' class='btn btn-outline-primary' value='save'/>
-        </form>
+    {% if form is not None %}
+      <div class="card">
+        <div class="card-body">
+          <form method='POST'> {% csrf_token %}
+            {{ form.as_p }}
+            <input type='submit' class='btn btn-outline-primary' value='save'/>
+          </form>
+        </div>
       </div>
-    </div>
+    {% else %}
+      <div class="card">
+        <div class="card-body">
+          <h5 class=card-text><a href='/users/login'>log in</a> to post a comment. don't have an account? <a href='/users/register'>register here.</a></h5>
+        </div>
+      </div>
+    {% endif %}
 
     {% for comment in comments %}
       {% include 'comment.html' with comment=comment %}
