@@ -1,0 +1,6 @@
+<div class='card'>
+  <h4 class='card-title'>comments</h4>
+  {% for comment in comments %}
+    {% include 'comment.html' with comment=comment %}
+  {% endfor %}
+</div>
