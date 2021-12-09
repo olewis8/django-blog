@@ -1,6 +1,16 @@
 <div class='card'>
   <div class='card-body'>
     <h3 class='card-title'>comments</h3>
+
+    <div class="card">
+      <div class="card-body">
+        <form method='POST'> {% csrf_token %}
+          {{ form.as_p }}
+          <input type='submit' class='btn btn-outline-primary' value='save'/>
+        </form>
+      </div>
+    </div>
+
     {% for comment in comments %}
       {% include 'comment.html' with comment=comment %}
     {% endfor %}

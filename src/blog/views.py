@@ -6,6 +6,9 @@ from django.utils import timezone
 from .forms import CreateBlogPost
 from .models import BlogPost
 
+from comments.forms import CreateComment
+from comments.models import Comment
+
 
 def blog_list_view(request):
     qs = BlogPost.objects.all()
@@ -21,9 +24,21 @@ def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     comments = blog_post.comment_set.all()
 
+    new_comment_form = CreateComment(request.POST or None)
+    if new_comment_form.is_valid():
+        new_comment = Comment.objects.create(post=blog_post)
+        new_comment.user = request.user.username
+        new_comment.created = timezone.now()
+        new_comment.text = new_comment_form.cleaned_data['text']
+
+        new_comment.save()
+
+        return redirect(f'/blog/{post_id}')
+
     template_name = 'pages/blog_detail.html'
     context = {'blog_post': blog_post,
                'comments': comments,
+               'form': new_comment_form,
                }
 
     return render(request, template_name, context)
