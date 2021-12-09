@@ -8,8 +8,8 @@
   <div class='card'>
     <div class='card-body'>
       <h1 class='card-title'>{{ blog_post.title }}</h1>
-      <h6 class='card-title'><small class='text-muted'>{{ blog_post.created  }}</small></h6>
-      <h5 class='card-title'>by {{ blog_post.author }}</h5>
+      <h6 class='card-title'><small class='text-muted'>{{ blog_post.created }}</small></h6>
+      <h5 class='card-title'>by <a href="/users/{{ blog_post.author }}">{{ blog_post.author }}</a></h5>
       <p class="card-text">{{ blog_post.content | linebreaks | lower }}</p>
       {% if blog_post.edited %}
         <h6 class='card-title'><small class='text-muted'>last edited {{ blog_post.modified  }}</small></h6>
@@ -25,7 +25,7 @@
 </div>
 
 <!-- comment section -->
-<div class='container py-3'>
+<div class='container'>
   {% include 'list-comments.html' with comments=comments %}
 </div>
 
