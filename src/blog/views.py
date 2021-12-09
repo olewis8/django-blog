@@ -5,7 +5,6 @@ from django.utils import timezone
 
 from .forms import CreateBlogPost
 from .models import BlogPost
-from comments.models import Comment
 
 
 def blog_list_view(request):
