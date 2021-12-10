@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.views.generic import RedirectView
 
 from .forms import CreateBlogPost
 from .models import BlogPost
@@ -101,3 +102,19 @@ def blog_delete_view(request, post_id):
                }
 
     return render(request, template_name, context)
+
+
+class toggle_like(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        post_id = kwargs.get('post_id')
+        blog_post = get_object_or_404(BlogPost, id=post_id)
+        url_ = blog_post.get_absolute_url()
+        user = self.request.user
+
+        if user.is_authenticated:
+            if user in blog_post.liked_by.all():
+                blog_post.liked_by.remove(user)
+            else:
+                blog_post.liked_by.add(user)
+
+        return url_
