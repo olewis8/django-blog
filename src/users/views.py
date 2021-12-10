@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 
+from blog.models import BlogPost
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -65,9 +67,13 @@ def register_view(request):
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
 
+    blog_posts = BlogPost.objects.filter(author=user.username)
+
     template_name = 'pages/profile.html'
     context = {'username': user.username,
                'location': user.profile.location,
-               'bio': user.profile.bio, }
+               'bio': user.profile.bio,
+               'blog_posts': blog_posts,
+               }
 
     return render(request, template_name, context)
