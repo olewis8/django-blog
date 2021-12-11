@@ -9,7 +9,10 @@
           <div class='card-body'>
             <h1 class='card-title'>{{ username }}'s bio</h1>
             <h5 class='card-subtitle'>{{ location }}</h5>
-            <p>{{ bio }}</p>
+            <p class='card-text'>{{ bio }}</p>
+            <a href='follow/' type="button" class="btn btn-outline-primary">follow</a>
+            <p class='card-text'>{{ followers.count }} <a href='followers/'>followers</a></p>
+            <p class='card-text'>{{ following.count }} <a href='following/'>following</a></p>
           </div>
         </div>
     </div>

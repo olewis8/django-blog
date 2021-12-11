@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic import RedirectView
+
+from .models import Profile
 
 from blog.models import BlogPost
 
@@ -74,6 +77,55 @@ def profile_view(request, username):
                'location': user.profile.location,
                'bio': user.profile.bio,
                'blog_posts': blog_posts,
+               'followers': user.profile.followers,
+               'following': user.profile.following,
+               }
+
+    return render(request, template_name, context)
+
+
+class toggle_follow(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        target_user = get_object_or_404(User, username=kwargs.get('username'))
+        target_profile = get_object_or_404(Profile, user=target_user)
+
+        user = self.request.user
+        # profile = get_object_or_404(Profile, user=user)
+
+        url_ = target_profile.get_profile_url()
+
+        if user.is_authenticated:
+            if user in target_profile.followers.all():
+                target_profile.followers.remove(user)
+                user.profile.following.remove(target_user)
+            else:
+                target_profile.followers.add(user)
+                user.profile.following.add(target_user)
+
+        return url_
+
+
+def followers_view(request, username):
+    user = get_object_or_404(User, username=username)
+    followers = user.profile.followers.all()
+
+    template_name = 'pages/follows.html'
+    context = {'user': user,
+               'follower_page': True,
+               'follows': followers,
+               }
+
+    return render(request, template_name, context)
+
+
+def following_view(request, username):
+    user = get_object_or_404(User, username=username)
+    following = user.profile.following.all()
+
+    template_name = 'pages/follows.html'
+    context = {'user': user,
+               'follower_page': False,
+               'follows': following,
                }
 
     return render(request, template_name, context)

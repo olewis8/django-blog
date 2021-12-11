@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- blog post card -->
+<div class='container py-3'>
+  <!-- this is to be eventually replaced by include list-inline.html -->
+  <div class='card'>
+    <div class='card-body'>
+      {% if follower_page %}
+        <h1>{{ user }}'s followers</h1>
+      {% else %}
+        <h1>{{ user }}'s following</h1>
+      {% endif %}
+
+      {% for follow in follows %}
+        {% include 'profile-card.html' with profile=follow.profile %}
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
