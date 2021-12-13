@@ -11,10 +11,10 @@ from comments.forms import CreateComment
 from comments.models import Comment
 
 
-def blog_list_view(request):
+def blog_home_view(request):
     qs = BlogPost.objects.all()
 
-    template_name = 'pages/blog_list.html'
+    template_name = 'pages/blog_home.html'
     context = {'title': 'blog',
                'object_list': qs, }
 
