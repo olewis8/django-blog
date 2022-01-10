@@ -9,10 +9,8 @@ class Profile(models.Model):
     bio = models.TextField(max_length=300, blank=True)
     location = models.CharField(max_length=30, blank=True)
 
-    followers = models.ManyToManyField(
-        User, blank=True, related_name='followers')
-    following = models.ManyToManyField(
-        User, blank=True, related_name='following')
+    followers = models.ManyToManyField('self', blank=True, related_name='follower_set', symmetrical=False)
+    following = models.ManyToManyField('self', blank=True, related_name='following_set', symmetrical=False)
 
     def get_profile_url(self):
         return f'/users/{self.user.username}'

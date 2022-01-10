@@ -86,21 +86,23 @@ def profile_view(request, username):
 
 class toggle_follow(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
+
+        user = get_object_or_404(User, username=self.request.user)
         target_user = get_object_or_404(User, username=kwargs.get('username'))
+
+        profile = get_object_or_404(Profile, user=user)
         target_profile = get_object_or_404(Profile, user=target_user)
 
-        user = self.request.user
-        # profile = get_object_or_404(Profile, user=user)
-
-        url_ = target_profile.get_profile_url()
+        url_ = Profile.objects.get(user=target_user).get_profile_url()
 
         if user.is_authenticated:
-            if user in target_profile.followers.all():
-                target_profile.followers.remove(user)
-                user.profile.following.remove(target_user)
+            print('awooga')
+            if profile in target_profile.followers.all():
+                target_profile.followers.remove(profile)
+                user.profile.following.remove(target_profile)
             else:
-                target_profile.followers.add(user)
-                user.profile.following.add(target_user)
+                target_profile.followers.add(profile)
+                user.profile.following.add(target_profile)
 
         return url_
 
