@@ -11,11 +11,11 @@
       {% if follower_page %}
         <h1>{{ user }}'s followers</h1>
       {% else %}
-        <h1>{{ user }}'s following</h1>
+        <h1>{{ user }} is following</h1>
       {% endif %}
 
       {% for follow in follows %}
-        {% include 'profile-card.html' with profile=follow.profile %}
+        {% include 'profile-card.html' with profile=follow %}
       {% endfor %}
 
     </div>

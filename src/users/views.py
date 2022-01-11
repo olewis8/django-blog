@@ -96,7 +96,6 @@ class toggle_follow(RedirectView):
         url_ = Profile.objects.get(user=target_user).get_profile_url()
 
         if user.is_authenticated:
-            print('awooga')
             if profile in target_profile.followers.all():
                 target_profile.followers.remove(profile)
                 user.profile.following.remove(target_profile)
