@@ -9,7 +9,7 @@
     <div class='card-body'>
       <h1 class='card-title'>{{ blog_post.title }}</h1>
       <h6 class='card-title'><small class='text-muted'>{{ blog_post.created }}</small></h6>
-      <h5 class='card-title'>by <a href="/users/{{ blog_post.author }}">{{ blog_post.author }}</a></h5>
+      <h5 class='card-title'>by <a href="/users/{{ blog_post.author.user.username }}">{{ blog_post.author.user.username }}</a></h5>
       <!-- <p class='card-title'></p> -->
       <p class="card-text">{{ blog_post.content | linebreaks | lower }}</p>
       {% if blog_post.edited %}
@@ -19,7 +19,7 @@
 
       <a role="button" class="btn btn-outline-primary" href='like/'>ε> {{ blog_post.liked_by.count }}</a>
       <!-- show edit and delete buttons -->
-      {% if user.is_authenticated and user.username == blog_post.author %}
+      {% if user.is_authenticated and user.username == blog_post.author.user.username %}
         <a role="button" class="btn btn-outline-secondary" href='edit/'>edit</a>
         <a role="button" class="btn btn-outline-danger" href='delete/'>delete</a>
       {% endif %}

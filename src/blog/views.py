@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -9,13 +10,29 @@ from .models import BlogPost
 
 from comments.forms import CreateComment
 from comments.models import Comment
+from users.models import Profile
 
 
+@login_required
 def blog_home_view(request):
+    user = get_object_or_404(User, username=request.user)
+    profile = get_object_or_404(Profile, user=user)
+
+    # qs = BlogPost.objects.get(author)
     qs = BlogPost.objects.all()
 
     template_name = 'pages/blog_home.html'
-    context = {'title': 'blog',
+    context = {'title': 'for you',
+               'object_list': qs, }
+
+    return render(request, template_name, context)
+
+
+def blog_discover_view(request):
+    qs = BlogPost.objects.all()
+
+    template_name = 'pages/blog_home.html'
+    context = {'title': 'discover',
                'object_list': qs, }
 
     return render(request, template_name, context)
@@ -51,8 +68,12 @@ def blog_detail_view(request, post_id):
 @login_required
 def blog_create_view(request):
     form = CreateBlogPost(request.POST or None)
+    user = get_object_or_404(User, username=request.user)
+    author = get_object_or_404(Profile, user=request.user)
+
     if form.is_valid():
-        form.save(author=request.user)
+        print('AWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOGa')
+        form.save(author=author)
 
         return redirect('blog')
 
@@ -68,7 +89,11 @@ def blog_create_view(request):
 def blog_edit_view(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
 
-    if str(request.user) != str(old.author):
+    user = get_object_or_404(User, username=request.user)
+    author = get_object_or_404(Profile, user=request.user)
+
+    # is not instead of != ?
+    if str(author) != str(old.author):
         return HttpResponse('Unauthorized', status=401)
 
     form = CreateBlogPost(request.POST or None, instance=old)
@@ -89,7 +114,10 @@ def blog_edit_view(request, post_id):
 def blog_delete_view(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
 
-    if str(request.user) != str(post.author):
+    user = get_object_or_404(User, username=request.user)
+    author = get_object_or_404(Profile, user=request.user)
+
+    if str(author) != str(post.author):
         return HttpResponse('Unauthorized', status=401)
 
     if request.method == 'POST':

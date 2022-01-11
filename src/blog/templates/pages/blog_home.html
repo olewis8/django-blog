@@ -5,6 +5,24 @@
 <div class='container py-3'>
     <h1>{{ title }}</h1>
 
+    {% ifequal title 'for you' %}
+      <div class='row py-3'>
+        <div class="btn-group">
+          <a href='' class="btn btn-primary active" aria-current="page">for you</a>
+          <a href='discover/' class="btn btn-primary">discover</a>
+        </div>
+      </div>
+    {% else %}
+      {% ifequal title 'discover' %}
+        <div class='row py-3'>
+          <div class="btn-group">
+            <a href='/blog' class="btn btn-primary">for you</a>
+            <a href='' class="btn btn-primary active" aria-current="page">discover</a>
+          </div>
+        </div>
+      {% endifequal %}
+    {% endifequal %}
+
     <div class='row gy-3'>
       {% for object in object_list reversed %}
         {% include 'pages/list-inline.html' with blog_post=object %}

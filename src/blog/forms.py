@@ -19,7 +19,7 @@ class CreateBlogPost(forms.ModelForm):
 
         m = super(CreateBlogPost, self).save(commit=False, **kwargs)
 
-        if m.author == '' and author is not None:
+        if m.author is None and author is not None:
             m.author = author
         if modified is not None:
             m.modified = modified

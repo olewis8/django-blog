@@ -1,7 +1,7 @@
 <div class='card'>
   <div class='card-body'>
     <h4 class='card-title'>{{ blog_post.title }}</h4>
-    <h6 class='card-title'>by {{ blog_post.author }}</h6>
+    <h6 class='card-title'>by {{ blog_post.author.user.username }}</h6>
 
     {% if not blog_post.edited %}
       <h6 class='card-title'><small class='text-muted'>{{ blog_post.created  }}</small></h6>
