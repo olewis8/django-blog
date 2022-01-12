@@ -69,8 +69,9 @@ def register_view(request):
 @login_required
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
 
-    blog_posts = BlogPost.objects.filter(author=user.username)
+    blog_posts = BlogPost.objects.filter(author=profile)
 
     template_name = 'pages/profile.html'
     context = {'username': user.username,

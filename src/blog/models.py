@@ -8,7 +8,6 @@ from users.models import Profile
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=100)
-    # author = models.CharField(max_length=100)
     author = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     content = models.TextField()
 

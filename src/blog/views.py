@@ -16,10 +16,8 @@ from users.models import Profile
 @login_required
 def blog_home_view(request):
     user = get_object_or_404(User, username=request.user)
-    profile = get_object_or_404(Profile, user=user)
 
-    # qs = BlogPost.objects.get(author)
-    qs = BlogPost.objects.all()
+    qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
 
     template_name = 'pages/blog_home.html'
     context = {'title': 'for you',
@@ -72,7 +70,6 @@ def blog_create_view(request):
     author = get_object_or_404(Profile, user=request.user)
 
     if form.is_valid():
-        print('AWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOGa')
         form.save(author=author)
 
         return redirect('blog')
