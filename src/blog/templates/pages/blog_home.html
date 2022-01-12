@@ -5,6 +5,7 @@
 <div class='container py-3'>
     <h1>{{ title }}</h1>
 
+    <!-- for you / discover button -->
     {% ifequal title 'for you' %}
       <div class='row py-3'>
         <div class="btn-group">
@@ -23,12 +24,14 @@
       {% endifequal %}
     {% endifequal %}
 
+    <!-- list the posts that were past to template -->
     <div class='row gy-3'>
       {% for object in object_list reversed %}
         {% include 'pages/list-inline.html' with blog_post=object %}
       {% endfor %}
     </div>
 
+    <!-- show new post button if the user is logged in -->
     {% if user.is_authenticated %}
       <a href='new/' type="button" class="btn btn-outline-primary">new post</a>
     {% endif %}
