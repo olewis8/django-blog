@@ -27,7 +27,7 @@
     <!-- list the posts that were past to template -->
     <div class='row gy-3'>
       {% for object in object_list reversed %}
-        {% include 'pages/list-inline.html' with blog_post=object %}
+        {% include 'post_preview_card.html' with blog_post=object %}
       {% endfor %}
     </div>
 

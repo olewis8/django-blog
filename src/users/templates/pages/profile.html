@@ -23,15 +23,7 @@
             <h1 class='card-title'>{{ username }}'s blog posts</h1>
             {% for blog_post in blog_posts reversed %}
               <div class='card'>
-                <div class='card-body'>
-                  <h1 class='card-title'>{{ blog_post.title }}</h1>
-                  <h6 class='card-title'><small class='text-muted'>{{ blog_post.created }}</small></h6>
-                  <p class="card-text">{{ blog_post.content | truncatewords:30 | lower }}</p>
-                  {% if blog_post.edited %}
-                    <h6 class='card-title'><small class='text-muted'>last edited {{ blog_post.modified }}</small></h6>
-                  {% endif %}
-                  <a href='{{ blog_post.get_absolute_url }}' type="button" class="btn btn-outline-success">read</a>
-                </div>
+                 {% include 'post_preview_card.html' with blog_post=blog_post %}
               </div>
             {% endfor %}
           </div>
@@ -39,4 +31,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
