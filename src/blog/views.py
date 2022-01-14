@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import RedirectView
@@ -27,14 +27,27 @@ def blog_home_view(request):
 
 
 def blog_discover_view(request):
-    qs = BlogPost.objects.all()
+    # qs = BlogPost.objects.all()
 
     template_name = 'pages/blog_home.html'
-    context = {'title': 'discover',
-               'object_list': qs, }
+    context = {'title': 'discover',}
+               # 'object_list': qs, }
 
     return render(request, template_name, context)
 
+
+def rest_discover_view(request):
+    qs = BlogPost.objects.all()
+
+    posts = [{'id': x.id,
+              'title': x.title,
+              'author': x.author.user.username,
+              'content': x.content,
+              'created': x.created} for x in qs]
+
+    data = {'response': posts}
+
+    return JsonResponse(data)
 
 def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
