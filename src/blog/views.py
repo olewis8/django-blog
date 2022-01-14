@@ -15,25 +15,33 @@ from users.models import Profile
 
 @login_required
 def blog_home_view(request):
-    user = get_object_or_404(User, username=request.user)
-
-    qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
-
     template_name = 'pages/blog_home.html'
-    context = {'title': 'for you',
-               'object_list': qs, }
+    context = {'title': 'for you'}
 
     return render(request, template_name, context)
 
 
 def blog_discover_view(request):
-    # qs = BlogPost.objects.all()
-
     template_name = 'pages/blog_home.html'
-    context = {'title': 'discover',}
-               # 'object_list': qs, }
+    context = {'title': 'discover'}
 
     return render(request, template_name, context)
+    
+
+@login_required
+def rest_home_view(request):
+    user = get_object_or_404(User, username=request.user)
+    qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
+
+    posts = [{'id': x.id,
+              'title': x.title,
+              'author': x.author.user.username,
+              'content': x.content,
+              'created': x.created} for x in qs]
+
+    data = {'response': posts}
+
+    return JsonResponse(data)
 
 
 def rest_discover_view(request):
