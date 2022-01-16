@@ -2,13 +2,15 @@ from django.db import models
 from django.utils import timezone
 
 from blog.models import BlogPost
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+
+from users.models import Profile
 
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete='CASCADE')
-    # user = models.ForeignKey(User, on_delete='CASCADE')
-    user = models.CharField(max_length=100)
+    user = models.ForeignKey(Profile, on_delete='CASCADE')
+    # user = models.CharField(max_length=100)
     text = models.TextField()
     created = models.DateTimeField(default=timezone.now, editable=False)
 

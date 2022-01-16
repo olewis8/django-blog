@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title"><a href="/users/{{comment.user}}">{{ comment.user }}</a></h5>
+    <h5 class="card-title"><a href="/users/{{comment.user.user.username}}">{{ comment.user.user.username }}</a></h5>
     <small class='text-muted'>{{ comment.created }}</small>
     <p class="card-text">{{ comment.text }}</p>
     {% if user.is_authenticated and user.username == comment.user %}
