@@ -3,7 +3,7 @@
     <h3 class='card-title'>comments</h3>
 
     {% if form is not None %}
-      <div class="card">
+      <div class="card mb-2">
         <div class="card-body">
           <form method='POST'> {% csrf_token %}
             {{ form.as_p }}
