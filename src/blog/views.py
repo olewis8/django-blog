@@ -10,6 +10,8 @@ from .models import BlogPost
 
 from comments.forms import CreateComment
 from comments.models import Comment
+from comments.views import new_comment
+
 from users.models import Profile
 
 
@@ -64,16 +66,7 @@ def blog_detail_view(request, post_id):
 
     if request.user.is_authenticated:
         new_comment_form = CreateComment(request.POST or None)
-        if new_comment_form.is_valid():
-            new_comment = Comment.objects.create(post=blog_post, user=get_object_or_404(Profile, user=request.user))
-            # new_comment.user = request.user.username
-            # new_comment.user = get_object_or_404(Profile, user=request.user)
-            new_comment.created = timezone.now()
-            new_comment.text = new_comment_form.cleaned_data['text']
-
-            new_comment.save()
-
-            return redirect(f'/blog/{post_id}')
+        new_comment(request, blog_post, new_comment_form)
     else:
         new_comment_form = None
 
