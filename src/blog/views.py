@@ -67,6 +67,8 @@ def blog_detail_view(request, post_id):
     if request.user.is_authenticated:
         new_comment_form = CreateComment(request.POST or None)
         new_comment(request, blog_post, new_comment_form)
+        
+        new_comment_form = CreateComment()
     else:
         new_comment_form = None
 
