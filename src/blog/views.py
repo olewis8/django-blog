@@ -35,11 +35,9 @@ def rest_home_view(request):
     user = get_object_or_404(User, username=request.user)
     qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
 
-    posts = [{'id': x.id,
-              'title': x.title,
-              'author': x.author.user.username,
-              'content': x.content,
-              'created': x.created} for x in qs]
+    posts = [x.serialize() for x in qs]
+
+    print(posts[0])
 
     data = {'response': posts}
 
@@ -67,7 +65,7 @@ def blog_detail_view(request, post_id):
     if request.user.is_authenticated:
         new_comment_form = CreateComment(request.POST or None)
         new_comment(request, blog_post, new_comment_form)
-        
+
         new_comment_form = CreateComment()
     else:
         new_comment_form = None

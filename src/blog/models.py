@@ -11,12 +11,22 @@ class BlogPost(models.Model):
     author = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     content = models.TextField()
 
-    # symmetric = False?
     liked_by = models.ManyToManyField(User, blank=True, related_name='likes')
 
     created = models.DateTimeField(default=timezone.now, editable=False)
     modified = models.DateTimeField(default=timezone.now, editable=True)
     edited = models.BooleanField(default=False)
+
+    def serialize(self):
+        data = {'title': self.title,
+                'author': self.author.user.username,
+                'content': self.content,
+                'created': self.created,
+                'modified': self.modified,
+                'edited': self.edited,
+                }
+
+        return data
 
     def get_absolute_url(self):
         return f'/blog/{self.id}'
