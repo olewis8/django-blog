@@ -17,7 +17,8 @@ class Comment(models.Model):
         ordering = ['-created']
 
     def serialize(self):
-        data = {'post_id': self.post.id,
+        data = {'id': self.id,
+                'post_id': self.post.id,
                 'user': self.user.user.username,
                 'text': self.text,
                 'created': self.created,

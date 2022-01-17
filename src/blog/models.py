@@ -18,7 +18,8 @@ class BlogPost(models.Model):
     edited = models.BooleanField(default=False)
 
     def serialize(self):
-        data = {'title': self.title,
+        data = {'id': self.id,
+                'title': self.title,
                 'author': self.author.user.username,
                 'content': self.content,
                 'created': self.created,
