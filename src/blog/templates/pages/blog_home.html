@@ -72,7 +72,7 @@
 <!-- this is so hacky fix it -->
 {% ifequal title 'for you' %}
 <script>
-  const postsElement = document.getElementById('posts')
+  const postElement = document.getElementById('posts')
 
   const xhr = new XMLHttpRequest()
   const method = 'GET'
@@ -101,20 +101,36 @@
       postHtmlStr += formatPost(listedItems[i])
       console.log(listedItems[i])
     }
-    postsElement.innerHTML = postHtmlStr
+    postElement.innerHTML = postHtmlStr
   }
 
  xhr.send()
 </script>
 {% else %}
 {% ifequal title 'discover' %}
-<script>
-  const postsElement = document.getElementById('posts')
 
-  const xhr = new XMLHttpRequest()
-  const method = 'GET'
-  const url = '/blog/discover-rest'
-  const responseType = 'json'
+<script>
+  const postElement = document.getElementById('posts')
+
+  const loadPostPreviews = function(postElement){
+    const xhr = new XMLHttpRequest()
+    const method = 'GET'
+    const url = '/blog/discover-rest'
+    const responseType = 'json'
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+      var listedItems = xhr.response.response
+      postHtmlStr = ''
+      for(var i=listedItems.length-1; i>=0; i--){
+        postHtmlStr += formatPost(listedItems[i])
+        console.log(listedItems[i])
+      }
+      postElement.innerHTML = postHtmlStr
+    }
+   xhr.send()
+  }
 
   const readButton = function(post_id){
     action = "window.location='/blog/"+ post_id + "'"
@@ -128,20 +144,8 @@
     return template
   }
 
-  xhr.responseType = responseType
-  xhr.open(method, url)
+  loadPostPreviews(postElement)
 
-  xhr.onload = function(){
-    var listedItems = xhr.response.response
-    postHtmlStr = ''
-    for(var i=listedItems.length-1; i>=0; i--){
-      postHtmlStr += formatPost(listedItems[i])
-      console.log(listedItems[i])
-    }
-    postsElement.innerHTML = postHtmlStr
-  }
-
- xhr.send()
 </script>
 {% endifequal %}
 {% endifequal %}
