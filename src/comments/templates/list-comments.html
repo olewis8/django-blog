@@ -19,8 +19,40 @@
       </div>
     {% endif %}
 
-    {% for comment in comments %}
-      {% include 'comment.html' with comment=comment %}
-    {% endfor %}
+    <div id='comment'></div>
   </div>
 </div>
+
+
+
+<script>
+  const commentElement = document.getElementById('comment')
+
+  const loadComments = function(commentElement){
+    const xhr = new XMLHttpRequest()
+    const method = 'GET'
+    const url = '{{request.path}}' + 'get'
+    const responseType = 'json'
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+      var comments = xhr.response.comments
+      var commentHtmlStr = ''
+      for(var i=0; i<comments.length; i++){
+        console.log(comments[i])
+        commentHtmlStr += formatComment(comments[i])
+      }
+      commentElement.innerHTML = commentHtmlStr
+    }
+   xhr.send()
+  }
+
+  const formatComment = function(comment){
+    template = "<div class='card mb-3'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text +"</p></div></div>"
+    return template
+  }
+
+  loadComments(commentElement)
+
+</script>
