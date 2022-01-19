@@ -29,7 +29,8 @@
 
 <!-- comment section -->
 <div class='container'>
-  {% include 'list-comments.html' with comments=comments %}
+  <a href='/c/{{blog_post.id}}'>comments page</a>
+  <!-- {% include 'list-comments.html' with comments=comments %} -->
 </div>
 
 {% endblock %}

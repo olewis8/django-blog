@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class='container py-3'>
+  <h1>temporary comments page</h1>
+  {% include 'list-comments.html' with comments=comments %}
+</div>
+
+{% endblock %}
