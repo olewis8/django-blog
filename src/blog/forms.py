@@ -26,3 +26,5 @@ class CreateBlogPost(forms.ModelForm):
 
         m.edited = True
         m.save()
+
+        return m

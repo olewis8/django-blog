@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.utils.http import is_safe_url
 from django.views.generic import RedirectView
 
 from .forms import CreateBlogPost
@@ -36,8 +38,6 @@ def rest_home_view(request):
     qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
 
     posts = [x.serialize() for x in qs]
-
-    print(posts[0])
 
     data = {'response': posts}
 
@@ -82,13 +82,17 @@ def blog_detail_view(request, post_id):
 @login_required
 def blog_create_view(request):
     form = CreateBlogPost(request.POST or None)
-    user = get_object_or_404(User, username=request.user)
     author = get_object_or_404(Profile, user=request.user)
+    next_url = request.POST.get("next") or None
 
     if form.is_valid():
-        form.save(author=author)
+        post = form.save(commit=False)
+        post = form.save(author=author)
 
-        return redirect('blog')
+        new_post_url = next_url + f'/{post.id}'
+
+        if next_url is not None and is_safe_url(new_post_url, settings.ALLOWED_HOSTS):
+            return redirect(new_post_url)
 
     template_name = 'pages/create_post.html'
     context = {'title': 'new post',
