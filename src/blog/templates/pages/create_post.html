@@ -2,8 +2,13 @@
 
 {% block content %}
 
-<h1>{{ title }}</h1>
-
-{% include 'components/create_form.html' with form=form  %}
+<div class='container py-3'>
+  <h1>{{ title }}</h1>
+  <div class='card'>
+    <div class='card-body'>
+      {% include 'components/create_form.html' %}
+    </div>
+  </div>
+</div>
 
 {% endblock %}
