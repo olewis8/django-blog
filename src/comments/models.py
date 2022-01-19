@@ -24,5 +24,7 @@ class Comment(models.Model):
                 'created': self.created,
         }
 
+        return data
+
     def __str__(self):
         return f'post: {self.post.pk}, user: {self.user}'
