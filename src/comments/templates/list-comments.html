@@ -24,6 +24,28 @@
 
 <script>
   const commentElement = document.getElementById('comment')
+  const commentCreateForm = document.getElementById('comment-create-form')
+
+  const handleFormDidSubmit = function(event){
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+    const xhr = new XMLHttpRequest()
+    const method = event.target.getAttribute('method')
+    const url = event.target.getAttribute('action')
+
+    xhr.open(method, url)
+    xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+    xhr.onload = function(){
+      const commentElement = document.getElementById('comment')
+      loadComments(commentElement)
+      event.target.reset()
+    }
+    xhr.send(formData)
+  }
+
+  commentCreateForm.addEventListener('submit', handleFormDidSubmit)
 
   const loadComments = function(commentElement){
     const xhr = new XMLHttpRequest()
@@ -37,7 +59,6 @@
       var comments = xhr.response.comments
       var commentHtmlStr = ''
       for(var i=0; i<comments.length; i++){
-        console.log(comments[i])
         commentHtmlStr += formatComment(comments[i])
       }
       commentElement.innerHTML = commentHtmlStr
