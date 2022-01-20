@@ -12,7 +12,6 @@ from .models import BlogPost
 
 from comments.forms import CreateComment
 from comments.models import Comment
-from comments.views import new_comment
 
 from users.models import Profile
 
@@ -62,18 +61,9 @@ def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     comments = blog_post.comment_set.all()
 
-    if request.user.is_authenticated:
-        new_comment_form = CreateComment(request.POST or None)
-        new_comment(request, blog_post, new_comment_form)
-
-        new_comment_form = CreateComment()
-    else:
-        new_comment_form = None
-
     template_name = 'pages/blog_detail.html'
     context = {'blog_post': blog_post,
                'comments': comments,
-               'form': new_comment_form,
                }
 
     return render(request, template_name, context)

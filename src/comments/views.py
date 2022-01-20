@@ -12,17 +12,9 @@ from blog.models import BlogPost
 def comment_page(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     comments = blog_post.comment_set.all()
-
-    if request.user.is_authenticated:
-        new_comment_form = CreateComment(request.POST or None)
-        new_comment(request, blog_post, new_comment_form)
-        new_comment_form = CreateComment()
-    else:
-        new_comment_form = None
-
+    
     template_name = 'pages/comments_page.html'
     context = {'comments': comments,
-               'form': new_comment_form,
                }
 
     return render(request, template_name, context)
@@ -38,12 +30,13 @@ def retrieve_comments(request, post_id):
     return JsonResponse(data)
 
 
-def new_comment(request, blog_post: BlogPost, new_comment_form):
-    if new_comment_form.is_valid():
-        profile = get_object_or_404(Profile, user=request.user)
-        new_comment = Comment.objects.create(post=blog_post, user=profile)
-        new_comment.created = timezone.now()
-        new_comment.text = new_comment_form.cleaned_data['text']
-        new_comment.save()
+def create_comment(request, post_id):
+    next_url = request.POST.get('next') or None
+    text = request.POST.get('text') or None
 
-    return redirect(f'/c/{blog_post.id}')
+    post = get_object_or_404(BlogPost, id=post_id)
+    profile = get_object_or_404(Profile, user=request.user)
+
+    comment = Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
+
+    return JsonResponse({}, status=201)

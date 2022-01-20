@@ -2,7 +2,7 @@
   <div class='card-body'>
     <h3 class='card-title'>comments</h3>
 
-    {% if form is not None %}
+    {% if user.is_authenticated %}
       <div class="card mb-2">
         <div class="card-body">
           {% include 'components/comments/create_form.html' %}
@@ -23,16 +23,13 @@
 
 
 <script>
-  const commentElement = document.getElementById('comment')
-  const commentCreateForm = document.getElementById('comment-create-form')
-
   const handleFormDidSubmit = function(event){
     event.preventDefault()
 
     const formData = new FormData(event.target)
     const xhr = new XMLHttpRequest()
     const method = event.target.getAttribute('method')
-    const url = event.target.getAttribute('action')
+    const url = event.target.getAttribute('action') + 'new'
 
     xhr.open(method, url)
     xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
@@ -44,8 +41,6 @@
     }
     xhr.send(formData)
   }
-
-  commentCreateForm.addEventListener('submit', handleFormDidSubmit)
 
   const loadComments = function(commentElement){
     const xhr = new XMLHttpRequest()
@@ -66,10 +61,16 @@
    xhr.send()
   }
 
+  // this is a stupid way to do this
   const formatComment = function(comment){
     template = "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text +"</p></div></div>"
     return template
   }
+
+  const commentElement = document.getElementById('comment')
+  const commentCreateForm = document.getElementById('comment-create-form')
+
+  commentCreateForm.addEventListener('submit', handleFormDidSubmit)
 
   loadComments(commentElement)
 
