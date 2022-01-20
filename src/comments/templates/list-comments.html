@@ -5,10 +5,7 @@
     {% if form is not None %}
       <div class="card mb-2">
         <div class="card-body">
-          <form method='POST'> {% csrf_token %}
-            {{ form.as_p }}
-            <input type='submit' class='btn btn-outline-primary' value='save'/>
-          </form>
+          {% include 'components/comments/create_form.html' %}
         </div>
       </div>
     {% else %}
@@ -49,7 +46,7 @@
   }
 
   const formatComment = function(comment){
-    template = "<div class='card mb-3'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text +"</p></div></div>"
+    template = "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text +"</p></div></div>"
     return template
   }
 
