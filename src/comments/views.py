@@ -33,20 +33,17 @@ def retrieve_comments(request, post_id):
     comment_set = blog_post.comment_set.all()
 
     comments = [x.serialize() for x in comment_set]
-
     data = {'comments': comments}
-    
+
     return JsonResponse(data)
 
 
 def new_comment(request, blog_post: BlogPost, new_comment_form):
-
     if new_comment_form.is_valid():
         profile = get_object_or_404(Profile, user=request.user)
         new_comment = Comment.objects.create(post=blog_post, user=profile)
         new_comment.created = timezone.now()
         new_comment.text = new_comment_form.cleaned_data['text']
-
         new_comment.save()
 
     return redirect(f'/c/{blog_post.id}')
