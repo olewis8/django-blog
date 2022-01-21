@@ -25,6 +25,7 @@ class BlogPost(models.Model):
                 'created': self.created,
                 'modified': self.modified,
                 'edited': self.edited,
+                'like_count': self.liked_by.count()
                 }
 
         return data
