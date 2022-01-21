@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 from .forms import CreateBlogPost
@@ -59,14 +61,18 @@ def rest_discover_view(request):
 
 def blog_detail_view(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
-    comments = blog_post.comment_set.all()
 
     template_name = 'pages/blog_detail.html'
     context = {'blog_post': blog_post,
-               'comments': comments,
                }
 
     return render(request, template_name, context)
+
+def rest_blog_detail(request, post_id):
+    blog_post = get_object_or_404(BlogPost, id=post_id)
+    data = blog_post.serialize()
+
+    return JsonResponse(data)
 
 
 @login_required
@@ -138,9 +144,11 @@ def blog_delete_view(request, post_id):
 
     return render(request, template_name, context)
 
-
+# add csrf verif.
+@method_decorator(csrf_exempt, name='dispatch')
 class toggle_like(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
+        print(self.request.is_ajax())
         post_id = kwargs.get('post_id')
         blog_post = get_object_or_404(BlogPost, id=post_id)
         url_ = blog_post.get_absolute_url()

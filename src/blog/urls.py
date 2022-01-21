@@ -9,16 +9,21 @@ from .views import (blog_home_view,
                     toggle_like,
 
                     rest_discover_view,
-                    rest_home_view)
+                    rest_home_view,
+                    rest_blog_detail)
 
 urlpatterns = [
     path('', blog_home_view, name='blog'),
+
     path('for-you/', rest_home_view),
     path('discover/', blog_discover_view),
     path('discover-rest/', rest_discover_view),
+
     path('<int:post_id>/', blog_detail_view),
+    path('<int:post_id>/get/', rest_blog_detail),
+
     path('<int:post_id>/edit/', blog_edit_view),
     path('<int:post_id>/delete/', blog_delete_view),
     path('<int:post_id>/like/', toggle_like.as_view(), name='toggle_like'),
-    path('new/', blog_create_view)
+    path('new/', blog_create_view),
 ]

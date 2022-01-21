@@ -3,28 +3,8 @@
 {% block content %}
 
 <!-- blog post card -->
-<div class='container py-3'>
-  <div class='card'>
-    <div class='card-body'>
-      <h1 class='card-title'>{{ blog_post.title }}</h1>
-      <h6 class='card-title'><small class='text-muted'>{{ blog_post.created }}</small></h6>
-      <h5 class='card-title'>by <a href="/users/{{ blog_post.author.user.username }}">{{ blog_post.author.user.username }}</a></h5>
-      <p class="card-text">{{ blog_post.content | linebreaks | lower }}</p>
-
-      <!-- show when last edited -->
-      {% if blog_post.edited %}
-        <h6 class='card-title'><small class='text-muted'>last edited {{ blog_post.modified  }}</small></h6>
-      {% endif %}
-
-      <!-- show like edit and delets buttons -->
-      <a role="button" class="btn btn-outline-primary" href='like/'>ε> {{ blog_post.liked_by.count }}</a>
-      {% if user.is_authenticated and user.username == blog_post.author.user.username %}
-        <a role="button" class="btn btn-outline-secondary" href='edit/'>edit</a>
-        <a role="button" class="btn btn-outline-danger" href='delete/'>delete</a>
-      {% endif %}
-
-    </div>
-  </div>
+<div id='blog-post'>
+  loading.....
 </div>
 
 <!-- comment section -->
@@ -32,5 +12,62 @@
   <a href='/c/{{blog_post.id}}'>comments page</a>
   <!-- {% include 'list-comments.html' with comments=comments %} -->
 </div>
+
+<script>
+  const handleDidLike = function(){
+    const xhr = new XMLHttpRequest()
+    const method = 'POST'
+    const url = 'like/'
+
+    xhr.open(method, url)
+    xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+    xhr.onload = function(){
+      console.log('like successful')
+      postElement = document.getElementById('blog-post')
+      loadBlogPost(postElement)
+    }
+    xhr.send()
+  }
+
+  const handleDidClickEdit = function(){
+    location.href = 'edit/'
+  }
+
+  const handleDidClickDelete = function(){
+    location.href = 'delete/'
+  }
+
+  const loadBlogPost = function(blogPostElement){
+    const xhr = new XMLHttpRequest()
+    const method = 'GET'
+    const url = '{{request.path}}' + 'get'
+    const responseType = 'json'
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+      var post = formatBlogPost(xhr.response)
+      blogPostElement.innerHTML = post
+    }
+    xhr.send()
+  }
+
+  const formatBlogPost = function(post){
+    if('{{ request.user.is_authenticated }}' == 'True' && '{{request.user}}' == post.author){
+      template = "<div class='container py-3'><div class='card'><div class='card-body'><h1 class='card-title'>"+ post.title.toLowerCase() +"</h1><h6 class='card-title'><small class='text-muted'>"+ post.created +"</small></h6><h5 class='card-title'>by <a href='/users/"+post.author+"'>"+ post.author +"</a></h5><p class='card-text'>"+ post.content.toLowerCase().replace(/\n/g, '<br>\n') +"</p><button type='button' class='btn btn-primary' onclick='handleDidLike()'>ε>"+ post.like_count +"</button><button type='button' class='btn btn-secondary' onclick='handleDidClickEdit()'>edit</button><button type='button' class='btn btn-danger' onclick='handleDidClickDelete()'>delete</button></div></div></div>"
+    }
+    else {
+      template = "<div class='container py-3'><div class='card'><div class='card-body'><h1 class='card-title'>"+ post.title.toLowerCase() +"</h1><h6 class='card-title'><small class='text-muted'>"+ post.created +"</small></h6><h5 class='card-title'>by <a href='/users/"+post.author+"'>"+ post.author +"</a></h5><p class='card-text'>"+ post.content.toLowerCase().replace(/\n/g, '<br>\n') +"</p><button type='button' class='btn btn-primary' onclick='handleDidLike()'>ε>"+ post.like_count +"</button></div></div></div>"
+    }
+
+    return template
+  }
+
+  postElement = document.getElementById('blog-post')
+  loadBlogPost(postElement)
+
+
+</script>
 
 {% endblock %}
