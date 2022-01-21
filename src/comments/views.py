@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Comment
 from .forms import CreateComment
@@ -12,7 +13,9 @@ from blog.models import BlogPost
 def comment_page(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     comments = blog_post.comment_set.all()
-    
+
+    print(request.META)
+
     template_name = 'pages/comments_page.html'
     context = {'comments': comments,
                }
@@ -40,3 +43,18 @@ def create_comment(request, post_id):
     comment = Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
 
     return JsonResponse({}, status=201)
+
+
+# add csrf verification
+@csrf_exempt
+def delete_comment(request, post_id, comment_id):
+    qs = Comment.objects.filter(id=comment_id, user=get_object_or_404(Profile, user=request.user))
+
+    print(qs)
+
+    if not qs.exists():
+        return JsonResponse({'message': 'forbidden'}, status=401)
+
+    qs.first().delete()
+
+    return JsonResponse({'message': 'success'}, status=200)
