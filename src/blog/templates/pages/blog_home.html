@@ -2,119 +2,28 @@
 
 {% block content %}
 
-<!-- <div class='container py-3'>
-    <h1>{{ title }}</h1>
-
-    {% ifequal title 'for you' %}
-      <div class='row py-3'>
-        <div class="btn-group">
-          <a href='' class="btn btn-primary active" aria-current="page">for you</a>
-          <a href='discover/' class="btn btn-primary">discover</a>
-        </div>
-      </div>
-    {% else %}
-      {% ifequal title 'discover' %}
-        <div class='row py-3'>
-          <div class="btn-group">
-            <a href='/blog' class="btn btn-primary">for you</a>
-            <a href='' class="btn btn-primary active" aria-current="page">discover</a>
-          </div>
-        </div>
-      {% endifequal %}
-    {% endifequal %}
-
-    <div class='row gy-3'>
-      {% for object in object_list reversed %}
-        {% include 'post_preview_card.html' with blog_post=object %}
-      {% endfor %}
-    </div>
-
-    {% if user.is_authenticated %}
-      <a href='new/' type="button" class="btn btn-outline-primary">new post</a>
-    {% endif %}
-</div> -->
-
-<div class='container py-3'>
-  <h1>{{ title }}</h1>
-  {% ifequal title 'for you' %}
-    <div class='row py-3'>
-      <div class="btn-group">
-        <button class="btn btn-primary active" aria-current="page" onclick="history.go(0)">for you</button>
-        <button class="btn btn-primary" onclick='visit("/blog/discover")'>discover</button>
-      </div>
-    </div>
-  {% else %}
-    {% ifequal title 'discover' %}
-      <div class='row py-3'>
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick='visit("/blog/")'>for you</button>
-          <button class="btn btn-primary active" aria-current="page" onclick="history.go(0)">discover</button>
-        </div>
-      </div>
-    {% endifequal %}
-  {% endifequal %}
+<div class='container'>
+  <div id='title'>
+    loading title...
+  </div>
 
   <div id='posts'>
-    loading...
+    loading posts...
   </div>
 
   {% if user.is_authenticated %}
-    <button class='btn btn-primary' onclick='visit("/blog/new")'>new post</button>
+  <div class='mb-4'>
+    <button class='btn btn-primary' onclick='location.href="/blog/new"'>new post</button>
   {% endif %}
+  </div>
 </div>
 
-<script>
-  const visit = function(page){
-    return window.location.replace(page)
-  }
-</script>
-
-<!-- this is so hacky fix it -->
-{% ifequal title 'for you' %}
-<script>
-  const postElement = document.getElementById('posts')
-
-  const xhr = new XMLHttpRequest()
-  const method = 'GET'
-  const url = '/blog/for-you'
-  const responseType = 'json'
-
-  const readButton = function(post_id){
-    action = "window.location='/blog/"+ post_id + "'"
-    button = "<button class='btn btn-primary' onclick="+action+">read</button>"
-    return button
-  }
-
-  const formatPost = function(post){
-    template = "<div class='card mb-2' id='post-" + post.id +"'><div class='card-body'><h4 class='card-title'>" + post.title.toLowerCase() + "</h4><h6 class='card-title'>by " + post.author + "</h6><h6 class='card-title'><small class='text-muted'>" + post.created + "</small></h6><p>" + post.content.substring(0, 280).toLowerCase() + "...</p><div class='btn-group'>" + readButton(post.id) + "</div></div></div>"
-
-    return template
-  }
-
-  xhr.responseType = responseType
-  xhr.open(method, url)
-
-  xhr.onload = function(){
-    var listedItems = xhr.response.response
-    postHtmlStr = ''
-    for(var i=listedItems.length-1; i>=0; i--){
-      postHtmlStr += formatPost(listedItems[i])
-    }
-    postElement.innerHTML = postHtmlStr
-  }
-
- xhr.send()
-</script>
-{% else %}
-{% ifequal title 'discover' %}
 
 <script>
-  const postElement = document.getElementById('posts')
-
-  const loadPostPreviews = function(postElement){
+  const loadPostPreviews = function(postElement, page){
     const xhr = new XMLHttpRequest()
     const method = 'GET'
-    const url = '/blog/discover-rest'
+    const url = '/blog/page/' + page + '/get/'
     const responseType = 'json'
 
     xhr.responseType = responseType
@@ -125,27 +34,44 @@
       for(var i=listedItems.length-1; i>=0; i--){
         postHtmlStr += formatPost(listedItems[i])
       }
+      titleElement = document.getElementById('title')
+
+      titleElement.innerHTML = formatTitle(page)
       postElement.innerHTML = postHtmlStr
     }
    xhr.send()
   }
 
-  const readButton = function(post_id){
-    action = "window.location='/blog/"+ post_id + "'"
-    button = "<button class='btn btn-primary' onclick="+action+">read</button>"
-    return button
+  const handleDidClickRead = function(post_id){
+    location.href = String(post_id) + '/'
+  }
+
+  const handleDidClickDiscover = function(){
+    loadPostPreviews(postElement, 'disc')
+  }
+
+  const handleDidClickForYou = function(){
+    loadPostPreviews(postElement, 'fy')
   }
 
   const formatPost = function(post){
-    template = "<div class='card mb-2' id='post-" + post.id +"'><div class='card-body'><h4 class='card-title'>" + post.title.toLowerCase() + "</h4><h6 class='card-title'>by " + post.author + "</h6><h6 class='card-title'><small class='text-muted'>" + post.created + "</small></h6><p>" + post.content.substring(0, 280).toLowerCase() + "...</p><div class='btn-group'>" + readButton(post.id) + "</div></div></div>"
+    template = "<div class='card mb-2' id='post-" + post.id +"'><div class='card-body'><h4 class='card-title'>" + post.title.toLowerCase() + "</h4><h6 class='card-title'>by " + post.author + "</h6><h6 class='card-title'><small class='text-muted'>" + post.created + "</small></h6><p>" + post.content.substring(0, 280).toLowerCase() + "...</p><div class='btn-group'><button type='button' class='btn btn-primary' onclick=handleDidClickRead("+ post.id +")>read</button></div></div></div>"
 
     return template
   }
 
-  loadPostPreviews(postElement)
+  const formatTitle = function(page){
+    if(page == 'disc'){
+      return "<div class='row py-3'><h1>discover</h1><div class='btn-group'><button class='btn btn-primary' onclick='handleDidClickForYou()'>for you</button><button class='btn btn-primary active' aria-current='page' onclick='handleDidClickDiscover()'>discover</button></div></div>"
+    }
+    else if(page == 'fy'){
+      return "<div class='row py-3'><h1>for you</h1><div class='btn-group'><button class='btn btn-primary active' aria-current='page' onclick='handleDidClickForYou()'>for you</button><button class='btn btn-primary' onclick='handleDidClickDiscover()'>discover</button></div></div>"
+    }
+  }
+
+  const postElement = document.getElementById('posts')
+  loadPostPreviews(postElement, 'fy')
 
 </script>
-{% endifequal %}
-{% endifequal %}
 
 {% endblock %}

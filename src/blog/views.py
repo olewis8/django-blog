@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -33,7 +33,27 @@ def blog_discover_view(request):
     return render(request, template_name, context)
 
 
-@login_required
+def retrieve_posts(request, page):
+    user = get_object_or_404(User, username=request.user)
+
+    if page == 'fy':
+        qs1 = BlogPost.objects.all().filter(author__in=user.profile.following.all())
+        # qs2 = BlogPost.objects.all().filter(author=get_object_or_404(Profile, user=user))
+        # qs = (qs1 | qs2).distinct()
+
+        posts = [x.serialize() for x in qs1]
+        data = {'response': posts}
+
+        return JsonResponse(data)
+
+    elif page == 'disc':
+        qs = BlogPost.objects.all()
+        posts = [x.serialize() for x in qs]
+        data = {'response': posts}
+
+        return JsonResponse(data)
+
+
 def rest_home_view(request):
     user = get_object_or_404(User, username=request.user)
     qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
@@ -67,6 +87,7 @@ def blog_detail_view(request, post_id):
                }
 
     return render(request, template_name, context)
+
 
 def rest_blog_detail(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)

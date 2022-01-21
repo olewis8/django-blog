@@ -8,6 +8,8 @@ from .views import (blog_home_view,
                     blog_delete_view,
                     toggle_like,
 
+                    retrieve_posts,
+
                     rest_discover_view,
                     rest_home_view,
                     rest_blog_detail)
@@ -18,6 +20,8 @@ urlpatterns = [
     path('for-you/', rest_home_view),
     path('discover/', blog_discover_view),
     path('discover-rest/', rest_discover_view),
+
+    path('page/<str:page>/get/', retrieve_posts),
 
     path('<int:post_id>/', blog_detail_view),
     path('<int:post_id>/get/', rest_blog_detail),

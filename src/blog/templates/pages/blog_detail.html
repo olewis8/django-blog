@@ -44,6 +44,8 @@
     const url = '{{request.path}}' + 'get'
     const responseType = 'json'
 
+    console.log(url)
+
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function(){
