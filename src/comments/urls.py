@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import (comment_page,
-                    retrieve_comments,
+from .views import (retrieve_comments,
                     create_comment,
                     delete_comment)
 
