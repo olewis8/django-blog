@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import (blog_home,
                     blog_detail,
@@ -11,6 +11,7 @@ from .views import (blog_home,
 
 urlpatterns = [
     path('', blog_home, name='blog'),
+    path('<int:post_id>/c/', include('comments.urls')),
     path('page/<str:page>/get/', retrieve_posts),
     path('<int:post_id>/', blog_detail),
     path('<int:post_id>/get/', rest_blog_detail),
