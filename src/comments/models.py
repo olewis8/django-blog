@@ -8,8 +8,8 @@ from users.models import Profile
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(BlogPost, on_delete='CASCADE')
-    user = models.ForeignKey(Profile, on_delete='CASCADE')
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     text = models.TextField()
     created = models.DateTimeField(default=timezone.now, editable=False)
 
