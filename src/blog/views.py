@@ -19,19 +19,17 @@ from users.models import Profile
 
 
 @login_required
-def blog_home_view(request):
+def blog_home(request):
     template_name = 'pages/blog_home.html'
-    context = {'title': 'for you'}
-
-    return render(request, template_name, context)
+    return render(request, template_name)
 
 
-def blog_discover_view(request):
-    template_name = 'pages/blog_home.html'
-    context = {'title': 'discover'}
+def blog_detail(request, post_id):
+    template_name = 'pages/blog_detail.html'
+    return render(request, template_name)
 
-    return render(request, template_name, context)
 
+###### these could probably be combines ######
 
 def retrieve_posts(request, page):
     user = get_object_or_404(User, username=request.user)
@@ -54,50 +52,16 @@ def retrieve_posts(request, page):
         return JsonResponse(data)
 
 
-def rest_home_view(request):
-    user = get_object_or_404(User, username=request.user)
-    qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
-
-    posts = [x.serialize() for x in qs]
-
-    data = {'response': posts}
-
-    return JsonResponse(data)
-
-
-def rest_discover_view(request):
-    qs = BlogPost.objects.all()
-
-    posts = [{'id': x.id,
-              'title': x.title,
-              'author': x.author.user.username,
-              'content': x.content,
-              'created': x.created} for x in qs]
-
-    data = {'response': posts}
-
-    return JsonResponse(data)
-
-
-def blog_detail_view(request, post_id):
-    blog_post = get_object_or_404(BlogPost, id=post_id)
-
-    template_name = 'pages/blog_detail.html'
-    context = {'blog_post': blog_post,
-               }
-
-    return render(request, template_name, context)
-
-
 def rest_blog_detail(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     data = blog_post.serialize()
 
     return JsonResponse(data)
 
+##############################################
 
 @login_required
-def blog_create_view(request):
+def blog_create(request):
     form = CreateBlogPost(request.POST or None)
     author = get_object_or_404(Profile, user=request.user)
     next_url = request.POST.get("next") or None
@@ -120,7 +84,7 @@ def blog_create_view(request):
 
 
 @login_required
-def blog_edit_view(request, post_id):
+def blog_edit(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
 
     user = get_object_or_404(User, username=request.user)
@@ -145,7 +109,7 @@ def blog_edit_view(request, post_id):
 
 
 @login_required
-def blog_delete_view(request, post_id):
+def blog_delete(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
 
     user = get_object_or_404(User, username=request.user)
