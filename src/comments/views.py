@@ -10,19 +10,6 @@ from users.models import Profile
 from blog.models import BlogPost
 
 
-def comment_page(request, post_id):
-    blog_post = get_object_or_404(BlogPost, id=post_id)
-    comments = blog_post.comment_set.all()
-
-    print(request.META)
-
-    template_name = 'pages/comments_page.html'
-    context = {'comments': comments,
-               }
-
-    return render(request, template_name, context)
-
-
 def retrieve_comments(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
     comment_set = blog_post.comment_set.all()
