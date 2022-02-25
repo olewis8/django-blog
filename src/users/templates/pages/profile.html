@@ -5,6 +5,23 @@
 <div class='container py-3'>
   <div class='row'>
     <div class='col-md-3 gy-3 gl-3'>
+      <div id='bio-card'>
+        loading bio card...
+      </div>
+    </div>
+
+    <div class='col-md-3 gy-3 gl-3'>
+      <div id='user-posts'>
+        loading user posts...
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container py-3'>
+  <div class='row'>
+    <div class='col-md-3 gy-3 gl-3'>
         <div class='card'>
           <div class='card-body'>
             <h1 class='card-title'>{{ username }}'s bio</h1>
@@ -31,5 +48,35 @@
     </div>
   </div>
 </div>
+
+
+<script>
+ const formatBioCard = function(bioData){
+   template = "<div class='card'><div class='card-body'><h1 class='card-title'>"+ bioData.username +"</h1><h5 class='card-subtitle'>"+ bioData.location +"</h5><p class='card-text'>"+ bioData.bio +"</p><a href='follow/' type='button' class='btn btn-outline-primary'>follow</a><p class='card-text'>"+ bioData.followers_count +" <a href='followers/'>followers</a></p><p class='card-text'>"+ bioData.following_count +" <a href='following/'>following</a></p></div></div>"
+
+   return template
+ }
+
+ const loadBioCard = function(bioElement){
+   const xhr = new XMLHttpRequest()
+   const method = 'GET'
+   const url = '{{request.path}}' + 'bio-data/'
+   const responseType = 'json'
+
+   xhr.responseType = responseType
+   xhr.open(method, url)
+   xhr.onload = function(){
+     var bioData = xhr.response
+     console.log(bioData)
+
+     bioCardHtml = formatBioCard(bioData)
+     bioElement.innerHTML = bioCardHtml
+   }
+  xhr.send()
+ }
+
+ var bioElement = document.getElementById('bio-card')
+ loadBioCard(bioElement)
+</script>
 
 {% endblock %}

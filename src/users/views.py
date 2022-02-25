@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import RedirectView
 
@@ -83,6 +84,14 @@ def profile_view(request, username):
                }
 
     return render(request, template_name, context)
+
+
+def retrieve_bio_data(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    data = profile.serialize()
+
+    return JsonResponse(data)
 
 
 class toggle_follow(RedirectView):

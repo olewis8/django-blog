@@ -6,7 +6,9 @@ from .views import (toggle_follow,
                     login_view,
                     logout_view,
                     register_view,
-                    profile_view)
+                    profile_view,
+
+                    retrieve_bio_data)
 
 urlpatterns = [
     path('login/', login_view, name='login'),
@@ -16,4 +18,6 @@ urlpatterns = [
     path('<str:username>/follow/', toggle_follow.as_view()),
     path('<str:username>/followers/', followers_view),
     path('<str:username>/following/', following_view),
+
+    path('<str:username>/bio-data/', retrieve_bio_data)
 ]

@@ -15,6 +15,17 @@ class Profile(models.Model):
     def get_profile_url(self):
         return f'/users/{self.user.username}'
 
+    def serialize(self):
+        data = {'id': self.id,
+                'username': self.user.username,
+                'bio': self.bio,
+                'location': self.location,
+                'followers_count': self.followers.count(),
+                'following_count': self.following.count(),
+                }
+
+        return data
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
