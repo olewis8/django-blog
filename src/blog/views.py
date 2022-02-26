@@ -60,6 +60,16 @@ def rest_blog_detail(request, post_id):
 
 ##############################################
 
+
+def retrieve_user_posts(request, username):
+    profile = get_object_or_404(Profile, user=get_object_or_404(User, username=username))
+
+    qs = BlogPost.objects.all().filter(author=profile)
+    data = {'response': [x.serialize() for x in qs]}
+
+    return JsonResponse(data)
+
+
 @login_required
 def blog_create(request):
     form = CreateBlogPost(request.POST or None)

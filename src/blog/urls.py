@@ -7,7 +7,8 @@ from .views import (blog_home,
                     blog_delete,
                     toggle_like,
                     retrieve_posts,
-                    rest_blog_detail)
+                    rest_blog_detail,
+                    retrieve_user_posts)
 
 urlpatterns = [
     path('', blog_home, name='blog'),
@@ -18,5 +19,7 @@ urlpatterns = [
     path('<int:post_id>/edit/', blog_edit),
     path('<int:post_id>/delete/', blog_delete),
     path('<int:post_id>/like/', toggle_like.as_view(), name='toggle_like'),
+
+    path('<str:username>/get/', retrieve_user_posts),
     path('new/', blog_create),
 ]
