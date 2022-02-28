@@ -1,11 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import RedirectView
+from django.utils.decorators import method_decorator
 
 from .models import Profile
 
@@ -94,6 +96,7 @@ def retrieve_bio_data(request, username):
     return JsonResponse(data)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class toggle_follow(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
 

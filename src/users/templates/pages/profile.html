@@ -24,6 +24,21 @@
    location.href = '/blog/' + String(post_id) + '/'
  }
 
+ const handleDidClickFollow = function(){
+   const xhr = new XMLHttpRequest()
+   const method = 'POST'
+   const url = 'follow/'
+
+   xhr.open(method, url)
+   xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+   xhr.onload = function(){
+     bioElement = document.getElementById('bio-card')
+     loadBioCard(bioElement)
+   }
+   xhr.send()
+  }
+
  const getUsername = function(){
    return '{{request.path}}'.slice(7, -1)
  }
@@ -35,7 +50,7 @@
  }
 
  const formatBioCard = function(bioData){
-   template = "<div class='card'><div class='card-body'><h1 class='card-title'>"+ bioData.username +"</h1><h5 class='card-subtitle'>"+ bioData.location +"</h5><p class='card-text'>"+ bioData.bio +"</p><a href='follow/' type='button' class='btn btn-outline-primary'>follow</a><p class='card-text'>"+ bioData.followers_count +" <a href='followers/'>followers</a></p><p class='card-text'>"+ bioData.following_count +" <a href='following/'>following</a></p></div></div>"
+   template = "<div class='card'><div class='card-body'><h1 class='card-title'>"+ bioData.username +"</h1><h5 class='card-subtitle'>"+ bioData.location +"</h5><p class='card-text'>"+ bioData.bio +"</p><button type='button' class='btn btn-primary' onclick='handleDidClickFollow()'>follow</button><p class='card-text'>"+ bioData.followers_count +" <a href='followers/'>followers</a></p><p class='card-text'>"+ bioData.following_count +" <a href='following/'>following</a></p></div></div>"
 
    return template
  }
