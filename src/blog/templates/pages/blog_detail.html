@@ -86,10 +86,14 @@
   }
 
   const loadComments = function(commentElement){
+    const postId = '{{request.path}}'.slice(6, -1)
+
     const xhr = new XMLHttpRequest()
     const method = 'GET'
-    const url = '{{request.path}}' + 'c/get'
+    const url = '/api/comments/'+ postId + '/get'
     const responseType = 'json'
+
+    console.log(url)
 
     xhr.responseType = responseType
     xhr.open(method, url)
@@ -109,8 +113,6 @@
     const method = 'GET'
     const url = '/api{{request.path}}' + 'get'
     const responseType = 'json'
-
-    console.log(url)
 
     xhr.responseType = responseType
     xhr.open(method, url)

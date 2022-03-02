@@ -5,7 +5,7 @@ from .views import (retrieve_comments,
                     delete_comment)
 
 urlpatterns = [
-    path('get', retrieve_comments),
+    path('<int:post_id>/get', retrieve_comments),
     path('new', create_comment),
     path('del/<int:comment_id>', delete_comment)
 ]
