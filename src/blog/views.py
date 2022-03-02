@@ -12,66 +12,24 @@ from django.views.generic import RedirectView
 from .forms import CreateBlogPost
 from .models import BlogPost
 
-from comments.forms import CreateComment
-from comments.models import Comment
-
 from users.models import Profile
 
 
+# PAGES
+
 @login_required
-def blog_home(request):
+def home_page(request):
     template_name = 'pages/blog_home.html'
     return render(request, template_name)
 
 
-def blog_detail(request, post_id):
+def post_detail_page(request, post_id):
     template_name = 'pages/blog_detail.html'
     return render(request, template_name)
 
 
-###### these could probably be combines ######
-
-def retrieve_posts(request, page):
-    user = get_object_or_404(User, username=request.user)
-
-    if page == 'fy':
-        qs1 = BlogPost.objects.all().filter(author__in=user.profile.following.all())
-        # qs2 = BlogPost.objects.all().filter(author=get_object_or_404(Profile, user=user))
-        # qs = (qs1 | qs2).distinct()
-
-        posts = [x.serialize() for x in qs1]
-        data = {'response': posts}
-
-        return JsonResponse(data)
-
-    elif page == 'disc':
-        qs = BlogPost.objects.all()
-        posts = [x.serialize() for x in qs]
-        data = {'response': posts}
-
-        return JsonResponse(data)
-
-
-def rest_blog_detail(request, post_id):
-    blog_post = get_object_or_404(BlogPost, id=post_id)
-    data = blog_post.serialize()
-
-    return JsonResponse(data)
-
-##############################################
-
-
-def retrieve_user_posts(request, username):
-    profile = get_object_or_404(Profile, user=get_object_or_404(User, username=username))
-
-    qs = BlogPost.objects.all().filter(author=profile)
-    data = {'response': [x.serialize() for x in qs]}
-
-    return JsonResponse(data)
-
-
 @login_required
-def blog_create(request):
+def create_post_page(request):
     form = CreateBlogPost(request.POST or None)
     author = get_object_or_404(Profile, user=request.user)
     next_url = request.POST.get("next") or None
@@ -94,7 +52,7 @@ def blog_create(request):
 
 
 @login_required
-def blog_edit(request, post_id):
+def update_post_page(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
 
     user = get_object_or_404(User, username=request.user)
@@ -119,10 +77,8 @@ def blog_edit(request, post_id):
 
 
 @login_required
-def blog_delete(request, post_id):
+def delete_post_page(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
-
-    user = get_object_or_404(User, username=request.user)
     author = get_object_or_404(Profile, user=request.user)
 
     if str(author) != str(post.author):
@@ -138,6 +94,26 @@ def blog_delete(request, post_id):
                }
 
     return render(request, template_name, context)
+
+
+
+# API
+
+def retrieve_blog_detail(request, post_id):
+    blog_post = get_object_or_404(BlogPost, id=post_id)
+    data = blog_post.serialize()
+
+    return JsonResponse(data)
+
+
+def retrieve_user_posts(request, username):
+    profile = get_object_or_404(Profile, user=get_object_or_404(User, username=username))
+
+    qs = BlogPost.objects.all().filter(author=profile)
+    data = {'response': [x.serialize() for x in qs]}
+
+    return JsonResponse(data)
+
 
 # add csrf verif.
 @method_decorator(csrf_exempt, name='dispatch')
@@ -156,3 +132,20 @@ class toggle_like(RedirectView):
                 blog_post.liked_by.add(user)
 
         return url_
+
+
+def retrieve_posts(request, page):
+    user = get_object_or_404(User, username=request.user)
+
+    qs = []
+    if page == 'fy':
+        qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
+    elif page == 'disc':
+        qs = BlogPost.objects.all()
+    else:
+        return Http404()
+
+    posts = [x.serialize() for x in qs]
+    data = {'response': posts}
+
+    return JsonResponse(data)
