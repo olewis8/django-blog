@@ -18,8 +18,8 @@ urlpatterns = [
     path('<int:post_id>/delete/', delete_post_page),
     path('new/', create_post_page),
 
-    path('<str:page>/get-posts/', retrieve_posts),  # done
+    path('<str:page>/get-posts', retrieve_posts),  # done
     path('<int:post_id>/get/', retrieve_blog_detail),  # done
-    path('<int:post_id>/like/', toggle_like.as_view(), name='toggle_like'),  # done
-    path('<str:username>/get-user-posts/', retrieve_user_posts),  # done
+    path('<int:post_id>/like', toggle_like.as_view(), name='toggle_like'),  # done
+    path('<str:username>/get-user-posts', retrieve_user_posts),  # done
 ]

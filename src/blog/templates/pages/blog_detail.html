@@ -63,9 +63,7 @@
   const handleDidLike = function(postId){
     const xhr = new XMLHttpRequest()
     const method = 'POST'
-    // const url = 'like /'
-
-    const url = '/api/blog/'+ postId +'/like/'
+    const url = '/api/blog/'+ postId +'/like'
 
     xhr.open(method, url)
     xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
@@ -92,8 +90,6 @@
     const method = 'GET'
     const url = '/api/comments/'+ postId + '/get'
     const responseType = 'json'
-
-    console.log(url)
 
     xhr.responseType = responseType
     xhr.open(method, url)
