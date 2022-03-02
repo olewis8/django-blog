@@ -96,7 +96,6 @@ def delete_post_page(request, post_id):
     return render(request, template_name, context)
 
 
-
 # API
 
 def retrieve_blog_detail(request, post_id):
