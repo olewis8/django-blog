@@ -26,11 +26,14 @@
   const handleFormDidSubmit = function(event){
     event.preventDefault()
 
+    const postId = '{{request.path}}'.slice(6, -1)
+
     const formData = new FormData(event.target)
     const xhr = new XMLHttpRequest()
     const method = event.target.getAttribute('method')
-    const url = event.target.getAttribute('action') + 'c/new'
-    console.log(event.target.getAttribute('action'))
+    const url = '/api/comments/'+ postId +'/new'
+
+
 
     xhr.open(method, url)
     xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
@@ -43,10 +46,12 @@
     xhr.send(formData)
   }
 
-  const handleDeleteComment = function(comment_id){
+  const handleDeleteComment = function(commentId){
+    const postId = '{{request.path}}'.slice(6, -1)
+
     const xhr = new XMLHttpRequest()
     const method = 'POST'
-    const url = '{{request.path}}' + 'c/del/' + String(comment_id)
+    const url = '/api/comments/'+ postId +'/del/'+ String(commentId)
 
     xhr.open(method, url)
     xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')

@@ -6,6 +6,6 @@ from .views import (retrieve_comments,
 
 urlpatterns = [
     path('<int:post_id>/get', retrieve_comments),
-    path('new', create_comment),
-    path('del/<int:comment_id>', delete_comment)
+    path('<int:post_id>/new', create_comment),
+    path('<int:post_id>/del/<int:comment_id>', delete_comment)
 ]
