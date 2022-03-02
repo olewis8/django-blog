@@ -1,10 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Comment
-from .forms import CreateComment
 
 from users.models import Profile
 from blog.models import BlogPost
@@ -21,13 +20,11 @@ def retrieve_comments(request, post_id):
 
 
 def create_comment(request, post_id):
-    next_url = request.POST.get('next') or None
     text = request.POST.get('text') or None
-
     post = get_object_or_404(BlogPost, id=post_id)
     profile = get_object_or_404(Profile, user=request.user)
 
-    comment = Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
+    Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
 
     return JsonResponse({}, status=201)
 
