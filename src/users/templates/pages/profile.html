@@ -42,7 +42,7 @@
   const loadBioCard = function(bioElement){
     const xhr = new XMLHttpRequest()
     const method = 'GET'
-    const url = '{{request.path}}' + 'bio-data/'
+    const url = '/api{{request.path}}' + 'bio-data/'
     const responseType = 'json'
 
     xhr.responseType = responseType
