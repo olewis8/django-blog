@@ -34,8 +34,6 @@ def create_comment(request, post_id):
 def delete_comment(request, post_id, comment_id):
     qs = Comment.objects.filter(id=comment_id, user=get_object_or_404(Profile, user=request.user))
 
-    print(qs)
-
     if not qs.exists():
         return JsonResponse({'message': 'forbidden'}, status=401)
 
