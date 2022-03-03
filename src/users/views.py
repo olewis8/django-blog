@@ -14,7 +14,7 @@ from .models import Profile
 from blog.models import BlogPost
 
 
-def login_view(request):
+def login_page(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -35,7 +35,7 @@ def login_view(request):
 
 
 @login_required
-def logout_view(request):
+def logout_page(request):
     template_name = 'authenticate/logout.html'
     context = {'title': 'log out'}
 
@@ -46,7 +46,7 @@ def logout_view(request):
     return render(request, template_name, context)
 
 
-def register_view(request):
+def register_page(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -69,23 +69,16 @@ def register_view(request):
     return render(request, template_name, context)
 
 
-@login_required
-def profile_view(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = get_object_or_404(Profile, user=user)
-
-    blog_posts = BlogPost.objects.filter(author=profile)
-
+def profile_page(request, username):
     template_name = 'pages/profile.html'
-    context = {'username': user.username,
-               'location': user.profile.location,
-               'bio': user.profile.bio,
-               'blog_posts': blog_posts,
-               'followers': user.profile.followers,
-               'following': user.profile.following,
-               }
 
-    return render(request, template_name, context)
+    return render(request, template_name)
+
+
+def follows_page(request, username):
+    template_name = 'pages/follows.html'
+
+    return render(request, template_name)
 
 
 def retrieve_bio_data(request, username):
@@ -119,27 +112,19 @@ class toggle_follow(RedirectView):
         return url_
 
 
-def followers_view(request, username):
+def retrieve_user_followers(request, username):
     user = get_object_or_404(User, username=username)
-    followers = user.profile.followers.all()
+    qs = user.profile.followers.all()
+    response = [x.serialize() for x in qs]
+    data = {'response': response}
 
-    template_name = 'pages/follows.html'
-    context = {'user': user,
-               'follower_page': True,
-               'follows': followers,
-               }
-
-    return render(request, template_name, context)
+    return JsonResponse(data)
 
 
-def following_view(request, username):
+def retrieve_user_following(request, username):
     user = get_object_or_404(User, username=username)
-    following = user.profile.following.all()
+    qs = user.profile.following.all()
+    response = [x.serialize() for x in qs]
+    data = {'response': response}
 
-    template_name = 'pages/follows.html'
-    context = {'user': user,
-               'follower_page': False,
-               'follows': following,
-               }
-
-    return render(request, template_name, context)
+    return JsonResponse(data)

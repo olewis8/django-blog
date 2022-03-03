@@ -5,21 +5,69 @@
 
 <!-- blog post card -->
 <div class='container py-3'>
-  <!-- this is to be eventually replaced by include list-inline.html -->
   <div class='card'>
     <div class='card-body'>
-      {% if follower_page %}
-        <h1>{{ user }}'s followers</h1>
-      {% else %}
-        <h1>{{ user }} is following</h1>
-      {% endif %}
-
-      {% for follow in follows %}
-        {% include 'profile-card.html' with profile=follow %}
-      {% endfor %}
-
+      <div id='follows'>
+        <h1>ooga</h1>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  const loadUserFollows = function(userElement, page){
+    const username = '{{request.path}}'.slice(7, -11)
+
+    const xhr = new XMLHttpRequest()
+    const method = 'GET'
+    const responseType = 'json'
+    var url = ''
+    var title = ''
+
+    if (page === 'followers'){
+      title = '<h1>people who follow '+ username +'</h1>'
+      url = '/api/users/'+ username + '/retrieve_user_followers/'
+    }
+    else if (page === 'following'){
+      title = '<h1>people '+ username +' follows</h1>'
+      url = '/api/users/'+ username + '/retrieve_user_following/'
+    }
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+      var listedItems = xhr.response.response
+      bioHtmlStr = title
+      for(var i=listedItems.length-1; i>=0; i--){
+        bioHtmlStr += formatBioCard(listedItems[i])
+      }
+
+      userElement.innerHTML = bioHtmlStr
+    }
+    xhr.send()
+  }
+
+  const formatBioCard = function(profile){
+    template = "<div class='card mb-2'><div class='card-body'><h3 class='card-title'>"+ profile.username +"</h3><small class='card-subtitle'><p class='text-muted'>"+ profile.location +"</p></small><p class='card-text'>"+ profile.bio +"</p><button class='btn btn-primary' onclick='handleDidClickViewProfile(&quot;"+ profile.username +"&quot;)'>view profile</button></div></div>"
+
+    return template
+  }
+
+  const handleDidClickViewProfile = function(username){
+    console.log(username)
+    location.href = '/users/' + username
+  }
+
+  page = '{{request.path}}'.slice(-10, -1)
+  if (page === 'followers' || page === 'following'){
+    userElement = document.getElementById('follows')
+    loadUserFollows(userElement, page)
+  }
+  else{
+    // handle 404 here
+    console.log(page)
+  }
+
+</script>
 
 {% endblock %}
