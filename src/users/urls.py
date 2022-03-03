@@ -1,23 +1,26 @@
 from django.urls import path
 
-from .views import (toggle_follow,
-                    followers_view,
-                    following_view,
-                    login_view,
-                    logout_view,
-                    register_view,
-                    profile_view,
+from .views import (follows_page,
+                    login_page,
+                    logout_page,
+                    register_page,
+                    profile_page,
 
-                    retrieve_bio_data)
+                    toggle_follow,
+                    retrieve_bio_data,
+                    retrieve_user_following,
+                    retrieve_user_followers)
 
 urlpatterns = [
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view),
-    path('register/', register_view),
-    path('<str:username>/', profile_view),
-    path('<str:username>/follow/', toggle_follow.as_view()),
-    path('<str:username>/followers/', followers_view),
-    path('<str:username>/following/', following_view),
+    path('login/', login_page, name='login'),
+    path('logout/', logout_page),
+    path('register/', register_page),
+    path('<str:username>/', profile_page),
+    path('<str:username>/followers/', follows_page),
+    path('<str:username>/following/', follows_page),
 
-    path('<str:username>/bio-data/', retrieve_bio_data)
+    path('<str:username>/follow/', toggle_follow.as_view()),
+    path('<str:username>/bio-data/', retrieve_bio_data),
+    path('<str:username>/retrieve_user_followers/', retrieve_user_followers),
+    path('<str:username>/retrieve_user_following/', retrieve_user_following),
 ]
