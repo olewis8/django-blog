@@ -54,21 +54,30 @@ def create_post_page(request):
 @login_required
 def update_post_page(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
-
     author = get_object_or_404(Profile, user=request.user)
+
+    old_title = old.title
+    old_content = old.content
 
     if str(author) != str(old.author):
         return HttpResponse('Unauthorized', status=401)
 
     form = CreateBlogPost(request.POST or None, instance=old)
+    next_url = request.POST.get("next") or None
 
     if form.is_valid():
         form.save(modified=timezone.now())
-        return redirect(f'/blog/{post_id}')
 
-    template_name = 'pages/create_post.html'
-    context = {'title': f'edit: {old.title}',
+        new_post_url = next_url + f'/{post_id}'
+
+        if next_url is not None and is_safe_url(new_post_url, settings.ALLOWED_HOSTS):
+            return redirect(new_post_url)
+
+    template_name = 'pages/update_post.html'
+    context = {'post_id': post_id,
                'form': form,
+               'old_title': old_title,
+               'old_content': old_content
                }
 
     return render(request, template_name, context)
