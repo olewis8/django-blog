@@ -55,10 +55,8 @@ def create_post_page(request):
 def update_post_page(request, post_id):
     old = get_object_or_404(BlogPost, id=post_id)
 
-    user = get_object_or_404(User, username=request.user)
     author = get_object_or_404(Profile, user=request.user)
 
-    # is not instead of != ?
     if str(author) != str(old.author):
         return HttpResponse('Unauthorized', status=401)
 
