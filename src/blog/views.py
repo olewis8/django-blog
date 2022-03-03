@@ -91,13 +91,14 @@ def delete_post_page(request, post_id):
     if str(author) != str(post.author):
         return HttpResponse('Unauthorized', status=401)
 
-    if request.method == 'POST':
+    if request.POST.get('next') == 'yes':
         post.delete()
         return redirect('/blog')
+    elif request.POST.get('next') == 'no':
+        return redirect(f'/blog/{post_id}')
 
     template_name = 'pages/delete_post.html'
-    context = {'title': 'delete post',
-               'post': post
+    context = {'post': post
                }
 
     return render(request, template_name, context)
