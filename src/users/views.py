@@ -11,8 +11,6 @@ from django.utils.decorators import method_decorator
 
 from .models import Profile
 
-from blog.models import BlogPost
-
 
 def login_page(request):
     if request.method == 'POST':
