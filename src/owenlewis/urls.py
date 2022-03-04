@@ -8,8 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('blog/', include('blog.urls')),
-    path('dm/', include('direct_messages.urls')),
-    path('wall/', include('wall.urls')),
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
 
