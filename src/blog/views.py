@@ -17,7 +17,6 @@ from users.models import Profile
 
 # PAGES
 
-@login_required
 def home_page(request):
     template_name = 'pages/blog_home.html'
     return render(request, template_name)

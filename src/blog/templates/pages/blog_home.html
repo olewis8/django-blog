@@ -2,36 +2,7 @@
 
 {% block content %}
 
-
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
-  menu
-</button>
-
-<div class="offcanvas offcanvas-start" tabindex="-1" id="menu">
-  <div class="offcanvas-header">
-    <h2>username</h2>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-  </div>
-
-  <div class="offcanvas-body">
-    <div class="btn-group-vertical mb-2">
-      <button type="button" class="btn btn-primary" onclick=handleDidClickForYou()>for you</button>
-      <button type="button" class="btn btn-primary" onclick='handleDidClickDiscover()'>discover</button>
-    </div>
-  <div class='mb-2' id='new-post-button'>
-    <button type='button' class='btn btn-primary' onclick='location.href="/blog/new"'>new post</button>
-  </div>
-  <div id='search-bar'>
-    <form>
-      <textarea placeholder='search'></textarea>
-    </form>
-  </div>
-
-  </div>
-</div>
-
-
-
+{% include 'components/blog/off-canvas-menu.html' %}
 
 <div class='container'>
   <div id='title'>
