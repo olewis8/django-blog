@@ -2,9 +2,7 @@ from django.shortcuts import render
 
 
 def home_view(request):
-    template_name = 'pages/card.html'
-    context = {'title': 'hello world,,,',
-               'body': 'welcome to my website',
-               }
+    template_name = 'pages/home.html'
+    context = {}
 
     return render(request, template_name, context)
