@@ -3,8 +3,8 @@
 </button>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="menu">
-  <div class="offcanvas-header">
 
+  <div class="offcanvas-header">
     {% if request.user.is_authenticated %}
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-primary" onclick="location.href='/users/{{request.user}}'">{{request.user}}</button>
@@ -19,7 +19,6 @@
     <a href='/users/login/'>log in</a>
     <a href='/users/register/'>register</a>
     {% endif %}
-
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
   </div>
 
@@ -28,14 +27,19 @@
       <button type="button" class="btn btn-primary" onclick=handleDidClickForYou()>for you</button>
       <button type="button" class="btn btn-primary" onclick='handleDidClickDiscover()'>discover</button>
     </div>
-  <div class='mb-2' id='new-post-button'>
-    <button type='button' class='btn btn-primary' onclick='location.href="/blog/new"'>new post</button>
-  </div>
-  <div id='search-bar'>
-    <form>
-      <textarea placeholder='search'></textarea>
-    </form>
-  </div>
 
+    <div class='mb-2' id='new-post-button'>
+      <button type='button' class='btn btn-primary' onclick='location.href="/blog/new"'>new post</button>
+    </div>
+
+    <div id='search-bar'>
+      <form>
+        <textarea placeholder='search'></textarea>
+      </form>
+    </div>
+
+    <div>
+      <a href='../'>return to owenlewis.ca</a>
+    </div>
   </div>
 </div>
