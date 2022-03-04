@@ -6,15 +6,30 @@
 <div class='container'>
   <div id='welcome'>
     <h1>owen's website</h1>
+    <p>i hope you enjoy your stay</p>
   </div>
   <div id='about'>
     <h1>about me</h1>
+    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae accumsan magna, dictum finibus quam. Donec id sem vitae ante venenatis mollis. Quisque euismod, odio sed eleifend bibendum, odio nisi pharetra leo, iaculis dictum mi nulla gravida metus. Phasellus dapibus est et ligula ullamcorper, malesuada suscipit justo accumsan. Duis pretium justo nec lorem dictum pharetra. Integer mi risus, finibus sit amet mattis eget, vestibulum ac tellus. Pellentesque a hendrerit mi. Aliquam dapibus non turpis eleifend aliquet. Praesent cursus id purus a pharetra. Ut dictum dapibus arcu, nec gravida risus dignissim ac. Vestibulum malesuada pretium sodales. </p>
   </div>
   <div id='portfolio'>
     <h1>sample work</h1>
+    <div class='card'>
+      <h4 class='card-title'>blog</h4>
+      <p class='card-body'>Aliquam at dui a nisi fringilla posuere. Sed volutpat nisl nisl, vel finibus ipsum facilisis nec. Phasellus sed nisl vel eros venenatis tincidunt sit amet at nunc. Sed commodo sodales velit, placerat volutpat ipsum tincidunt et. </p>
+      <a href='https://www.github.com'>github</a>
+      <a href='/blog'>live demo</a>
+    </div>
   </div>
   <div id='contact'>
     <h1>contact me</h1>
+    <a href='https://www.linkedin.com'>linkedin</a>
+    <a href='https://www.github.com'>github</a>
+    <h5>send me a message</h5>
+    <form> {% csrf_token %}
+      <textarea placeholder='message'></textarea>
+      <button class='button' type='submit'>send</button>
+    </form>
   </div>
 </div>
 
