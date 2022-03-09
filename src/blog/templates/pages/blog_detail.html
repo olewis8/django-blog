@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -23,145 +24,12 @@
   </div>
 </div>
 
-
 <script>
-  const handleFormDidSubmit = function(event){
-    event.preventDefault()
-
-    const postId = '{{request.path}}'.slice(6, -1)
-
-    const formData = new FormData(event.target)
-    const xhr = new XMLHttpRequest()
-    const method = event.target.getAttribute('method')
-    const url = '/api/comments/'+ postId +'/new'
-
-
-
-    xhr.open(method, url)
-    xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    xhr.onload = function(){
-      const commentElement = document.getElementById('comment-section')
-      loadComments(commentElement)
-      event.target.reset()
-    }
-    xhr.send(formData)
-  }
-
-  const handleDeleteComment = function(commentId){
-    const postId = '{{request.path}}'.slice(6, -1)
-
-    const xhr = new XMLHttpRequest()
-    const method = 'POST'
-    const url = '/api/comments/'+ postId +'/del/'+ String(commentId)
-
-    xhr.open(method, url)
-    xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    // xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'))
-    // xhr.setRequestHeader('HTTP_X_CSRFTOKEN', getCookie('csrftoken'))
-    xhr.onload = function(){
-      const commentElement = document.getElementById('comment-section')
-      loadComments(commentElement)
-    }
-    xhr.send()
-  }
-
-  const handleDidLike = function(postId){
-    const xhr = new XMLHttpRequest()
-    const method = 'POST'
-    const url = '/api/blog/'+ postId +'/like'
-
-    xhr.open(method, url)
-    xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-    xhr.onload = function(){
-      postElement = document.getElementById('blog-post')
-      loadBlogPost(postElement)
-    }
-    xhr.send()
-  }
-
-  const handleDidClickEdit = function(){
-    location.href = 'edit/'
-  }
-
-  const handleDidClickDelete = function(){
-    location.href = 'delete/'
-  }
-
-  const loadComments = function(commentElement){
-    const postId = '{{request.path}}'.slice(6, -1)
-
-    const xhr = new XMLHttpRequest()
-    const method = 'GET'
-    const url = '/api/comments/'+ postId + '/get'
-    const responseType = 'json'
-
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function(){
-      var comments = xhr.response.comments
-      var commentHtmlStr = ''
-      for(var i=0; i<comments.length; i++){
-        commentHtmlStr += formatComment(comments[i])
-      }
-      commentElement.innerHTML = commentHtmlStr
-    }
-   xhr.send()
-  }
-
-  const loadBlogPost = function(blogPostElement){
-    const xhr = new XMLHttpRequest()
-    const method = 'GET'
-    const url = '/api{{request.path}}' + 'get'
-    const responseType = 'json'
-
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function(){
-      var post = formatBlogPost(xhr.response)
-      blogPostElement.innerHTML = post
-    }
-    xhr.send()
-  }
-
-  const loadPage = function(postElement, commentElement){
-    loadBlogPost(postElement)
-    loadComments(commentElement)
-  }
-
-  const formatBlogPost = function(post){
-    if('{{ request.user.is_authenticated }}' == 'True' && '{{request.user}}' == post.author){
-      template = "<div class='container py-3'><div class='card'><div class='card-body'><h1 class='card-title'>"+ post.title.toLowerCase() +"</h1><h6 class='card-title'><small class='text-muted'>"+ post.created +"</small></h6><h5 class='card-title'>by <a href='/users/"+post.author+"'>"+ post.author +"</a></h5><p class='card-text'>"+ post.content.toLowerCase().replace(/\n/g, '<br>\n') +"</p><button type='button' class='btn btn-primary' onclick='handleDidLike("+ post.id +")'>ε>"+ post.like_count +"</button><button type='button' class='btn btn-secondary' onclick='handleDidClickEdit()'>edit</button><button type='button' class='btn btn-danger' onclick='handleDidClickDelete()'>delete</button></div></div></div>"
-    }
-    else {
-      template = "<div class='container py-3'><div class='card'><div class='card-body'><h1 class='card-title'>"+ post.title.toLowerCase() +"</h1><h6 class='card-title'><small class='text-muted'>"+ post.created +"</small></h6><h5 class='card-title'>by <a href='/users/"+post.author+"'>"+ post.author +"</a></h5><p class='card-text'>"+ post.content.toLowerCase().replace(/\n/g, '<br>\n') +"</p><button type='button' class='btn btn-primary' onclick='handleDidLike("+ post.id +")'>ε>"+ post.like_count +"</button></div></div></div>"
-    }
-
-    return template
-  }
-
-  const formatComment = function(comment){
-    if('{{ request.user.is_authenticated }}' == 'True' && '{{request.user}}' == comment.user){
-      template = "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text.toLowerCase() +"</p><button type='button' class='btn btn-danger btn-sm' onclick='handleDeleteComment("+ comment.id +")'>delete</button></div></div>"
-      return template
-    }
-    else{
-      template = "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text.toLowerCase() +"</p></div></div>"
-      return template
-    }
-  }
-
-  var commentElement = document.getElementById('comment-section')
-  const commentCreateForm = document.getElementById('comment-create-form')
-  const commentDeleteButton = document.getElementById('delete-button')
-  var postElement = document.getElementById('blog-post')
-
-  commentCreateForm.addEventListener('submit', handleFormDidSubmit)
-
-  loadPage(postElement, commentElement)
-
+  var requestPath = '{{ request.path }}'
+  var requestUserIsAuthenticated = '{{ request.user.is_authenticated }}' == 'True' ? true : false
+  var requestUser = '{{ request.user }}'
 </script>
+<script type='module' src='{% static "comments/load-blog-comments.js" %}'></script>
+<script type='module' src='{% static "blog/load-blog-post-detail.js" %}'></script>
 
 {% endblock %}

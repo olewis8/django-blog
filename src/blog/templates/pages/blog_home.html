@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -20,60 +21,6 @@
   </div>
 </div>
 
-
-<script>
-  const loadPostPreviews = function(postElement, page){
-    const xhr = new XMLHttpRequest()
-    const method = 'GET'
-    const url = '/api/blog/' + page + '/get-posts'
-    const responseType = 'json'
-
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function(){
-      var listedItems = xhr.response.response
-      postHtmlStr = ''
-      for(var i=listedItems.length-1; i>=0; i--){
-        postHtmlStr += formatPost(listedItems[i])
-      }
-      titleElement = document.getElementById('title')
-
-      titleElement.innerHTML = formatTitle(page)
-      postElement.innerHTML = postHtmlStr
-    }
-   xhr.send()
-  }
-
-  const handleDidClickRead = function(post_id){
-    location.href = String(post_id) + '/'
-  }
-
-  const handleDidClickDiscover = function(){
-    loadPostPreviews(postElement, 'disc')
-  }
-
-  const handleDidClickForYou = function(){
-    loadPostPreviews(postElement, 'fy')
-  }
-
-  const formatPost = function(post){
-    template = "<div class='card mb-2' id='post-" + post.id +"'><div class='card-body'><h4 class='card-title'>" + post.title.toLowerCase() + "</h4><h6 class='card-title'>by " + post.author + "</h6><h6 class='card-title'><small class='text-muted'>" + post.created + "</small></h6><p>" + post.content.substring(0, 280).toLowerCase() + "...</p><div class='btn-group'><button type='button' class='btn btn-primary' onclick=handleDidClickRead("+ post.id +")>read</button></div></div></div>"
-
-    return template
-  }
-
-  const formatTitle = function(page){
-    if(page == 'disc'){
-      return '<h1>discover</h1>'
-    }
-    else if(page == 'fy'){
-      return '<h1>for you</h1>'
-    }
-  }
-
-  const postElement = document.getElementById('posts')
-  loadPostPreviews(postElement, 'fy')
-
-</script>
+<script type='module' src='{% static "blog/load-post-previews.js" %}'></script>
 
 {% endblock %}
