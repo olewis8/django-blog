@@ -1,6 +1,10 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
-  menu
-</button>
+{% load staticfiles %}
+
+<div id='menu-button'>
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
+    menu
+  </button>
+</div>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="menu">
 
@@ -24,8 +28,8 @@
 
   <div class="offcanvas-body">
     <div class="btn-group-vertical mb-2">
-      <button type="button" class="btn btn-primary" onclick=handleDidClickForYou()>for you</button>
-      <button type="button" class="btn btn-primary" onclick='handleDidClickDiscover()'>discover</button>
+      <button type="button" class="btn btn-primary" id='for-you-button' data-bs-dismiss="offcanvas" onclick='handleDidClickForYou()'>for you</button>
+      <button type="button" class="btn btn-primary" id='dicsover-button' data-bs-dismiss="offcanvas" onclick='handleDidClickDiscover()'>discover</button>
     </div>
 
     <div class='mb-2' id='new-post-button'>
@@ -43,3 +47,34 @@
     </div>
   </div>
 </div>
+
+<script type='module'>
+  import { loadPostPreviews as lpp } from '{% static "blog/module.js" %}'
+
+  window.loadPostPreviews = function(postElement, page){
+    lpp(postElement, page)
+  }
+</script>
+
+<script>
+  requestPath = '{{ request.path }}'
+
+  const handleDidClickDiscover = function(){
+    if (requestPath != '/blog/'){
+      localStorage.setItem('buttonClicked', 'disc')
+      location.href = '/blog/'
+    }
+
+    postElement = document.getElementById('posts')
+    loadPostPreviews(postElement, 'disc')
+  }
+
+  const handleDidClickForYou = function(){
+    if (requestPath != '/blog/'){
+      location.href = '/blog/'
+    }
+
+    postElement = document.getElementById('posts')
+    loadPostPreviews(postElement, 'fy')
+  }
+</script>
