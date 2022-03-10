@@ -1,22 +1,3 @@
-const handleDeleteComment = function(commentId){
-  const postId = requestPath.slice(6, -1)
-
-  const xhr = new XMLHttpRequest()
-  const method = 'POST'
-  const url = '/api/comments/'+ postId +'/del/'+ String(commentId)
-
-  xhr.open(method, url)
-  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-  // xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'))
-  // xhr.setRequestHeader('HTTP_X_CSRFTOKEN', getCookie('csrftoken'))
-  xhr.onload = function(){
-    const commentElement = document.getElementById('comment-section')
-    loadComments(commentElement)
-  }
-  xhr.send()
-}
-
 const loadComments = function(commentElement){
   const postId = requestPath.slice(6, -1)
 
@@ -62,6 +43,26 @@ const formatComment = function(comment){
   }
   return template
 }
+
+const handleDeleteComment = function(commentId){
+  const postId = requestPath.slice(6, -1)
+
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api/comments/'+ postId +'/del/'+ String(commentId)
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  // xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'))
+  // xhr.setRequestHeader('HTTP_X_CSRFTOKEN', getCookie('csrftoken'))
+  xhr.onload = function(){
+    const commentElement = document.getElementById('comment-section')
+    loadComments(commentElement)
+  }
+  xhr.send()
+}
+
 
 const handleFormDidSubmit = function(event){
   event.preventDefault()
