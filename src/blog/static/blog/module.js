@@ -71,8 +71,8 @@ const formatBlogPost = function(post){
             <p class='card-text'>${post.content.toLowerCase().replace(/\n/g, '<br>\n')}</p>
             <div class='btn-group' id='post-control-buttons'>
               <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})'>ε>${post.like_count}</button>
-              <button type='button' class='btn btn-secondary mx-1' onclick='handleDidClickEdit()'>edit</button>
-              <button type='button' class='btn btn-danger' onclick='handleDidClickDelete()'>delete</button>
+              <a type='button' class='btn btn-secondary mx-1' href='edit/'>edit</a>
+              <a type='button' class='btn btn-danger' href='delete/'>delete</a>
             </div>
           </div>
         </div>
@@ -110,14 +110,6 @@ const handleDidLike = function(postId){
     loadBlogPost(postElement)
   }
   xhr.send()
-}
-
-const handleDidClickEdit = function(){
-  location.href = 'edit/'
-}
-
-const handleDidClickDelete = function(){
-  location.href = 'delete/'
 }
 
 export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, handleDidClickEdit, handleDidClickDelete, loadBlogPost, formatBlogPost }
