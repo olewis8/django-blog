@@ -73,9 +73,7 @@ const formatPostPreview = function(post){
         <h4 class='card-title'>${post.title.toLowerCase()}</h4>
         <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
         <p>${post.content.substring(0, 280).toLowerCase()}...</p>
-        <div class='btn-group'>
-          <button type='button' class='btn btn-primary' onclick=handleDidClickRead(${post.id})>read</button>
-        </div>
+        <a class='stretched-link' href='/blog/${post.id}'></a>
       </div>
     </div>`
 
@@ -105,15 +103,11 @@ const formatProfileCard = function(profile){
         <h3 class='card-title'>${profile.username}</h3>
         <small class='card-subtitle'><p class='text-muted'>${profile.location}</p></small>
         <p class='card-text'>${profile.bio}</p>
-        <button class='btn btn-primary' onclick='handleDidClickViewProfile(${profile.username})'>view profile</button>
+        <a class='stretched-link' href='/users/${profile.username}'></a>
       </div>
     </div>`
 
     return template
-}
-
-const handleDidClickRead = function(post_id){
-  location.href = '/blog/' + String(post_id) + '/'
 }
 
 const handleDidClickFollow = function(){
