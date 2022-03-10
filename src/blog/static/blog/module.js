@@ -31,10 +31,8 @@ const formatPostPreview = function(post){
         <h4 class='card-title'>${post.title.toLowerCase()}</h4>
         <h6 class='card-title'>by ${post.author}</h6>
         <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-        <p>${post.content.substring(0, 280).toLowerCase()}</p>
-        <div class='btn-group'>
-          <button type='button' class='btn btn-primary' onclick='handleDidClickRead(${post.id})'>read</button>
-        </div>
+        <p>${post.content.substring(0, 280).toLowerCase()}...</p>
+        <a class='stretched-link' href='/blog/${post.id}'></a>
       </div>
     </div>`
 
@@ -96,7 +94,7 @@ const formatBlogPost = function(post){
           <div class='card-body'>
             <h1 class='card-title'>${post.title.toLowerCase()}</h1>
             <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-            <h5 class='card-title'>by <a href='/users/"+post.author+"'>${post.author}</a></h5>
+            <h5 class='card-title'>by <a href='/users/${post.author}'>${post.author}</a></h5>
             <p class='card-text'>${post.content.toLowerCase().replace(/\n/g, '<br>\n')}</p>
             <div class='btn-group' id='post-control-buttons'>
               <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})'>ε>${post.like_count}</button>
@@ -114,7 +112,7 @@ const formatBlogPost = function(post){
           <div class='card-body'>
             <h1 class='card-title'>${post.title.toLowerCase()}</h1>
             <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-            <h5 class='card-title'>by <a href='/users/"+post.author+"'>${post.author}</a></h5>
+            <h5 class='card-title'>by <a href='/users/${post.author}'>${post.author}</a></h5>
             <p class='card-text'>${post.content.toLowerCase().replace(/\n/g, '<br>\n')}</p>
             <div class='btn-group' id='post-control-buttons'>
               <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})'>ε>${post.like_count}</button>
