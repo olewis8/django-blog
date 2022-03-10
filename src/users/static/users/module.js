@@ -133,7 +133,7 @@ const formatProfileCard = function(profile){
         <h3 class='card-title'>${profile.username}</h3>
         <small class='card-subtitle'><p class='text-muted'>${profile.location}</p></small>
         <p class='card-text'>${profile.bio}</p>
-        <button class='btn btn-primary' onclick='handleDidClickViewProfile(&quot;${profile.username}&quot;)'>view profile</button>
+        <button class='btn btn-primary' onclick='handleDidClickViewProfile(${profile.username})'>view profile</button>
       </div>
     </div>`
 
