@@ -66,34 +66,6 @@ const loadUserFollows = function(userElement, page){
   xhr.send()
 }
 
-const handleDidClickRead = function(post_id){
-  location.href = '/blog/' + String(post_id) + '/'
-}
-
-const handleDidClickFollow = function(){
-  const xhr = new XMLHttpRequest()
-  const method = 'POST'
-  const url = 'follow/'
-
-  xhr.open(method, url)
-  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-  xhr.onload = function(){
-    bioElement = document.getElementById('bio-card')
-    loadBioCard(bioElement)
-  }
-  xhr.send()
-}
-
-const handleDidClickViewProfile = function(username){
-  console.log(username)
-  location.href = '/users/' + username
-}
-
-const getUsername = function(){
-  return requestPath.slice(7, -1)
-}
-
 const formatPostPreview = function(post){
   var template = `
     <div class='card mb-2' id='post-${post.id}'>
@@ -140,5 +112,32 @@ const formatProfileCard = function(profile){
     return template
 }
 
+const handleDidClickRead = function(post_id){
+  location.href = '/blog/' + String(post_id) + '/'
+}
+
+const handleDidClickFollow = function(){
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = 'follow/'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    bioElement = document.getElementById('bio-card')
+    loadBioCard(bioElement)
+  }
+  xhr.send()
+}
+
+const handleDidClickViewProfile = function(username){
+  console.log(username)
+  location.href = '/users/' + username
+}
+
+const getUsername = function(){
+  return requestPath.slice(7, -1)
+}
 
 export { loadBioCard, loadPostPreviews, getUsername, loadUserFollows }
