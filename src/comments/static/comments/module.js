@@ -40,7 +40,7 @@ const loadComments = function(commentElement){
 
 const formatComment = function(comment){
   if(requestUserIsAuthenticated && requestUser == comment.user){
-    template = `
+    var template = `
       <div class='card mb-2'>
         <div class='card-body'>
           <h5 class='card-title'><a href='/users/${comment.user}'>${comment.user}</a></h5>
@@ -51,7 +51,7 @@ const formatComment = function(comment){
       </div>`
   }
   else{
-    template = `
+    var template = `
       <div class='card mb-2'>
         <div class='card-body'>
           <h5 class='card-title'><a href='/users/${comment.user}'>${comment.user}</a></h5>
