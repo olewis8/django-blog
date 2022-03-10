@@ -20,10 +20,6 @@ const loadPostPreviews = function(postElement, page){
  xhr.send()
 }
 
-const handleDidClickRead = function(post_id){
-  location.href = String(post_id) + '/'
-}
-
 const formatPostPreview = function(post){
   var template = `
     <div class='card mb-2' id='post-${post.id}'>
@@ -124,4 +120,4 @@ const formatBlogPost = function(post){
   return template
 }
 
-export { loadPostPreviews, handleDidClickRead, formatPostPreview, formatTitle, handleDidLike, handleDidClickEdit, handleDidClickDelete, loadBlogPost, formatBlogPost }
+export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, handleDidClickEdit, handleDidClickDelete, loadBlogPost, formatBlogPost }
