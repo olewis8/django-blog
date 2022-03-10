@@ -40,11 +40,27 @@ const loadComments = function(commentElement){
 
 const formatComment = function(comment){
   if(requestUserIsAuthenticated && requestUser == comment.user){
-    return "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text.toLowerCase() +"</p><button type='button' class='btn btn-danger btn-sm' id='delete-button' onclick='handleDeleteComment("+ comment.id +")'>delete</button></div></div>"
+    template = `
+      <div class='card mb-2'>
+        <div class='card-body'>
+          <h5 class='card-title'><a href='/users/${comment.user}'>${comment.user}</a></h5>
+          <h6 class='card-subtitle'><small class='text-muted'>${comment.created}</small></h6>
+          <p class='card-text'>${comment.text.toLowerCase()}</p>
+          <button type='button' class='btn btn-danger btn-sm' id='delete-button' onclick='handleDeleteComment(${comment.id})'>delete</button>
+        </div>
+      </div>`
   }
   else{
-    return "<div class='card mb-2'><div class='card-body'><h5 class='card-title'><a href='/users/"+comment.user+"'>"+ comment.user +"</a></h5><h6 class='card-subtitle'><small class='text-muted'>"+ comment.created +"</small></h6><p class='card-text'>"+ comment.text.toLowerCase() +"</p></div></div>"
+    template = `
+      <div class='card mb-2'>
+        <div class='card-body'>
+          <h5 class='card-title'><a href='/users/${comment.user}'>${comment.user}</a></h5>
+          <h6 class='card-subtitle'><small class='text-muted'>${comment.created}</small></h6>
+          <p class='card-text'>${comment.text.toLowerCase()}</p>
+        </div>
+      </div>`
   }
+  return template
 }
 
 const handleFormDidSubmit = function(event){
