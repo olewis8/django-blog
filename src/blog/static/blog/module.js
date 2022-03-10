@@ -20,6 +20,21 @@ const loadPostPreviews = function(postElement, page){
  xhr.send()
 }
 
+const loadBlogPost = function(blogPostElement){
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = '/api' + requestPath + 'get'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    var post = formatBlogPost(xhr.response)
+    blogPostElement.innerHTML = post
+  }
+  xhr.send()
+}
+
 const formatPostPreview = function(post){
   var template = `
     <div class='card mb-2' id='post-${post.id}'>
@@ -42,44 +57,6 @@ const formatTitle = function(page){
   else if(page == 'fy'){
     return '<h1>for you</h1>'
   }
-}
-
-const handleDidLike = function(postId){
-  const xhr = new XMLHttpRequest()
-  const method = 'POST'
-  const url = '/api/blog/'+ postId +'/like'
-
-  xhr.open(method, url)
-  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-  xhr.onload = function(){
-    postElement = document.getElementById('blog-post')
-    loadBlogPost(postElement)
-  }
-  xhr.send()
-}
-
-const handleDidClickEdit = function(){
-  location.href = 'edit/'
-}
-
-const handleDidClickDelete = function(){
-  location.href = 'delete/'
-}
-
-const loadBlogPost = function(blogPostElement){
-  const xhr = new XMLHttpRequest()
-  const method = 'GET'
-  const url = '/api' + requestPath + 'get'
-  const responseType = 'json'
-
-  xhr.responseType = responseType
-  xhr.open(method, url)
-  xhr.onload = function(){
-    var post = formatBlogPost(xhr.response)
-    blogPostElement.innerHTML = post
-  }
-  xhr.send()
 }
 
 const formatBlogPost = function(post){
@@ -118,6 +95,29 @@ const formatBlogPost = function(post){
       </div>`
   }
   return template
+}
+
+const handleDidLike = function(postId){
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api/blog/'+ postId +'/like'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    postElement = document.getElementById('blog-post')
+    loadBlogPost(postElement)
+  }
+  xhr.send()
+}
+
+const handleDidClickEdit = function(){
+  location.href = 'edit/'
+}
+
+const handleDidClickDelete = function(){
+  location.href = 'delete/'
 }
 
 export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, handleDidClickEdit, handleDidClickDelete, loadBlogPost, formatBlogPost }
