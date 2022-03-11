@@ -74,8 +74,6 @@ const handleFormDidSubmit = function(event){
   const method = event.target.getAttribute('method')
   const url = '/api/comments/'+ postId +'/new'
 
-
-
   xhr.open(method, url)
   xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
