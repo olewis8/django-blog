@@ -24,9 +24,9 @@ def create_comment(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
     profile = get_object_or_404(Profile, user=request.user)
 
-    Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
+    comment = Comment.objects.create(post=post, user=profile, text=text, created=timezone.now())
 
-    return JsonResponse({}, status=201)
+    return JsonResponse(comment.serialize(), status=201)
 
 
 # add csrf verification
