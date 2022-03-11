@@ -70,7 +70,7 @@ const formatBlogPost = function(post){
             <h5 class='card-title'>by <a href='/users/${post.author}'>${post.author}</a></h5>
             <p class='card-text'>${post.content.toLowerCase().replace(/\n/g, '<br>\n')}</p>
             <div class='btn-group' id='post-control-buttons'>
-              <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})'>ε>${post.like_count}</button>
+              <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})' id='post-like-button'>ε>${post.like_count}</button>
               <a type='button' class='btn btn-secondary mx-1' href='edit/'>edit</a>
               <a type='button' class='btn btn-danger' href='delete/'>delete</a>
             </div>
@@ -88,12 +88,13 @@ const formatBlogPost = function(post){
             <h5 class='card-title'>by <a href='/users/${post.author}'>${post.author}</a></h5>
             <p class='card-text'>${post.content.toLowerCase().replace(/\n/g, '<br>\n')}</p>
             <div class='btn-group' id='post-control-buttons'>
-              <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id})'>ε>${post.like_count}</button>
+              <button type='button' class='btn btn-primary' onclick='handleDidLike(${post.id} id='post-like-button')'>ε>${post.like_count}</button>
             </div>
           </div>
         </div>
       </div>`
   }
+
   return template
 }
 
@@ -112,4 +113,4 @@ const handleDidLike = function(postId){
   xhr.send()
 }
 
-export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, handleDidClickEdit, handleDidClickDelete, loadBlogPost, formatBlogPost }
+export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, loadBlogPost, formatBlogPost }
