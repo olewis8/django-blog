@@ -125,7 +125,6 @@ def retrieve_user_posts(request, username):
 @method_decorator(csrf_exempt, name='dispatch')
 class toggle_like(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        print(self.request.is_ajax())
         post_id = kwargs.get('post_id')
         blog_post = get_object_or_404(BlogPost, id=post_id)
         url_ = blog_post.get_absolute_url()
