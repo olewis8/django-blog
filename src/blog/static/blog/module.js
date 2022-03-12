@@ -1,4 +1,4 @@
-const loadPostPreviews = function(postElement, page){
+const loadPostPreviews = function(postListElement, page){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = '/api/blog/' + page + '/get-posts'
@@ -7,15 +7,16 @@ const loadPostPreviews = function(postElement, page){
   xhr.responseType = responseType
   xhr.open(method, url)
   xhr.onload = function(){
-    var listedItems = xhr.response.response
-    var postHtmlStr = ''
-    for(var i=listedItems.length-1; i>=0; i--){
-      postHtmlStr += formatPostPreview(listedItems[i])
-    }
     var titleElement = document.getElementById('title')
+    var listedItems = xhr.response.response
 
-    titleElement.innerHTML = formatTitle(page)
-    postElement.innerHTML = postHtmlStr
+    titleElement.innerHTML = ''
+    titleElement.append(formatTitle(page))
+
+    postListElement.innerHTML = ''
+    for(var i=listedItems.length-1; i>=0; i--){
+      postListElement.append(formatPostPreview(listedItems[i]))
+    }
   }
  xhr.send()
 }
@@ -36,27 +37,50 @@ const loadBlogPost = function(blogPostElement){
 }
 
 const formatPostPreview = function(post){
-  var template = `
-    <div class='card mb-2' id='post-${post.id}'>
-      <div class='card-body'>
-        <h4 class='card-title'>${post.title.toLowerCase()}</h4>
-        <h6 class='card-title'>by ${post.author}</h6>
-        <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-        <p>${post.content.substring(0, 280).toLowerCase()}...</p>
-        <a class='stretched-link' href='/blog/${post.id}'></a>
-      </div>
-    </div>`
+  var postPreviewCard = document.createElement('div')
+  var postPreviewCardBody = document.createElement('div')
+  var postPreviewCardTitle = document.createElement('h3')
+  var postPreviewCardUser = document.createElement('h5')
+  var postPreviewCardCreatedDate = document.createElement('h6')
+  var postPreviewCardCreatedDateSmall = document.createElement('h6')
+  var postPreviewCardText = document.createElement('p')
+  var postPreviewCardLink = document.createElement('a')
 
-  return template
+  postPreviewCard.classList.add('card', 'mb-2')
+  postPreviewCardBody.classList.add('card-body')
+  postPreviewCardTitle.classList.add('card-title')
+  postPreviewCardUser.classList.add('card-title')
+  postPreviewCardCreatedDate.classList.add('card-title')
+  postPreviewCardCreatedDateSmall.classList.add('text-muted')
+  postPreviewCardText.classList.add('card-text')
+  postPreviewCardLink.classList.add('stretched-link')
+
+  postPreviewCard.setAttribute('id', 'home-post-' + String(post.id))
+  postPreviewCardLink.setAttribute('href', '/blog/' + String(post.id))
+
+  postPreviewCardTitle.innerText = String(post.title).toLowerCase()
+  postPreviewCardUser.innerText = 'by ' + String(post.author)
+  postPreviewCardCreatedDateSmall.innerText = String(post.created)
+  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
+
+  postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
+  postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardUser, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
+  postPreviewCard.append(postPreviewCardBody)
+
+  return postPreviewCard
 }
 
 const formatTitle = function(page){
+  var titleH1 = document.createElement('h1')
+
   if(page == 'disc'){
-    return '<h1>discover</h1>'
+    titleH1.innerText = 'discover'
   }
   else if(page == 'fy'){
-    return '<h1>for you</h1>'
+    titleH1.innerText = 'for you'
   }
+
+  return titleH1
 }
 
 const formatBlogPost = function(post){
