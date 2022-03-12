@@ -1,4 +1,4 @@
 import { loadPostPreviews, getUsername } from './module.js'
 
-var postElement = document.getElementById('user-posts')
-loadPostPreviews(postElement, getUsername())
+var postListElement = document.getElementById('user-posts')
+loadPostPreviews(postListElement, getUsername())

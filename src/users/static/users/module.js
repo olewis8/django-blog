@@ -15,7 +15,7 @@ const loadBioCard = function(bioElement){
  xhr.send()
 }
 
-const loadPostPreviews = function(postElement, username){
+const loadPostPreviews = function(postListElement, username){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = '/api/blog/' + username + '/get-user-posts'
@@ -25,11 +25,11 @@ const loadPostPreviews = function(postElement, username){
   xhr.open(method, url)
   xhr.onload = function(){
     var listedItems = xhr.response.response
-    var postHtmlStr = ''
+    // var postHtmlStr = ''
     for(var i=listedItems.length-1; i>=0; i--){
       postHtmlStr += formatPostPreview(listedItems[i])
     }
-    postElement.innerHTML = postHtmlStr
+    postListElement.innerHTML = postHtmlStr
   }
  xhr.send()
 }
@@ -67,17 +67,46 @@ const loadUserFollows = function(userElement, page){
 }
 
 const formatPostPreview = function(post){
-  var template = `
-    <div class='card mb-2' id='post-${post.id}'>
-      <div class='card-body'>
-        <h4 class='card-title'>${post.title.toLowerCase()}</h4>
-        <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-        <p>${post.content.substring(0, 280).toLowerCase()}...</p>
-        <a class='stretched-link' href='/blog/${post.id}'></a>
-      </div>
-    </div>`
+  var postPreviewCard = document.createElement('div')
+  var postPreviewCardBody = document.createElement('div')
+  var postPreviewCardTitle = document.createElement('h3')
+  var postPreviewCardCreatedDate = document.createElement('h6')
+  var postPreviewCardCreatedDateSmall = document.createElement('h6')
+  var postPreviewCardText = document.createElement('p')
+  var postPreviewCardLink = document.createElement('a')
 
-  return template
+  postPreviewCard.classList.add('card', 'mb-2')
+  postPreviewCardBody.classList.add('card-body')
+  postPreviewCardTitle.classList.add('card-title')
+  postPreviewCardCreatedDate.classList.add('card-title')
+  postPreviewCardCreatedDateSmall.classList.add('text-muted')
+  postPreviewCardText.classList.add('card-text')
+  postPreviewCardLink.classList.add('stretched-link')
+
+  postPreviewCard.setAttribute('id', 'user-post-' + String(post.id))
+  postPreviewCardLink.setAttribute('href', '/blog/' + String(post.id))
+
+  postPreviewCardTitle.innerText = String(post.title).toLowerCase()
+  postPreviewCardCreatedDateSmall.innerText = String(post.created)
+  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
+
+  postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
+  postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
+  postPreviewCard.append(postPreviewCardBody)
+
+  return postPreviewCard
+
+  // var template = `
+  //   <div class='card mb-2' id='post-${post.id}'>
+  //     <div class='card-body'>
+  //       <h4 class='card-title'>${post.title.toLowerCase()}</h4>
+  //       <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
+  //       <p>${post.content.substring(0, 280).toLowerCase()}...</p>
+  //       <a class='stretched-link' href='/blog/${post.id}'></a>
+  //     </div>
+  //   </div>`
+  //
+  // return template
 }
 
 const formatBioCard = function(bioData){
