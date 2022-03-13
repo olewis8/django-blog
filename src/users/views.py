@@ -126,3 +126,18 @@ def retrieve_user_following(request, username):
     data = {'response': response}
 
     return JsonResponse(data)
+
+
+def refresh_bio_card(request, username):
+    profile = get_object_or_404(Profile, user=request.user)
+
+    target_user = get_object_or_404(User, username=username)
+    target_profile = get_object_or_404(Profile, user=target_user)
+
+    data = {
+        'updated_followers_count': target_profile.followers.count(),
+        'updated_following_count': target_profile.following.count(),
+        'user_follows_target_user': (profile in target_profile.followers.all())
+    }
+
+    return JsonResponse(data)

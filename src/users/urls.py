@@ -7,6 +7,7 @@ from .views import (follows_page,
                     profile_page,
 
                     toggle_follow,
+                    refresh_bio_card,
                     retrieve_bio_data,
                     retrieve_user_following,
                     retrieve_user_followers)
@@ -20,6 +21,7 @@ urlpatterns = [
     path('<str:username>/following/', follows_page),
 
     path('<str:username>/follow/', toggle_follow.as_view()),
+    path('<str:username>/refresh_bio_card/', refresh_bio_card),
     path('<str:username>/bio-data/', retrieve_bio_data),
     path('<str:username>/retrieve_user_followers/', retrieve_user_followers),
     path('<str:username>/retrieve_user_following/', retrieve_user_following),

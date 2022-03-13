@@ -9,8 +9,8 @@ const loadBioCard = function(bioElement){
   xhr.onload = function(){
     var bioData = xhr.response
 
-    var bioCardHtml = formatBioCard(bioData)
-    bioElement.innerHTML = bioCardHtml
+    bioElement.append(formatBioCard(bioData))
+    loadFollowButton()
   }
  xhr.send()
 }
@@ -25,11 +25,9 @@ const loadPostPreviews = function(postListElement, username){
   xhr.open(method, url)
   xhr.onload = function(){
     var listedItems = xhr.response.response
-    // var postHtmlStr = ''
     for(var i=listedItems.length-1; i>=0; i--){
-      postHtmlStr += formatPostPreview(listedItems[i])
+      postListElement.append(formatPostPreview(listedItems[i]))
     }
-    postListElement.innerHTML = postHtmlStr
   }
  xhr.send()
 }
@@ -44,24 +42,31 @@ const loadUserFollows = function(userElement, page){
   var title = ''
 
   if (page === 'followers'){
-    title = '<h1>people who follow '+ username +'</h1>'
+    title = 'people who follow '+ username
     url = '/api/users/'+ username + '/retrieve_user_followers/'
   }
   else if (page === 'following'){
-    title = '<h1>people '+ username +' follows</h1>'
+    title = 'people '+ username +' follows'
     url = '/api/users/'+ username + '/retrieve_user_following/'
   }
 
   xhr.responseType = responseType
   xhr.open(method, url)
   xhr.onload = function(){
-    var listedItems = xhr.response.response
-    var bioHtmlStr = title
-    for(var i=listedItems.length-1; i>=0; i--){
-      bioHtmlStr += formatProfileCard(listedItems[i])
-    }
+    var titleElement = document.getElementById('follows-page-title')
+    var titleH1Element = document.createElement('h1')
+    titleH1Element.innerText = title
+    titleElement.append(titleH1Element)
 
-    userElement.innerHTML = bioHtmlStr
+    var listedItems = xhr.response.response
+    var follows = document.getElementById('follows')
+
+    if (listedItems.length == 0){
+      follows.innerHTML = '<p>nobody =(</p>'
+    }
+    for(var i=listedItems.length-1; i>=0; i--){
+      follows.append(formatProfileCard(listedItems[i]))
+    }
   }
   xhr.send()
 }
@@ -95,48 +100,85 @@ const formatPostPreview = function(post){
   postPreviewCard.append(postPreviewCardBody)
 
   return postPreviewCard
-
-  // var template = `
-  //   <div class='card mb-2' id='post-${post.id}'>
-  //     <div class='card-body'>
-  //       <h4 class='card-title'>${post.title.toLowerCase()}</h4>
-  //       <h6 class='card-title'><small class='text-muted'>${post.created}</small></h6>
-  //       <p>${post.content.substring(0, 280).toLowerCase()}...</p>
-  //       <a class='stretched-link' href='/blog/${post.id}'></a>
-  //     </div>
-  //   </div>`
-  //
-  // return template
 }
 
 const formatBioCard = function(bioData){
-  var template = `
-    <div class='card'>
-      <div class='card-body'>
-        <h1 class='card-title'>${bioData.username}</h1>
-        <h5 class='card-subtitle'>${bioData.location}</h5>
-        <p class='card-text'>${bioData.bio}</p>
-        <button type='button' class='btn btn-primary' onclick='handleDidClickFollow()'>follow</button>
-        <p class='card-text'>${bioData.followers_count} <a href='followers/'>followers</a></p>
-        <p class='card-text'>${bioData.following_count} <a href='following/'>following</a></p>
-      </div>
-    </div>`
+  var bioCard = document.createElement('div')
+  var bioCardBody = document.createElement('div')
+  var bioCardTitle = document.createElement('h1')
+  var bioCardLocation = document.createElement('h5')
+  var bioCardBioText = document.createElement('p')
+  var bioCardFollowButton = document.createElement('button')
+  var bioCardFollowersCount = document.createElement('p')
+  var bioCardFollowingCount = document.createElement('p')
+  var bioCardFollowersLink = document.createElement('a')
+  var bioCardFollowingLink = document.createElement('a')
 
-  return template
+  bioCard.classList.add('card')
+  bioCardBody.classList.add('card-body')
+  bioCardTitle.classList.add('card-title')
+  bioCardLocation.classList.add('card-subtitle')
+  bioCardBioText.classList.add('card-text')
+  bioCardFollowButton.classList.add('btn', 'btn-primary')
+  bioCardFollowersCount.classList.add('card-text')
+  bioCardFollowingCount.classList.add('card-text')
+
+  bioCardFollowButton.setAttribute('type', 'button')
+  bioCardFollowButton.setAttribute('id', 'bio-card-follow-button')
+  bioCardFollowersCount.setAttribute('id', 'bio-card-followers-count')
+  bioCardFollowingCount.setAttribute('id', 'bio-card-following-count')
+  bioCardFollowersLink.setAttribute('id', 'bio-card-followers-link')
+  bioCardFollowingLink.setAttribute('id', 'bio-card-following-link')
+  bioCardFollowersLink.setAttribute('href', 'followers/')
+  bioCardFollowingLink.setAttribute('href', 'following/')
+
+  bioCardFollowButton.addEventListener('click', function(){handleDidClickFollow()})
+
+  bioCardTitle.innerText = bioData.username
+  bioCardLocation.innerText = bioData.location
+  bioCardBioText.innerText = bioData.bio
+  bioCardFollowButton.innerText = 'follow'
+  bioCardFollowersCount.innerText = String(bioData.followers_count) + ' '
+  bioCardFollowingCount.innerText = String(bioData.following_count) + ' '
+  bioCardFollowersLink.innerText = 'followers'
+  bioCardFollowingLink.innerText = 'following'
+
+  bioCardFollowersCount.append(bioCardFollowersLink)
+  bioCardFollowingCount.append(bioCardFollowingLink)
+  bioCardBody.append(bioCardTitle, bioCardLocation, bioCardBioText, bioCardFollowButton, bioCardFollowersCount, bioCardFollowingCount)
+  bioCard.append(bioCardBody)
+
+  return bioCard
 }
 
 const formatProfileCard = function(profile){
-  var template = `
-    <div class='card mb-2'>
-      <div class='card-body'>
-        <h3 class='card-title'>${profile.username}</h3>
-        <small class='card-subtitle'><p class='text-muted'>${profile.location}</p></small>
-        <p class='card-text'>${profile.bio}</p>
-        <a class='stretched-link' href='/users/${profile.username}'></a>
-      </div>
-    </div>`
+  var profileCard = document.createElement('div')
+  var profileCardBody = document.createElement('div')
+  var profileCardTitle = document.createElement('h3')
+  var profileCardLocation = document.createElement('h6')
+  var profileCardLocationSmall = document.createElement('small')
+  var profileCardBioText = document.createElement('p')
+  var profileCardLink = document.createElement('a')
 
-    return template
+  profileCard.classList.add('card', 'mb-2')
+  profileCardBody.classList.add('card-body')
+  profileCardTitle.classList.add('card-title')
+  profileCardLocation.classList.add('card-title')
+  profileCardLocationSmall.classList.add('text-muted')
+  profileCardBioText.classList.add('card-text')
+  profileCardLink.classList.add('stretched-link')
+
+  profileCardLink.setAttribute('href', '/users/' + String(profile.username))
+
+  profileCardTitle.innerText = profile.username
+  profileCardLocationSmall.innerText = profile.location
+  profileCardBioText.innerText = profile.bio
+
+  profileCardLocation.append(profileCardLocationSmall)
+  profileCardBody.append(profileCardTitle, profileCardLocation, profileCardBioText, profileCardLink)
+  profileCard.append(profileCardBody)
+
+  return profileCard
 }
 
 const handleDidClickFollow = function(){
@@ -148,8 +190,51 @@ const handleDidClickFollow = function(){
   xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
   xhr.onload = function(){
-    bioElement = document.getElementById('bio-card')
-    loadBioCard(bioElement)
+    var bioElement = document.getElementById('bio-card')
+    updateBioCardAfterFollow()
+  }
+  xhr.send()
+}
+
+const loadFollowButton = function(){
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = 'refresh_bio_card/'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    var bioCardFollowButton = document.getElementById('bio-card-follow-button')
+    var buttonText = xhr.response.user_follows_target_user ? 'unfollow' : 'follow'
+
+    bioCardFollowButton.innerText = buttonText
+  }
+  xhr.send()
+}
+
+const updateBioCardAfterFollow = function(){
+  // THIS DOESN'T WORK
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = 'refresh_bio_card/'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    var followersCountElement = document.getElementById('bio-card-followers-count')
+    var followingCountElement = document.getElementById('bio-card-following-count')
+    var followersLinkElement = document.getElementById('bio-card-followers-link')
+    var followingLinkElement = document.getElementById('bio-card-following-link')
+
+    var bioCardData = xhr.response
+
+    followersCountElement.innerText = String(bioCardData.updated_followers_count) + ' '
+    followingCountElement.innerText = String(bioCardData.updated_following_count) + ' '
+    followersCountElement.append(followersLinkElement)
+    followingCountElement.append(followingLinkElement)
+    loadFollowButton()
   }
   xhr.send()
 }
