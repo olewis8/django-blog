@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -25,6 +26,15 @@ def home_page(request):
 def post_detail_page(request, post_id):
     template_name = 'pages/blog_detail.html'
     return render(request, template_name)
+
+
+def search_results_page(request):
+    query = request.POST.get('query') or None
+
+    template_name = 'pages/search_results.html'
+    context = {'query': query}
+
+    return render(request, template_name, context)
 
 
 @login_required
@@ -152,5 +162,19 @@ def retrieve_posts(request, page):
 
     posts = [x.serialize() for x in qs]
     data = {'response': posts}
+
+    return JsonResponse(data)
+
+
+def excecute_query(request, query):
+    profiles_query = Profile.objects.filter(Q(user__username__contains=query) | Q(location__contains=query))
+    posts_query = BlogPost.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(author__user__username__contains=query))
+
+    profiles = [x.serialize() for x in profiles_query]
+    posts = [x.serialize() for x in posts_query]
+
+    data = {'profiles': profiles,
+            'posts': posts,
+            }
 
     return JsonResponse(data)

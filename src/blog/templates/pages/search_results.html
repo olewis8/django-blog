@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+{% include 'components/blog/off-canvas-menu.html' %}
+
+<div class='py-2'>
+  <button class='btn btn-primary' onclick='history.go(-1)'>back</button>
+</div>
+
+<div class='container'>
+  <div id='search-results-title'>
+    <h1>search results for "{{ query }}"</h1>
+  </div>
+
+  <div id='search-results'>
+  </div>
+</div>
+
+<script>
+  var query = '{{ query }}'
+</script>
+<script type='module' src='{% static "blog/load-search-results.js" %}'></script>
+
+{% endblock %}
