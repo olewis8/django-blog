@@ -4,11 +4,7 @@
 {% block content %}
 
 {% include 'components/blog/off-canvas-menu.html' %}
-
-<!-- back button -->
-<div class='py-2'>
-  <button class='btn btn-primary' onclick='history.go(-1)'>back</button>
-</div>
+{% include 'components/blog/back-button.html' %}
 
 <!-- blog post card -->
 <div class='container mb-3' id='blog-post'>
