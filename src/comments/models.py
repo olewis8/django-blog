@@ -2,11 +2,10 @@ from django.db import models
 from django.utils import timezone
 
 from blog.models import BlogPost
-from django.contrib.auth.models import User
-
 from users.models import Profile
 
 import datetime
+
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
