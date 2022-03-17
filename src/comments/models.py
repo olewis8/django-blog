@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from users.models import Profile
 
+import datetime
 
 class Comment(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
@@ -16,12 +17,16 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created']
 
+    def HTMLDisplayTime(self):
+        time = str(datetime.datetime.strftime(self.created, '%b %-d %Y at %-I:%M%p')).lower()
+        return time
+
     def serialize(self):
         data = {'id': self.id,
                 'post_id': self.post.id,
                 'user': self.user.user.username,
                 'text': self.text,
-                'created': self.created,
+                'created': self.HTMLDisplayTime(),
         }
 
         return data
