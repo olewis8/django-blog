@@ -189,6 +189,7 @@ const formatBlogPost = function(post){
 
   postCardTitle.innerText = String(post.title).toLowerCase()
   postCreatedDate.innerText = post.created
+  postUser.innerText = 'by '
   postUserProfileLink.innerText = post.author
   postCardText.innerText = String(post.content).toLowerCase()
   postLikeButton.innerText = 'ε>' + post.like_count
