@@ -107,7 +107,7 @@ const formatPostPreview = function(post){
   var postPreviewCardTitle = document.createElement('h3')
   var postPreviewCardUser = document.createElement('h5')
   var postPreviewCardCreatedDate = document.createElement('h6')
-  var postPreviewCardCreatedDateSmall = document.createElement('h6')
+  // var postPreviewCardCreatedDateSmall = document.createElement('h6')
   var postPreviewCardText = document.createElement('p')
   var postPreviewCardLink = document.createElement('a')
 
@@ -116,7 +116,7 @@ const formatPostPreview = function(post){
   postPreviewCardTitle.classList.add('card-title')
   postPreviewCardUser.classList.add('card-title')
   postPreviewCardCreatedDate.classList.add('card-title')
-  postPreviewCardCreatedDateSmall.classList.add('text-muted')
+  // postPreviewCardCreatedDateSmall.classList.add('text-muted')
   postPreviewCardText.classList.add('card-text')
   postPreviewCardLink.classList.add('stretched-link')
 
@@ -125,10 +125,11 @@ const formatPostPreview = function(post){
 
   postPreviewCardTitle.innerText = String(post.title).toLowerCase()
   postPreviewCardUser.innerText = 'by ' + String(post.author)
-  postPreviewCardCreatedDateSmall.innerText = String(post.created)
+  // postPreviewCardCreatedDateSmall.innerText = String(post.created)
+  postPreviewCardCreatedDate.innerText = String(post.created)
   postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
 
-  postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
+  // postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
   postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardUser, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
   postPreviewCard.append(postPreviewCardBody)
 
@@ -154,7 +155,6 @@ const formatBlogPost = function(post){
   var postCardBody = document.createElement('div')
   var postCardTitle = document.createElement('h1')
   var postCreatedDate = document.createElement('h6')
-  var postCreatedDateSmall = document.createElement('small')
   var postUser = document.createElement('h5')
   var postUserProfileLink = document.createElement('a')
   var postCardText = document.createElement('p')
@@ -168,7 +168,6 @@ const formatBlogPost = function(post){
   postCardBody.classList.add('card-body')
   postCardTitle.classList.add('card-title')
   postCreatedDate.classList.add('card-title')
-  postCreatedDateSmall.classList.add('text-muted')
   postUser.classList.add('card-title')
   postUserProfileLink.classList.add()
   postCardText.classList.add('card-text')
@@ -189,7 +188,7 @@ const formatBlogPost = function(post){
   postLikeButton.addEventListener('click', function(){handleDidLike(post.id); updateLikeButton(post.id)})
 
   postCardTitle.innerText = String(post.title).toLowerCase()
-  postCreatedDateSmall.innerText = post.created
+  postCreatedDate.innerText = post.created
   postUserProfileLink.innerText = post.author
   postCardText.innerText = String(post.content).toLowerCase()
   postLikeButton.innerText = 'ε>' + post.like_count
@@ -197,7 +196,6 @@ const formatBlogPost = function(post){
   postDeleteButton.innerText = 'delete'
 
   postControlButtonGroup.append(postLikeButton)
-  postCreatedDate.append(postCreatedDateSmall)
   postUser.append(postUserProfileLink)
 
   if(requestUserIsAuthenticated && requestUser == post.author){
@@ -276,7 +274,6 @@ const formatProfileCard = function(profile){
   var profileCardBody = document.createElement('div')
   var profileCardTitle = document.createElement('h3')
   var profileCardLocation = document.createElement('h6')
-  var profileCardLocationSmall = document.createElement('small')
   var profileCardBioText = document.createElement('p')
   var profileCardLink = document.createElement('a')
 
@@ -284,17 +281,15 @@ const formatProfileCard = function(profile){
   profileCardBody.classList.add('card-body')
   profileCardTitle.classList.add('card-title')
   profileCardLocation.classList.add('card-title')
-  profileCardLocationSmall.classList.add('text-muted')
   profileCardBioText.classList.add('card-text')
   profileCardLink.classList.add('stretched-link')
 
   profileCardLink.setAttribute('href', '/users/' + String(profile.username))
 
   profileCardTitle.innerText = profile.username
-  profileCardLocationSmall.innerText = profile.location
+  profileCardLocation.innerText = profile.location
   profileCardBioText.innerText = profile.bio
 
-  profileCardLocation.append(profileCardLocationSmall)
   profileCardBody.append(profileCardTitle, profileCardLocation, profileCardBioText, profileCardLink)
   profileCard.append(profileCardBody)
 
