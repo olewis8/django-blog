@@ -102,21 +102,31 @@ const formatSearchResult = function(searchResult, current){
 }
 
 const formatPostPreview = function(post){
+    // let N be the post id. creates this HTML in the DOM:
+    //
+    // <div class='card mb-2 preview-card' id='home-post-N'>
+    //   <div class='card-body'>
+    //     <h3 class='card-title'>post.title</h3>
+    //     <h5 class='card-title'>by post.author</h5>
+    //     <h6 class='card-title'>post.created</h6>
+    //     <p class='card-text'>post.content<p>
+    //     <a class='stretched-link' href='/blog/N'></a>
+    //   </div>
+    // </div>
+
   var postPreviewCard = document.createElement('div')
   var postPreviewCardBody = document.createElement('div')
   var postPreviewCardTitle = document.createElement('h3')
   var postPreviewCardUser = document.createElement('h5')
   var postPreviewCardCreatedDate = document.createElement('h6')
-  // var postPreviewCardCreatedDateSmall = document.createElement('h6')
   var postPreviewCardText = document.createElement('p')
   var postPreviewCardLink = document.createElement('a')
 
-  postPreviewCard.classList.add('card', 'mb-2')
+  postPreviewCard.classList.add('card', 'mb-2', 'preview-card')
   postPreviewCardBody.classList.add('card-body')
   postPreviewCardTitle.classList.add('card-title')
   postPreviewCardUser.classList.add('card-title')
   postPreviewCardCreatedDate.classList.add('card-title')
-  // postPreviewCardCreatedDateSmall.classList.add('text-muted')
   postPreviewCardText.classList.add('card-text')
   postPreviewCardLink.classList.add('stretched-link')
 
@@ -124,12 +134,10 @@ const formatPostPreview = function(post){
   postPreviewCardLink.setAttribute('href', '/blog/' + String(post.id))
 
   postPreviewCardTitle.innerText = String(post.title).toLowerCase()
-  postPreviewCardUser.innerText = 'by ' + String(post.author)
-  // postPreviewCardCreatedDateSmall.innerText = String(post.created)
-  postPreviewCardCreatedDate.innerText = String(post.created)
-  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
+  postPreviewCardUser.innerText = 'by ' + String(post.author).toLowerCase()
+  postPreviewCardCreatedDate.innerText = String(post.created).toLowerCase()
+  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content).toLowerCase()
 
-  // postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
   postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardUser, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
   postPreviewCard.append(postPreviewCardBody)
 
@@ -150,6 +158,26 @@ const formatTitle = function(page){
 }
 
 const formatBlogPost = function(post){
+  // let N be the post id. creates this HTML in the DOM:
+  //
+  // <div class='container py-3'>
+  //   <div class='card'>
+  //       <div class='card-body'>
+  //         <h1 class='card-title'>post.title</h1>
+  //         <h6 class='card-title'>post.created</h6>
+  //         <h5 class='post-byline'>by <a href='/users/post.author'>post.author</a></h5>
+             // <div>
+             // </div>
+  //         <p class='card-text'>post.text</p>
+  //         <div class='btn-group post-controls'>
+  //           <button class='btn btn-primary' type='button', id='post-like-button'>'ε>' + post.like_count</button>
+  //           <a class='btn btn-secondary mx-1' type='button' href='/edit'>edit</a>
+  //           <a class='btn btn-danger' type='button' href=/delete>delete</a>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+
   var postContainer = document.createElement('div')
   var postCard = document.createElement('div')
   var postCardBody = document.createElement('div')
@@ -168,16 +196,14 @@ const formatBlogPost = function(post){
   postCardBody.classList.add('card-body')
   postCardTitle.classList.add('card-title')
   postCreatedDate.classList.add('card-title')
-  postUser.classList.add('card-title')
-  postUserProfileLink.classList.add()
+  postUser.classList.add('card-byline')
   postCardText.classList.add('card-text')
-  postControlButtonGroup.classList.add('btn-group')
+  postControlButtonGroup.classList.add('btn-group', 'post-controls')
   postLikeButton.classList.add('btn', 'btn-primary')
   postEditButton.classList.add('btn', 'btn-secondary', 'mx-1')
   postDeleteButton.classList.add('btn', 'btn-danger')
 
   postUserProfileLink.setAttribute('href', '/users/' + post.author)
-  postControlButtonGroup.setAttribute('id', 'post-control-buttons')
   postLikeButton.setAttribute('type', 'button')
   postLikeButton.setAttribute('id', 'post-like-button')
   postEditButton.setAttribute('href', 'edit/')
@@ -203,7 +229,7 @@ const formatBlogPost = function(post){
     postControlButtonGroup.append(postEditButton, postDeleteButton)
   }
 
-  postCardBody.append(postCardTitle, postCreatedDate, postUser, postCardText, postControlButtonGroup)
+  postCardBody.append(postCardTitle, postUser, postCreatedDate, postCardText, postControlButtonGroup)
   postCard.append(postCardBody)
 
   return postCard
