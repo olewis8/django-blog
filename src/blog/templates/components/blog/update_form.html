@@ -1,6 +1,6 @@
 <form class='form' method='POST' action='/blog/{{post_id}}/edit/'> {% csrf_token %}
   <input type='hidden' value='/blog' name='next'>
-  <textarea class='form-control mb-2' name='title' placeholder='change title'>{{old_title}}</textarea>
-  <textarea class='form-control mb-4' name='content' placeholder='change something...'>{{old_content}}</textarea>
+  <input class='form-control mb-2 title-input' name='title' value='{{old_title}}' placeholder='change title'>
+  <textarea class='form-control mb-4 content-input' name='content' placeholder='change something...'>{{old_content}}</textarea>
   <button type='submit' class='btn btn-primary'>save</button>
 </form>

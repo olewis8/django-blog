@@ -9,8 +9,8 @@
 }
 
 @font-face{
-  font-family: ebgaramond-italic;
-  src: url(fonts/EBGaramond-Italic.ttf)
+  font-family: lora-italic;
+  src: url(fonts/Lora-Italic.ttf)
 }
 
 body {
@@ -37,5 +37,44 @@ h1 {
 }
 
 .card-body h6{
-  font-family: ebgaramond-italic;
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.form-control:focus{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.title-input{
+  border: 0;
+  padding: 0;
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.content-input{
+  border: 0;
+  padding: 0;
+  font-family: manrope-light;
+  font-size: 18px;
+  height: 500px;
+  resize: none;
+  box-shadow:none;
+}
+
+/* .card-byline{
+  color: orange;
+}
+
+.preview-card{
+  transition: transform 250ms;
+} */
+
+.preview-card:hover{
+  transform: scale(1.01);
+}
+
+*, *:before, *:after {
+  box-sizing:border-box;
 }
