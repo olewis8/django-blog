@@ -1,6 +1,6 @@
-<form class='form' method='POST' action='/blog/new/'> {% csrf_token %}
+<form class='form post-form' method='POST' action='/blog/new/'> {% csrf_token %}
   <input type='hidden' value='/blog' name='next'>
-  <textarea class='form-control mb-2' name='title' placeholder='add title'></textarea>
-  <textarea class='form-control mb-4' name='content' placeholder='write something...'></textarea>
+  <input class='form-control mb-2 title-input' name='title' placeholder='click to add title'>
+  <textarea class='form-control mb-2 content-input' name='content' placeholder='write something...'></textarea>
   <button type='submit' class='btn btn-primary'>save</button>
 </form>
