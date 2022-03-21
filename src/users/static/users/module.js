@@ -55,6 +55,7 @@ const loadUserFollows = function(userElement, page){
   xhr.onload = function(){
     var titleElement = document.getElementById('follows-page-title')
     var titleH1Element = document.createElement('h1')
+    titleH1Element.classList.add('page-title', 'text-end')
     titleH1Element.innerText = title
     titleElement.append(titleH1Element)
 
@@ -62,7 +63,20 @@ const loadUserFollows = function(userElement, page){
     var follows = document.getElementById('follows')
 
     if (listedItems.length == 0){
-      follows.innerHTML = '<p>nobody =(</p>'
+      var nobodyCard = document.createElement('div')
+      var nobodyCardBody = document.createElement('div')
+      var nobodyCardText = document.createElement('p')
+
+      nobodyCard.classList.add('card')
+      nobodyCardBody.classList.add('card-body')
+      nobodyCardText.classList.add('card-text')
+
+      nobodyCardText.innerHTML = 'nobody :('
+
+      nobodyCardBody.append(nobodyCardText)
+      nobodyCard.append(nobodyCardBody)
+      follows.append(nobodyCard)
+
     }
     for(var i=listedItems.length-1; i>=0; i--){
       follows.append(formatProfileCard(listedItems[i]))
@@ -76,15 +90,13 @@ const formatPostPreview = function(post){
   var postPreviewCardBody = document.createElement('div')
   var postPreviewCardTitle = document.createElement('h3')
   var postPreviewCardCreatedDate = document.createElement('h6')
-  var postPreviewCardCreatedDateSmall = document.createElement('h6')
   var postPreviewCardText = document.createElement('p')
   var postPreviewCardLink = document.createElement('a')
 
-  postPreviewCard.classList.add('card', 'mb-2')
+  postPreviewCard.classList.add('card', 'mb-2', 'preview-card')
   postPreviewCardBody.classList.add('card-body')
   postPreviewCardTitle.classList.add('card-title')
   postPreviewCardCreatedDate.classList.add('card-title')
-  postPreviewCardCreatedDateSmall.classList.add('text-muted')
   postPreviewCardText.classList.add('card-text')
   postPreviewCardLink.classList.add('stretched-link')
 
@@ -92,10 +104,9 @@ const formatPostPreview = function(post){
   postPreviewCardLink.setAttribute('href', '/blog/' + String(post.id))
 
   postPreviewCardTitle.innerText = String(post.title).toLowerCase()
-  postPreviewCardCreatedDateSmall.innerText = String(post.created)
+  postPreviewCardCreatedDate.innerText = String(post.created)
   postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
 
-  postPreviewCardCreatedDate.append(postPreviewCardCreatedDateSmall)
   postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
   postPreviewCard.append(postPreviewCardBody)
 
@@ -156,25 +167,22 @@ const formatProfileCard = function(profile){
   var profileCardBody = document.createElement('div')
   var profileCardTitle = document.createElement('h3')
   var profileCardLocation = document.createElement('h6')
-  var profileCardLocationSmall = document.createElement('small')
   var profileCardBioText = document.createElement('p')
   var profileCardLink = document.createElement('a')
 
-  profileCard.classList.add('card', 'mb-2')
+  profileCard.classList.add('card', 'mb-2', 'preview-card')
   profileCardBody.classList.add('card-body')
   profileCardTitle.classList.add('card-title')
   profileCardLocation.classList.add('card-title')
-  profileCardLocationSmall.classList.add('text-muted')
   profileCardBioText.classList.add('card-text')
   profileCardLink.classList.add('stretched-link')
 
   profileCardLink.setAttribute('href', '/users/' + String(profile.username))
 
   profileCardTitle.innerText = profile.username
-  profileCardLocationSmall.innerText = profile.location
+  profileCardLocation.innerText = profile.location
   profileCardBioText.innerText = profile.bio
 
-  profileCardLocation.append(profileCardLocationSmall)
   profileCardBody.append(profileCardTitle, profileCardLocation, profileCardBioText, profileCardLink)
   profileCard.append(profileCardBody)
 
