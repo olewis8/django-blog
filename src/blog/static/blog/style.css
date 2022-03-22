@@ -1,0 +1,90 @@
+.card-body h1{
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.card-body h3{
+  font-family: playfair-display;
+  font-size: 36px;
+}
+
+.card-body h5{
+  font-family: lora-regular;
+  font-size: 18px;
+}
+
+.card-body h6{
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.card-body p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.form-control:focus{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.title-input{
+  border: 0;
+  padding: 0;
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.content-input{
+  border: 0;
+  padding: 0;
+  font-family: manrope-light;
+  font-size: 18px;
+  height: 500px;
+  resize: none;
+  box-shadow:none;
+}
+
+.hidden-card{
+  display: none;
+}
+
+.hidden-card h3{
+  font-family: playfair-display;
+  font-size: 24px;
+}
+
+.hidden-card h5{
+  font-family: lora-italic;
+  font-size: 15px;
+  color: #989898;
+}
+
+.hidden-card p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.profile-link:hover + .hidden-card{
+  position: absolute;
+  box-shadow: 0 3px 10px;
+  display: block;
+}
+
+.profile-link{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.preview-card{
+  transition: transform 50ms;
+}
+
+.preview-card:hover{
+  transform: scale(1.01);
+}
+
+*, *:before, *:after {
+  box-sizing:border-box;
+}

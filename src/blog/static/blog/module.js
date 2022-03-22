@@ -51,9 +51,7 @@ const loadSearchProfileResults = function(searchResultsElement, query){
     searchResultsElement.append(formatSearchResultsPageToggleButton('profiles', searchResultsElement, query))
 
     if (searchResults.length === 0){
-      var noResultsMessage = document.createElement('p')
-      noResultsMessage.innerText = 'no results matching "'+ query + '" =('
-      searchResultsElement.append(noResultsMessage)
+      formatNoResultsMessage(searchResultsElement)
     }
     else{
       for (var i=0; i<searchResults.length; i++){
@@ -79,9 +77,7 @@ const loadSearchPostResults = function(searchResultsElement, query){
     searchResultsElement.append(formatSearchResultsPageToggleButton('posts', searchResultsElement, query))
 
     if (searchResults.length === 0){
-      var noResultsMessage = document.createElement('p')
-      noResultsMessage.innerText = 'no results matching "'+ query + '" =('
-      searchResultsElement.append(noResultsMessage)
+      formatNoResultsMessage(searchResultsElement)
     }
     else{
       for (var i=0; i<searchResults.length; i++){
@@ -90,6 +86,22 @@ const loadSearchPostResults = function(searchResultsElement, query){
     }
   }
   xhr.send()
+}
+
+const formatNoResultsMessage = function(searchResultsElement){
+  var noResultsMessageCard = document.createElement('div')
+  var noResultsMessageCardBody = document.createElement('div')
+  var noResultsMessageCardText = document.createElement('p')
+
+  noResultsMessageCard.classList.add('card')
+  noResultsMessageCardBody.classList.add('card-body')
+  noResultsMessageCardText.classList.add('card-text')
+
+  noResultsMessageCardText.innerText = 'no results matching "'+ query + '" :('
+
+  noResultsMessageCardBody.append(noResultsMessageCardText)
+  noResultsMessageCard.append(noResultsMessageCardBody)
+  searchResultsElement.append(noResultsMessageCard)
 }
 
 const formatSearchResult = function(searchResult, current){
@@ -146,6 +158,7 @@ const formatPostPreview = function(post){
 
 const formatTitle = function(page){
   var titleH1 = document.createElement('h1')
+  titleH1.classList.add('page-title', 'text-end')
 
   if(page == 'disc'){
     titleH1.innerText = 'discover'
@@ -166,8 +179,15 @@ const formatBlogPost = function(post){
   //         <h1 class='card-title'>post.title</h1>
   //         <h6 class='card-title'>post.created</h6>
   //         <h5 class='post-byline'>by <a href='/users/post.author'>post.author</a></h5>
-             // <div>
-             // </div>
+  //         <div class='hidden-card'>
+  //           <div class='card'>
+  //             <div class='card-body>
+  //               <h3 class='card-title'>post.user</h3>
+  //               <h5 class='card-title'>post.user.location</h5>
+  //               <p class='card-text'>post.user.bio</p>
+  //             </div>
+  //           </div>
+  //         </div>
   //         <p class='card-text'>post.text</p>
   //         <div class='btn-group post-controls'>
   //           <button class='btn btn-primary' type='button', id='post-like-button'>'ε>' + post.like_count</button>
@@ -191,17 +211,32 @@ const formatBlogPost = function(post){
   var postEditButton = document.createElement('a')
   var postDeleteButton = document.createElement('a')
 
+  var hiddenBioPreview = document.createElement('div')
+  var hiddenBioPreviewCard = document.createElement('div')
+  var hiddenBioPreviewCardBody = document.createElement('div')
+  var hiddenBioPreviewCardUser = document.createElement('h3')
+  var hiddenBioPreviewCardLocation = document.createElement('h5')
+  var hiddenBioPreviewCardBio = document.createElement('p')
+
   postContainer.classList.add('container', 'py-3')
   postCard.classList.add('card')
   postCardBody.classList.add('card-body')
   postCardTitle.classList.add('card-title')
   postCreatedDate.classList.add('card-title')
   postUser.classList.add('card-byline')
+  postUserProfileLink.classList.add('profile-link')
   postCardText.classList.add('card-text')
   postControlButtonGroup.classList.add('btn-group', 'post-controls')
   postLikeButton.classList.add('btn', 'btn-primary')
   postEditButton.classList.add('btn', 'btn-secondary', 'mx-1')
   postDeleteButton.classList.add('btn', 'btn-danger')
+
+  hiddenBioPreview.classList.add('hidden-card')
+  hiddenBioPreviewCard.classList.add('card')
+  hiddenBioPreviewCardBody.classList.add('card-body')
+  hiddenBioPreviewCardUser.classList.add('card-title')
+  hiddenBioPreviewCardLocation.classList.add('card-title')
+  hiddenBioPreviewCardBio.classList.add('card-text')
 
   postUserProfileLink.setAttribute('href', '/users/' + post.author)
   postLikeButton.setAttribute('type', 'button')
@@ -222,8 +257,16 @@ const formatBlogPost = function(post){
   postEditButton.innerText = 'edit'
   postDeleteButton.innerText = 'delete'
 
+  hiddenBioPreviewCardUser.innerText = post.author
+  hiddenBioPreviewCardLocation.innerText = post.author_location
+  hiddenBioPreviewCardBio.innerText = post.author_bio
+
+  hiddenBioPreviewCardBody.append(hiddenBioPreviewCardUser, hiddenBioPreviewCardLocation, hiddenBioPreviewCardBio)
+  hiddenBioPreviewCard.append(hiddenBioPreviewCardBody)
+  hiddenBioPreview.append(hiddenBioPreviewCard)
+
   postControlButtonGroup.append(postLikeButton)
-  postUser.append(postUserProfileLink)
+  postUser.append(postUserProfileLink, hiddenBioPreview)
 
   if(requestUserIsAuthenticated && requestUser == post.author){
     postControlButtonGroup.append(postEditButton, postDeleteButton)
@@ -270,9 +313,9 @@ const formatSearchResultsPageToggleButton = function(current, searchResultsEleme
   var searchResultsProfilesToggleButton = document.createElement('button')
   var searchResultsPostsToggleButton = document.createElement('button')
 
-  searchResultsButtonGroup.classList.add('btn-group', 'py-2')
-  searchResultsProfilesToggleButton.classList.add('btn', 'btn-primary')
-  searchResultsPostsToggleButton.classList.add('btn', 'btn-primary')
+  searchResultsButtonGroup.classList.add('btn-group', 'w-100', 'py-2')
+  searchResultsProfilesToggleButton.classList.add('btn', 'btn-primary', 'w-100')
+  searchResultsPostsToggleButton.classList.add('btn', 'btn-primary', 'w-100')
 
   searchResultsButtonGroup.setAttribute('role', 'group')
   searchResultsProfilesToggleButton.setAttribute('type', 'button')
@@ -304,7 +347,7 @@ const formatProfileCard = function(profile){
   var profileCardBioText = document.createElement('p')
   var profileCardLink = document.createElement('a')
 
-  profileCard.classList.add('card', 'mb-2')
+  profileCard.classList.add('card', 'mb-2', 'preview-card')
   profileCardBody.classList.add('card-body')
   profileCardTitle.classList.add('card-title')
   profileCardLocation.classList.add('card-title')
