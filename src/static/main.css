@@ -10,71 +10,23 @@
 
 @font-face{
   font-family: lora-italic;
-  src: url(fonts/Lora-Italic.ttf)
+  src: url(fonts/Lora-Italic.ttf);
+}
+
+@font-face {
+  font-family: lora-regular;
+  src: url(fonts/Lora-Regular.ttf);
+}
+
+a {
+  color: #365587;
+  text-decoration-thickness: 1px;
 }
 
 body {
   background-color: #F6F4EE;
 }
 
-h1 {
-  font-size: 72px;
-}
-
-.card-body h1{
-  font-family: playfair-display;
-  font-size: 45px;
-}
-
-.card-body h3{
-  font-family: playfair-display;
-  font-size: 36px;
-}
-
-.card-body p{
-  font-family: manrope-light;
-  font-size: 18px;
-}
-
-.card-body h6{
-  font-family: lora-italic;
-  color: #989898;
-}
-
-.form-control:focus{
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.title-input{
-  border: 0;
-  padding: 0;
-  font-family: playfair-display;
-  font-size: 45px;
-}
-
-.content-input{
-  border: 0;
-  padding: 0;
-  font-family: manrope-light;
-  font-size: 18px;
-  height: 500px;
-  resize: none;
-  box-shadow:none;
-}
-
-/* .card-byline{
-  color: orange;
-}
-
-.preview-card{
-  transition: transform 250ms;
-} */
-
-.preview-card:hover{
-  transform: scale(1.01);
-}
-
-*, *:before, *:after {
-  box-sizing:border-box;
+.page-title{
+  font-size: 60px;
 }
