@@ -96,7 +96,7 @@ const handleFormDidSubmit = function(event){
     const commentElement = document.getElementById('comment-section')
 
     const newComment = formatComment(JSON.parse(xhr.response))
-    commentElement.append(newComment)
+    commentElement.prepend(newComment)
 
     event.target.reset()
   }

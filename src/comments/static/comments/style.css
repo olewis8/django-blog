@@ -1,0 +1,23 @@
+.comment-section-body{
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 5px;
+  padding-bottom: 0px;
+}
+
+.comment-section-body h4{
+  font-family: lora-regular;
+}
+
+.comment-submit-button{
+  margin-left: 7px;
+}
+
+.comment-input{
+  font-family: manrope-light;
+  resize: none;
+}
+
+.create-comment-form{
+  display: flex;
+}
