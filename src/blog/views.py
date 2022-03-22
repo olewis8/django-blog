@@ -53,8 +53,7 @@ def create_post_page(request):
             return redirect(new_post_url)
 
     template_name = 'pages/create_post.html'
-    context = {'title': 'new post',
-               'form': form,
+    context = {'form': form,
                }
 
     return render(request, template_name, context)
@@ -117,7 +116,11 @@ def delete_post_page(request, post_id):
 
 def retrieve_blog_detail(request, post_id):
     blog_post = get_object_or_404(BlogPost, id=post_id)
+    author = get_object_or_404(Profile, id=blog_post.author.id)
+
     data = blog_post.serialize()
+    data['author_location'] = author.location
+    data['author_bio'] = author.bio
 
     return JsonResponse(data)
 
