@@ -1,0 +1,17 @@
+.bio-card-bio-text{
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+.follow-button{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.follows-count{
+  display: block;
+}
+
+.follows-count p{
+  margin-bottom: 0;
+}

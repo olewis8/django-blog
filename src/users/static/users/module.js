@@ -117,9 +117,10 @@ const formatBioCard = function(bioData){
   var bioCard = document.createElement('div')
   var bioCardBody = document.createElement('div')
   var bioCardTitle = document.createElement('h1')
-  var bioCardLocation = document.createElement('h5')
+  var bioCardLocation = document.createElement('h6')
   var bioCardBioText = document.createElement('p')
   var bioCardFollowButton = document.createElement('button')
+  var bioCardFollowsCount = document.createElement('div')
   var bioCardFollowersCount = document.createElement('p')
   var bioCardFollowingCount = document.createElement('p')
   var bioCardFollowersLink = document.createElement('a')
@@ -129,8 +130,9 @@ const formatBioCard = function(bioData){
   bioCardBody.classList.add('card-body')
   bioCardTitle.classList.add('card-title')
   bioCardLocation.classList.add('card-subtitle')
-  bioCardBioText.classList.add('card-text')
-  bioCardFollowButton.classList.add('btn', 'btn-primary')
+  bioCardBioText.classList.add('card-text', 'bio-card-bio-text')
+  bioCardFollowButton.classList.add('btn', 'btn-primary', 'follow-button', 'w-100')
+  bioCardFollowsCount.classList.add('follows-count')
   bioCardFollowersCount.classList.add('card-text')
   bioCardFollowingCount.classList.add('card-text')
 
@@ -156,7 +158,9 @@ const formatBioCard = function(bioData){
 
   bioCardFollowersCount.append(bioCardFollowersLink)
   bioCardFollowingCount.append(bioCardFollowingLink)
-  bioCardBody.append(bioCardTitle, bioCardLocation, bioCardBioText, bioCardFollowButton, bioCardFollowersCount, bioCardFollowingCount)
+  bioCardFollowsCount.append(bioCardFollowingCount, bioCardFollowersCount)
+
+  bioCardBody.append(bioCardTitle, bioCardLocation, bioCardBioText, bioCardFollowButton, bioCardFollowsCount)
   bioCard.append(bioCardBody)
 
   return bioCard
