@@ -3,9 +3,14 @@
   margin-bottom: 5px;
 }
 
-.follow-button{
-  margin-top: 10px;
-  margin-bottom: 10px;
+.bio-card-button-group{
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.bio-card-button-group button{
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .follows-count{
@@ -14,4 +19,17 @@
 
 .follows-count p{
   margin-bottom: 0;
+}
+
+.location-input{
+  padding: 0;
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.bio-input{
+  padding: 0;
+  resize: none;
+  font-family: manrope-light;
+  font-size: 18px;
 }

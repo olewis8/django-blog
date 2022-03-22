@@ -1,4 +1,4 @@
-const loadBioCard = function(bioElement){
+const loadBioCard = function(bioElement, editForm){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = '/api' + requestPath + 'bio-data/'
@@ -9,7 +9,26 @@ const loadBioCard = function(bioElement){
   xhr.onload = function(){
     var bioData = xhr.response
 
-    bioElement.append(formatBioCard(bioData))
+    bioElement.innerHTML = ''
+    bioElement.append(formatBioCard(bioData, editForm))
+    loadFollowButton()
+  }
+ xhr.send()
+}
+
+const loadEditBioCard = function(bioElement, editForm){
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = '/api' + requestPath + 'bio-data/'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    var bioData = xhr.response
+
+    bioElement.innerHTML = ''
+    bioElement.append(formatEditBioCard(bioData, editForm))
     loadFollowButton()
   }
  xhr.send()
@@ -113,13 +132,15 @@ const formatPostPreview = function(post){
   return postPreviewCard
 }
 
-const formatBioCard = function(bioData){
+const formatBioCard = function(bioData, editForm){
   var bioCard = document.createElement('div')
   var bioCardBody = document.createElement('div')
   var bioCardTitle = document.createElement('h1')
   var bioCardLocation = document.createElement('h6')
   var bioCardBioText = document.createElement('p')
+  var bioCardButtonGroup = document.createElement('div')
   var bioCardFollowButton = document.createElement('button')
+  var bioCardEditProfileButton = document.createElement('button')
   var bioCardFollowsCount = document.createElement('div')
   var bioCardFollowersCount = document.createElement('p')
   var bioCardFollowingCount = document.createElement('p')
@@ -131,13 +152,17 @@ const formatBioCard = function(bioData){
   bioCardTitle.classList.add('card-title')
   bioCardLocation.classList.add('card-subtitle')
   bioCardBioText.classList.add('card-text', 'bio-card-bio-text')
-  bioCardFollowButton.classList.add('btn', 'btn-primary', 'follow-button', 'w-100')
+  bioCardButtonGroup.classList.add('w-100', 'bio-card-button-group')
+  bioCardFollowButton.classList.add('btn', 'btn-primary', 'bio-card-button', 'w-100')
+  bioCardEditProfileButton.classList.add('btn', 'btn-secondary', 'bio-card-button', 'w-100')
   bioCardFollowsCount.classList.add('follows-count')
   bioCardFollowersCount.classList.add('card-text')
   bioCardFollowingCount.classList.add('card-text')
 
   bioCardFollowButton.setAttribute('type', 'button')
   bioCardFollowButton.setAttribute('id', 'bio-card-follow-button')
+  bioCardEditProfileButton.setAttribute('type', 'button')
+  bioCardEditProfileButton.setAttribute('id', 'bio-card-edit-profile-button')
   bioCardFollowersCount.setAttribute('id', 'bio-card-followers-count')
   bioCardFollowingCount.setAttribute('id', 'bio-card-following-count')
   bioCardFollowersLink.setAttribute('id', 'bio-card-followers-link')
@@ -146,22 +171,101 @@ const formatBioCard = function(bioData){
   bioCardFollowingLink.setAttribute('href', 'following/')
 
   bioCardFollowButton.addEventListener('click', function(){handleDidClickFollow()})
+  bioCardEditProfileButton.addEventListener('click', function(){handleDidClickEdit(editForm)})
 
   bioCardTitle.innerText = bioData.username
   bioCardLocation.innerText = bioData.location
   bioCardBioText.innerText = bioData.bio
   bioCardFollowButton.innerText = 'follow'
+  bioCardEditProfileButton.innerText = 'edit profile'
   bioCardFollowersCount.innerText = String(bioData.followers_count) + ' '
   bioCardFollowingCount.innerText = String(bioData.following_count) + ' '
   bioCardFollowersLink.innerText = 'followers'
   bioCardFollowingLink.innerText = 'following'
 
+  if (requestUserIsAuthenticated && requestUser === bioData.username){
+    bioCardButtonGroup.append(bioCardEditProfileButton)
+  }
+  bioCardButtonGroup.append(bioCardFollowButton)
+
   bioCardFollowersCount.append(bioCardFollowersLink)
   bioCardFollowingCount.append(bioCardFollowingLink)
   bioCardFollowsCount.append(bioCardFollowingCount, bioCardFollowersCount)
 
-  bioCardBody.append(bioCardTitle, bioCardLocation, bioCardBioText, bioCardFollowButton, bioCardFollowsCount)
+  bioCardBody.append(bioCardTitle, bioCardLocation, bioCardBioText, bioCardButtonGroup, bioCardFollowsCount)
   bioCard.append(bioCardBody)
+
+  return bioCard
+}
+
+const formatEditBioCard = function(bioData, editForm){
+  var bioCard = document.createElement('div')
+  var bioCardBody = document.createElement('div')
+  var bioCardTitle = document.createElement('h1')
+  var bioCardButtonGroup = document.createElement('div')
+  var bioCardFollowButton = document.createElement('button')
+  var bioCardSaveButton = document.createElement('button')
+  var bioCardFollowsCount = document.createElement('div')
+  var bioCardFollowersCount = document.createElement('p')
+  var bioCardFollowingCount = document.createElement('p')
+  var bioCardFollowersLink = document.createElement('a')
+  var bioCardFollowingLink = document.createElement('a')
+  var bioCardLocation = document.createElement('input')
+  var bioCardBioText = document.createElement('textarea')
+
+  bioCard.classList.add('card')
+  bioCardBody.classList.add('card-body')
+  bioCardTitle.classList.add('card-title')
+  bioCardButtonGroup.classList.add('w-100', 'bio-card-button-group')
+  bioCardFollowButton.classList.add('btn', 'btn-primary', 'bio-card-button', 'w-100')
+  bioCardSaveButton.classList.add('btn', 'btn-secondary', 'bio-card-button', 'w-100')
+  bioCardFollowsCount.classList.add('follows-count')
+  bioCardFollowersCount.classList.add('card-text')
+  bioCardFollowingCount.classList.add('card-text')
+  bioCardLocation.classList.add('form-control', 'location-input')
+  bioCardBioText.classList.add('form-control', 'bio-input')
+
+  bioCardFollowButton.setAttribute('type', 'button')
+  bioCardFollowButton.setAttribute('id', 'bio-card-follow-button')
+  bioCardFollowButton.setAttribute('disabled', '')
+  bioCardSaveButton.setAttribute('type', 'submit')
+  bioCardSaveButton.setAttribute('id', 'bio-card-edit-profile-button')
+  bioCardSaveButton.setAttribute('name', 'submit')
+  bioCardFollowersCount.setAttribute('id', 'bio-card-followers-count')
+  bioCardFollowingCount.setAttribute('id', 'bio-card-following-count')
+  bioCardFollowersLink.setAttribute('id', 'bio-card-followers-link')
+  bioCardFollowingLink.setAttribute('id', 'bio-card-following-link')
+  bioCardFollowersLink.setAttribute('href', 'followers/')
+  bioCardFollowingLink.setAttribute('href', 'following/')
+  bioCardLocation.setAttribute('form', 'edit-profile-form')
+  bioCardLocation.setAttribute('name', 'location')
+  bioCardLocation.setAttribute('value', bioData.location)
+  bioCardLocation.setAttribute('placeholder', 'change location')
+  bioCardBioText.setAttribute('form', 'edit-profile-form')
+  bioCardBioText.setAttribute('name', 'bio')
+  bioCardBioText.setAttribute('placeholder', 'write about yourself')
+
+  bioCardTitle.innerText = bioData.username
+  bioCardFollowButton.innerText = 'follow'
+  bioCardSaveButton.innerText = 'save'
+  bioCardFollowersCount.innerText = String(bioData.followers_count) + ' '
+  bioCardFollowingCount.innerText = String(bioData.following_count) + ' '
+  bioCardFollowersLink.innerText = 'followers'
+  bioCardFollowingLink.innerText = 'following'
+  bioCardBioText.innerText = bioData.bio
+
+  if (requestUserIsAuthenticated && requestUser === bioData.username){
+    bioCardButtonGroup.append(bioCardSaveButton)
+  }
+  bioCardButtonGroup.append(bioCardFollowButton)
+  bioCardFollowersCount.append(bioCardFollowersLink)
+  bioCardFollowingCount.append(bioCardFollowingLink)
+  bioCardFollowsCount.append(bioCardFollowingCount, bioCardFollowersCount)
+  editForm.append(bioCardLocation, bioCardBioText, bioCardButtonGroup)
+  bioCardBody.append(bioCardTitle, editForm, bioCardFollowsCount)
+  bioCard.append(bioCardBody)
+
+  editForm.addEventListener('submit', function(){handleDidClickSave(editForm)})
 
   return bioCard
 }
@@ -206,6 +310,49 @@ const handleDidClickFollow = function(){
     updateBioCardAfterFollow()
   }
   xhr.send()
+}
+
+const handleDidClickEdit = function(editForm){
+  var bioElement = document.getElementById('bio-card')
+  bioElement.innerHTML = ''
+  loadEditBioCard(bioElement, editForm)
+}
+
+const handleDidClickSave = function(editForm){
+  event.preventDefault()
+  const formData = new FormData(event.target)
+
+  updateUserBio(formData, editForm)
+}
+
+const updateUserBio = function(formData, editForm){
+
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api' + requestPath + 'update-bio/'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    var bioElement = document.getElementById('bio-card')
+    var bioCardLocation = editForm.querySelector('.location-input')
+    var bioCardBioText = editForm.querySelector('.bio-input')
+    var bioCardButtonGroup = editForm.querySelector('.bio-card-button-group')
+
+    if (bioCardLocation){
+      editForm.removeChild(bioCardLocation)
+    }
+    if (bioCardBioText){
+      editForm.removeChild(bioCardBioText)
+    }
+    if (bioCardButtonGroup){
+      editForm.removeChild(bioCardButtonGroup)
+    }
+
+    loadBioCard(bioElement, editForm)
+  }
+  xhr.send(formData)
 }
 
 const loadFollowButton = function(){
@@ -260,4 +407,4 @@ const getUsername = function(){
   return requestPath.slice(7, -1)
 }
 
-export { loadBioCard, loadPostPreviews, getUsername, loadUserFollows }
+export { loadBioCard, loadPostPreviews, getUsername, loadUserFollows, loadEditBioCard }

@@ -10,6 +10,11 @@
 
     <div class='col-md-3'>
       <div id='bio-card'></div>
+      <div id='edit-bio-card'>
+        {% if user.is_authenticated %}
+          {% include 'components/users/edit-profile-form.html' %}
+        {% endif %}
+      </div>
     </div>
 
     <div class='col-md-9'>
@@ -22,6 +27,8 @@
 
 <script>
   requestPath = '{{ request.path }}'
+  requestUser = '{{ request.user }}'
+  var requestUserIsAuthenticated = '{{ request.user.is_authenticated }}' == 'True' ? true : false
 </script>
 <script type='module' src='{% static "users/load-bio-card.js" %}'></script>
 <script type='module' src='{% static "users/load-user-post-previews.js" %}'></script>

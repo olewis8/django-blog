@@ -12,6 +12,9 @@ from django.utils.decorators import method_decorator
 from .models import Profile
 
 
+# pages
+
+
 def login_page(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -77,6 +80,24 @@ def follows_page(request, username):
     template_name = 'pages/follows.html'
 
     return render(request, template_name)
+
+
+# API
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+def update_bio_data(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    new_location = request.POST['location']
+    new_bio = request.POST['bio']
+
+    profile.location = new_location
+    profile.bio = new_bio
+
+    profile.save()
+
+    return JsonResponse({})
 
 
 def retrieve_bio_data(request, username):

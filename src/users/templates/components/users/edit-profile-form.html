@@ -1,0 +1,3 @@
+<form class='form edit-profile-form' method='POST' action='{{ request.path }}update-bio/' id='edit-profile-form'> {% csrf_token %}
+  <input type='hidden' value='{{ request.path }}' name='next'>
+</form>
