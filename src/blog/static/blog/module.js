@@ -1,3 +1,19 @@
+const displaySuggestedFollows = function(postListElement){
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = '/api/users/get_top_users/'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    console.log(xhr.response)
+    var userList = xhr.response.response
+    postListElement.append(formatSuggestedFollows(userList))
+  }
+  xhr.send()
+}
+
 const loadPostPreviews = function(postListElement, page){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
@@ -14,8 +30,14 @@ const loadPostPreviews = function(postListElement, page){
     titleElement.append(formatTitle(page))
 
     postListElement.innerHTML = ''
-    for(var i=listedItems.length-1; i>=0; i--){
-      postListElement.append(formatPostPreview(listedItems[i]))
+
+    if (listedItems.length === 0){
+      displaySuggestedFollows(postListElement)
+    }
+    else{
+      for(var i=listedItems.length-1; i>=0; i--){
+        postListElement.append(formatPostPreview(listedItems[i]))
+      }
     }
   }
  xhr.send()
@@ -281,6 +303,32 @@ const formatLikeButton = function(post){
   return postLikeButton
 }
 
+const formatSuggestedFollows = function(userList){
+  var suggestedFollowsCard = document.createElement('div')
+  var suggestedFollowsCardBody = document.createElement('div')
+  var suggestedFollowsCardTitle = document.createElement('h1')
+  var suggestedFollowsCardText = document.createElement('p')
+  var suggestedFollowsCardList = document.createElement('div')
+
+  suggestedFollowsCard.classList.add('card')
+  suggestedFollowsCardBody.classList.add('card-body')
+  suggestedFollowsCardTitle.classList.add('card-title')
+  suggestedFollowsCardText.classList.add('card-text')
+  suggestedFollowsCardList.classList.add('suggested-users-list')
+
+  suggestedFollowsCardTitle.innerText = 'suggested users'
+  suggestedFollowsCardText.innerText = 'posts from people you follow will appear here. follow some to get started.'
+
+  for (var i=0; i<userList.length; i++){
+    suggestedFollowsCardList.append(formatSuggestedUserCard(userList[i]))
+  }
+
+  suggestedFollowsCardBody.append(suggestedFollowsCardTitle, suggestedFollowsCardText, suggestedFollowsCardList)
+  suggestedFollowsCard.append(suggestedFollowsCardBody)
+
+  return suggestedFollowsCard
+}
+
 const updateLikeButton = function(){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
@@ -307,6 +355,20 @@ const handleDidLike = function(postId){
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
   xhr.onload = function(){
     updateLikeButton()
+  }
+  xhr.send()
+}
+
+const handleDidClickFollow = function(username){
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api/users/'+ String(username) +'/follow/'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    console.log('awooga')
   }
   xhr.send()
 }
@@ -371,6 +433,20 @@ const formatProfileCard = function(profile){
   profileCard.append(profileCardBody)
 
   return profileCard
+}
+
+const formatSuggestedUserCard = function(profile){
+  var followButton = document.createElement('button')
+  followButton.classList.add('btn', 'btn-primary', 'suggested-follow-button')
+  followButton.innerText = 'follow'
+
+  var card = formatProfileCard(profile)
+  var cardBody = card.querySelector('.card-body')
+  cardBody.append(followButton)
+
+  followButton.addEventListener('click', function(){handleDidClickFollow(profile.username); cardBody.removeChild(followButton)})
+
+  return card
 }
 
 export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, loadBlogPost, formatBlogPost, loadSearchProfileResults, loadSearchPostResults, updateLikeButton }

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import RedirectView
 from django.utils.decorators import method_decorator
+from django.db.models import Count
 
 from .models import Profile
 from .forms import UserRegistrationForm
@@ -174,5 +175,12 @@ def refresh_bio_card(request, username):
         'updated_following_count': target_profile.following.count(),
         'user_follows_target_user': (profile in target_profile.followers.all())
     }
+
+    return JsonResponse(data)
+
+
+def get_top_users(request):
+    profiles = Profile.objects.all().annotate(num_followers=Count('followers')).order_by('-num_followers')
+    data = {'response': [x.serialize() for x in profiles][:5]}
 
     return JsonResponse(data)
