@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -163,7 +163,7 @@ def retrieve_posts(request, page):
     if page == 'fy':
         qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
     elif page == 'disc':
-        qs = BlogPost.objects.all()
+        qs = BlogPost.objects.all().annotate(num_likes=Count('liked_by')).order_by('-num_likes')[:10]
     else:
         return Http404()
 
