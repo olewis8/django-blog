@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (home_page,
+                    discover_page,
                     post_detail_page,
                     create_post_page,
                     update_post_page,
@@ -15,6 +16,7 @@ from .views import (home_page,
 
 urlpatterns = [
     path('', home_page, name='blog'),
+    path('discover/', discover_page),
     path('results/', search_results_page),
     path('<int:post_id>/', post_detail_page),
     path('<int:post_id>/edit/', update_post_page),

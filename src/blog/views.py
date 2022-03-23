@@ -20,10 +20,13 @@ from users.models import Profile
 
 @login_required
 def home_page(request):
-    if not request.user.is_authenticated:
-        return redirect('/users/login/')
-
     template_name = 'pages/blog_home.html'
+    return render(request, template_name)
+
+
+@login_required
+def discover_page(request):
+    template_name = 'pages/blog_discover.html'
     return render(request, template_name)
 
 
