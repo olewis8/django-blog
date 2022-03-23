@@ -190,7 +190,9 @@ const formatBlogPost = function(post){
   //         </div>
   //         <p class='card-text'>post.text</p>
   //         <div class='btn-group post-controls'>
-  //           <button class='btn btn-primary' type='button', id='post-like-button'>'ε>' + post.like_count</button>
+  //           <div class='like-button'>
+  //             <button class='btn btn-primary' type='button', id='post-like-button'>'ε>' + post.like_count</button>
+  //           </div>
   //           <a class='btn btn-secondary mx-1' type='button' href='/edit'>edit</a>
   //           <a class='btn btn-danger' type='button' href=/delete>delete</a>
   //       </div>
@@ -207,10 +209,9 @@ const formatBlogPost = function(post){
   var postUserProfileLink = document.createElement('a')
   var postCardText = document.createElement('p')
   var postControlButtonGroup = document.createElement('div')
-  var postLikeButton = document.createElement('button')
+  var postLikeButtonDiv = document.createElement('div')
   var postEditButton = document.createElement('a')
   var postDeleteButton = document.createElement('a')
-
   var hiddenBioPreview = document.createElement('div')
   var hiddenBioPreviewCard = document.createElement('div')
   var hiddenBioPreviewCardBody = document.createElement('div')
@@ -227,10 +228,9 @@ const formatBlogPost = function(post){
   postUserProfileLink.classList.add('profile-link')
   postCardText.classList.add('card-text')
   postControlButtonGroup.classList.add('btn-group', 'post-controls')
-  postLikeButton.classList.add('btn', 'btn-primary')
+  postLikeButtonDiv.classList.add('like-button')
   postEditButton.classList.add('btn', 'btn-secondary', 'mx-1')
   postDeleteButton.classList.add('btn', 'btn-danger')
-
   hiddenBioPreview.classList.add('hidden-card')
   hiddenBioPreviewCard.classList.add('card')
   hiddenBioPreviewCardBody.classList.add('card-body')
@@ -239,24 +239,18 @@ const formatBlogPost = function(post){
   hiddenBioPreviewCardBio.classList.add('card-text')
 
   postUserProfileLink.setAttribute('href', '/users/' + post.author)
-  postLikeButton.setAttribute('type', 'button')
-  postLikeButton.setAttribute('id', 'post-like-button')
   postEditButton.setAttribute('href', 'edit/')
   postEditButton.setAttribute('type', 'button')
   postDeleteButton.setAttribute('href', 'delete/')
   postDeleteButton.setAttribute('type', 'button')
-
-  postLikeButton.addEventListener('click', function(){handleDidLike(post.id); updateLikeButton(post.id)})
 
   postCardTitle.innerText = String(post.title).toLowerCase()
   postCreatedDate.innerText = post.created
   postUser.innerText = 'by '
   postUserProfileLink.innerText = post.author
   postCardText.innerText = String(post.content).toLowerCase()
-  postLikeButton.innerText = 'ε>' + post.like_count
   postEditButton.innerText = 'edit'
   postDeleteButton.innerText = 'delete'
-
   hiddenBioPreviewCardUser.innerText = post.author
   hiddenBioPreviewCardLocation.innerText = post.author_location
   hiddenBioPreviewCardBio.innerText = post.author_bio
@@ -264,21 +258,30 @@ const formatBlogPost = function(post){
   hiddenBioPreviewCardBody.append(hiddenBioPreviewCardUser, hiddenBioPreviewCardLocation, hiddenBioPreviewCardBio)
   hiddenBioPreviewCard.append(hiddenBioPreviewCardBody)
   hiddenBioPreview.append(hiddenBioPreviewCard)
-
-  postControlButtonGroup.append(postLikeButton)
-  postUser.append(postUserProfileLink, hiddenBioPreview)
-
+  postLikeButtonDiv.append(formatLikeButton(post))
+  postControlButtonGroup.append(postLikeButtonDiv)
   if(requestUserIsAuthenticated && requestUser == post.author){
     postControlButtonGroup.append(postEditButton, postDeleteButton)
   }
 
+  postUser.append(postUserProfileLink, hiddenBioPreview)
   postCardBody.append(postCardTitle, postUser, postCreatedDate, postCardText, postControlButtonGroup)
   postCard.append(postCardBody)
 
   return postCard
 }
 
-const updateLikeButton = function(postId){
+const formatLikeButton = function(post){
+  var postLikeButton = document.createElement('button')
+  postLikeButton.classList.add('btn', 'btn-primary', 'post-like-button')
+  postLikeButton.setAttribute('type', 'button')
+  postLikeButton.addEventListener('click', function(){handleDidLike(post.id)})
+  postLikeButton.innerText = 'ε>' + String(post.like_count)
+
+  return postLikeButton
+}
+
+const updateLikeButton = function(){
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = '/api' + requestPath + 'get'
@@ -287,8 +290,9 @@ const updateLikeButton = function(postId){
   xhr.responseType = responseType
   xhr.open(method, url)
   xhr.onload = function(){
-    var likeButtonElement = document.getElementById('post-like-button')
-    likeButtonElement.innerText = 'ε>' + String(xhr.response.like_count)
+    var likeButtonElement = document.querySelector('.like-button')
+    likeButtonElement.innerHTML = ''
+    likeButtonElement.append(formatLikeButton(xhr.response))
   }
   xhr.send()
 }
@@ -301,6 +305,9 @@ const handleDidLike = function(postId){
   xhr.open(method, url)
   xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    updateLikeButton()
+  }
   xhr.send()
 }
 
@@ -366,4 +373,4 @@ const formatProfileCard = function(profile){
   return profileCard
 }
 
-export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, loadBlogPost, formatBlogPost, loadSearchProfileResults, loadSearchPostResults }
+export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, loadBlogPost, formatBlogPost, loadSearchProfileResults, loadSearchPostResults, updateLikeButton }
