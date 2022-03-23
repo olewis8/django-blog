@@ -9,6 +9,10 @@
   font-family: lora-regular;
 }
 
+h5.comment-login-prompt{
+  font-family: manrope-light;
+}
+
 .comment-submit-button{
   margin-left: 7px;
 }
