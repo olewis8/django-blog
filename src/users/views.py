@@ -10,6 +10,7 @@ from django.views.generic import RedirectView
 from django.utils.decorators import method_decorator
 
 from .models import Profile
+from .forms import UserRegistrationForm
 
 
 # pages
@@ -23,28 +24,25 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('/blog/')
         else:
             messages.success(request, 'username and password don\'t match')
             return redirect('login')
 
     else:
         template_name = 'authenticate/login.html'
-        context = {'title': 'log in'}
-
-        return render(request, template_name, context)
+        return render(request, template_name)
 
 
 @login_required
 def logout_page(request):
-    template_name = 'authenticate/logout.html'
-    context = {'title': 'log out'}
-
     if request.method == 'POST':
-        logout(request)
-        return redirect('home')
+        if request.POST.get('next') == 'yes':
+            logout(request)
+            return redirect('home')
 
-    return render(request, template_name, context)
+    template_name = 'authenticate/logout.html'
+    return render(request, template_name)
 
 
 def register_page(request):
@@ -59,15 +57,31 @@ def register_page(request):
             user = authenticate(request, username=username, password=password)
             login(request, user)
 
-            return redirect('home')
+            return redirect('/users/' + username + '/setup/')
     else:
-        form = UserCreationForm()
+        form = UserRegistrationForm()
 
     template_name = 'authenticate/register.html'
     context = {'title': 'create account',
                'form': form}
 
     return render(request, template_name, context)
+
+
+def profile_setup_page(request, username):
+    if request.method == 'POST':
+        user = get_object_or_404(User, username=username)
+        profile = get_object_or_404(Profile, user=user)
+
+        profile.location = request.POST['location']
+        profile.bio = request.POST['bio']
+        profile.save()
+
+        return redirect('/blog/')
+
+    template_name = 'pages/profile_setup.html'
+
+    return render(request, template_name)
 
 
 def profile_page(request, username):

@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<h1>{{ title }}</h1>
+<div class='container'>
+  <div class='card'>
+    <div class='card-body'>
 
-<form method="POST" action=""> {% csrf_token %}
+      <h1 class='card-title'>create account</h1>
 
-  {{ form.as_p }}
+      <form method="POST" action=""> {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit' class='btn btn-primary'>next</button>
+      </form>
 
-  <br/>
-  <button type="submit">register</button>
-
-</form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

@@ -2,11 +2,20 @@
 
 {% block content %}
 
-<h1>{{ title }}</h1>
-<h5> are u sure u want to log out??</h5>
+<div class='container'>
+  <div class='card'>
+    <div class='card-body'>
 
-<form method="POST" action=""> {% csrf_token %}
-  <button type="submit">log out</button>
-</form>
+      <h1 class='card-title'>log out</h1>
+      <h5 class='card-subtitle'> are you sure you want to log out?</h5>
+
+      <form method="POST" action='/users/logout/'> {% csrf_token %}
+        <button type="submit" name='next' value='yes' class='btn btn-primary'>yes</button>
+      </form>
+      <button type="submit" onclick='history.go(-1)' class='btn btn-secondary'>no</button>
+
+    </div>
+  </div>
+</div>
 
 {% endblock %}

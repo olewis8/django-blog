@@ -19,6 +19,9 @@ from users.models import Profile
 # PAGES
 
 def home_page(request):
+    if not request.user.is_authenticated:
+        return redirect('/users/login/')
+
     template_name = 'pages/blog_home.html'
     return render(request, template_name)
 

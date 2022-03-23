@@ -5,6 +5,7 @@ from .views import (follows_page,
                     logout_page,
                     register_page,
                     profile_page,
+                    profile_setup_page,
 
                     toggle_follow,
                     update_bio_data,
@@ -18,6 +19,7 @@ urlpatterns = [
     path('logout/', logout_page),
     path('register/', register_page),
     path('<str:username>/', profile_page),
+    path('<str:username>/setup/', profile_setup_page),
     path('<str:username>/followers/', follows_page),
     path('<str:username>/following/', follows_page),
 
