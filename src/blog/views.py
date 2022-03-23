@@ -18,6 +18,7 @@ from users.models import Profile
 
 # PAGES
 
+@login_required
 def home_page(request):
     if not request.user.is_authenticated:
         return redirect('/users/login/')

@@ -85,12 +85,14 @@ def profile_setup_page(request, username):
     return render(request, template_name)
 
 
+@login_required
 def profile_page(request, username):
     template_name = 'pages/profile.html'
 
     return render(request, template_name)
 
 
+@login_required
 def follows_page(request, username):
     template_name = 'pages/follows.html'
 
