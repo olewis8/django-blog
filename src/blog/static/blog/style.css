@@ -1,10 +1,10 @@
-#posts, #discover-posts{
+#posts, #discover-posts, #search-results{
   height: 90vh;
   overflow-y: auto;
   scrollbar-width: none;
 }
 
-#posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar{
+#posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar, #search-results::-webkit-scrollbar{
   display: none;
 }
 
@@ -77,6 +77,11 @@
 
 .like-button{
   margin-right: 3px;
+}
+
+.menu-buttons{
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .on-canvas-menu{

@@ -3,15 +3,19 @@
 
 {% block content %}
 
-{% include 'components/blog/off-canvas-menu.html' %}
-{% include 'components/blog/back-button.html' %}
-
 <div class='container'>
-  <div id='search-results-title'>
-    <h1 class='page-title'>search results for "{{ query }}"</h1>
+  <div class='row'>
+    {% include 'components/blog/off-canvas-menu.html' %}
+    {% include 'components/blog/back-button.html' %}
   </div>
-
-  <div id='search-results'>
+  <div class='row'>
+    <div id='search-results-title'>
+      <h1 class='page-title'>search results for "{{ query }}"</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div id='search-results'>
+    </div>
   </div>
 </div>
 

@@ -3,15 +3,21 @@
 
 {% block content %}
 
-{% include 'components/blog/off-canvas-menu.html' %}
-{% include 'components/blog/back-button.html' %}
-
-<!-- blog post card -->
 <div class='container'>
-  <div id='follows-page-title'>
+  <div class='row'>
+    <div class='col menu-buttons'>
+      {% include 'components/blog/off-canvas-menu.html' %}
+      {% include 'components/blog/back-button.html' %}
+    </div>
+    <div class='col'>
+      <div id='follows-page-title'>
+      </div>
+    </div>
   </div>
-  
-  <div id='follows'>
+
+  <div class='row'>
+    <div id='follows'>
+    </div>
   </div>
 
 </div>

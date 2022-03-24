@@ -2,14 +2,21 @@
 
 {% block content %}
 
-{% include 'components/blog/off-canvas-menu.html' %}
-{% include 'components/blog/back-button.html' %}
-
 <div class='container'>
-  <h1 class='page-title text-end'>new post</h1>
-  <div class='card'>
-    <div class='card-body'>
-      {% include 'components/blog/create_form.html' %}
+  <div class='row'>
+    <div class='col'>
+      {% include 'components/blog/off-canvas-menu.html' %}
+      {% include 'components/blog/back-button.html' %}
+    </div>
+    <div class='col'>
+      <h1 class='page-title text-end'>new post</h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='card'>
+      <div class='card-body'>
+        {% include 'components/blog/create_form.html' %}
+      </div>
     </div>
   </div>
 </div>

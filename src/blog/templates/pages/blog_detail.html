@@ -3,23 +3,29 @@
 
 {% block content %}
 
-{% include 'components/blog/off-canvas-menu.html' %}
-{% include 'components/blog/back-button.html' %}
-
-<!-- blog post card -->
-<div class='container mb-2' id='blog-post'>
-</div>
-
 <div class='container'>
-  <div class='card mb-2 py-2 px-2'>
-    <div class='card-body comment-section-body'>
-      <h4 class='card-title'>comments</h4>
-      {% if user.is_authenticated %}
-        {% include 'components/comments/create_form.html' %}
-      {% else %}
-        <h5 class=comment-login-prompt><a href='/users/login'>log in</a> to post a comment. don't have an account? <a href='/users/register'>register here.</a></h5>
-      {% endif %}
-      <div id='comment-section' class='my-2'>
+  <div class='row'>
+    {% include 'components/blog/off-canvas-menu.html' %}
+    {% include 'components/blog/back-button.html' %}
+  </div>
+
+  <div class='row'>
+    <!-- blog post card -->
+    <div class='container mb-2' id='blog-post'>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='card mb-2'>
+      <div class='card-body comment-section-body'>
+        <h4 class='card-title'>comments</h4>
+        {% if user.is_authenticated %}
+          {% include 'components/comments/create_form.html' %}
+        {% else %}
+          <h5 class=comment-login-prompt><a href='/users/login'>log in</a> to post a comment. don't have an account? <a href='/users/register'>register here.</a></h5>
+        {% endif %}
+        <div id='comment-section' class='my-2'>
+        </div>
       </div>
     </div>
   </div>
