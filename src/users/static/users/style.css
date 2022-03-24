@@ -1,3 +1,17 @@
+#user-posts{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#user-posts::-webkit-scrollbar{
+  display: none;
+}
+
+#bio-card{
+  margin-top: 5px;
+}
+
 .bio-card-bio-text{
   margin-top: 3px;
   margin-bottom: 5px;
