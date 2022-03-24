@@ -1,3 +1,13 @@
+#posts, #discover-posts{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar{
+  display: none;
+}
+
 .card-body h1{
   font-family: playfair-display;
   font-size: 45px;
@@ -69,6 +79,10 @@
   margin-right: 3px;
 }
 
+.on-canvas-menu{
+  margin-top: 5px;
+}
+
 .post-controls{
   display: flex;
 }
@@ -87,6 +101,7 @@
 }
 
 .preview-card{
+  margin: 5px;
   transition: transform 50ms;
 }
 
