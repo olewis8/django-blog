@@ -10,9 +10,9 @@
       <h5 class='card-subtitle'> are you sure you want to log out?</h5>
 
       <form method="POST" action='/users/logout/'> {% csrf_token %}
-        <button type="submit" name='next' value='yes' class='btn btn-primary'>yes</button>
+        <button type="submit" name='next' value='yes' class='btn btn-outline-primary'>yes</button>
+        <button type="button" onclick='history.go(-1)' class='btn btn-outline-secondary'>no</button>
       </form>
-      <button type="submit" onclick='history.go(-1)' class='btn btn-secondary'>no</button>
 
     </div>
   </div>

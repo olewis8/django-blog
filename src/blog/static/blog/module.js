@@ -386,8 +386,8 @@ const formatSearchResultsPageToggleButton = function(current, searchResultsEleme
   var searchResultsPostsToggleButton = document.createElement('button')
 
   searchResultsButtonGroup.classList.add('btn-group', 'w-100', 'py-2')
-  searchResultsProfilesToggleButton.classList.add('btn', 'btn-primary', 'w-100')
-  searchResultsPostsToggleButton.classList.add('btn', 'btn-primary', 'w-100')
+  searchResultsProfilesToggleButton.classList.add('btn', 'btn-outline-primary', 'w-100')
+  searchResultsPostsToggleButton.classList.add('btn', 'btn-outline-primary', 'w-100')
 
   searchResultsButtonGroup.setAttribute('role', 'group')
   searchResultsProfilesToggleButton.setAttribute('type', 'button')
@@ -440,7 +440,7 @@ const formatProfileCard = function(profile){
 
 const formatSuggestedUserCard = function(profile){
   var followButton = document.createElement('button')
-  followButton.classList.add('btn', 'btn-primary', 'suggested-follow-button')
+  followButton.classList.add('btn', 'btn-outline-primary', 'suggested-follow-button')
   followButton.innerText = 'follow'
 
   var card = formatProfileCard(profile)

@@ -13,6 +13,22 @@ h5.comment-login-prompt{
   font-family: manrope-light;
 }
 
+.comment-card-text{
+  margin-bottom: 0;
+}
+
+.comment-delete-button{
+  border: 0;
+  padding: 0;
+  color: #b0132d;
+  background-color: white;
+}
+
+.comment-delete-button:hover{
+  color: #b0132d;
+  background-color: white;
+}
+
 .comment-submit-button{
   margin-left: 7px;
 }

@@ -30,3 +30,30 @@ body {
 .page-title{
   font-size: 60px;
 }
+
+.btn-outline-danger{
+  boder-color: #b0132d;
+  color: #b0132d;
+}
+
+.btn-outline-primary{
+  border-color: #365587;
+  color: #365587;
+}
+
+.btn-outline-primary.active{
+  background-color: #365587;
+  border-color: #365587;
+}
+
+.btn-outline-danger:hover{
+  boder-color: #b0132d;
+  background-color: #b0132d;
+  color: white;
+}
+
+.btn-outline-primary:hover{
+  border-color: #365587;
+  background-color: #365587;
+  color: white;
+}

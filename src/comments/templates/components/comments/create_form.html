@@ -1,5 +1,5 @@
 <form class='form create-comment-form' method='POST' action='{{request.path}}' id='comment-create-form'> {% csrf_token %}
   <input type='hidden' value='{{request.path}}' name='next'>
   <textarea class='form-control comment-input' name='text' placeholder='add a comment'></textarea>
-  <button type='submit' class='btn btn-primary comment-submit-button'>save</button>
+  <button type='submit' class='btn btn-outline-primary comment-submit-button'>save</button>
 </form>

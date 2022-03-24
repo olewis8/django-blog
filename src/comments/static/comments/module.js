@@ -32,8 +32,8 @@ const formatComment = function(comment){
   commentCardTitle.classList.add('card-title')
   commentCreatedDate.classList.add('card-subtitle')
   commentCreatedDateSmall.classList.add('text-muted')
-  commentCardText.classList.add('card-text')
-  commentDeleteButton.classList.add('btn', 'btn-danger', 'btn-sm')
+  commentCardText.classList.add('card-text', 'comment-card-text')
+  commentDeleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'comment-delete-button')
 
   commentCard.setAttribute('id', 'comment-' + String(comment.id))
   commentUserProfileLink.setAttribute('href', '/users/' + comment.user)
