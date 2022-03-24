@@ -232,6 +232,7 @@ const formatBlogPost = function(post){
   var postCardText = document.createElement('p')
   var postControlButtonGroup = document.createElement('div')
   var postLikeButtonDiv = document.createElement('div')
+  var postOwnerButtonGroup = document.createElement('div')
   var postEditButton = document.createElement('a')
   var postDeleteButton = document.createElement('a')
   var hiddenBioPreview = document.createElement('div')
@@ -249,10 +250,11 @@ const formatBlogPost = function(post){
   postUser.classList.add('card-byline')
   postUserProfileLink.classList.add('profile-link')
   postCardText.classList.add('card-text')
-  postControlButtonGroup.classList.add('btn-group', 'post-controls')
+  postControlButtonGroup.classList.add('post-controls')
   postLikeButtonDiv.classList.add('like-button')
-  postEditButton.classList.add('btn', 'btn-secondary', 'mx-1')
-  postDeleteButton.classList.add('btn', 'btn-danger')
+  postOwnerButtonGroup.classList.add('btn-group', 'post-owner-buttons')
+  postEditButton.classList.add('btn', 'btn-outline-secondary', 'mx-1')
+  postDeleteButton.classList.add('btn', 'btn-outline-danger')
   hiddenBioPreview.classList.add('hidden-card')
   hiddenBioPreviewCard.classList.add('card')
   hiddenBioPreviewCardBody.classList.add('card-body')
@@ -283,7 +285,8 @@ const formatBlogPost = function(post){
   postLikeButtonDiv.append(formatLikeButton(post))
   postControlButtonGroup.append(postLikeButtonDiv)
   if(requestUserIsAuthenticated && requestUser == post.author){
-    postControlButtonGroup.append(postEditButton, postDeleteButton)
+    postOwnerButtonGroup.append(postEditButton, postDeleteButton)
+    postControlButtonGroup.append(postOwnerButtonGroup)
   }
 
   postUser.append(postUserProfileLink, hiddenBioPreview)
@@ -295,7 +298,7 @@ const formatBlogPost = function(post){
 
 const formatLikeButton = function(post){
   var postLikeButton = document.createElement('button')
-  postLikeButton.classList.add('btn', 'btn-primary', 'post-like-button')
+  postLikeButton.classList.add('btn', 'btn-outline-primary', 'post-like-button')
   postLikeButton.setAttribute('type', 'button')
   postLikeButton.addEventListener('click', function(){handleDidLike(post.id)})
   postLikeButton.innerText = 'ε>' + String(post.like_count)

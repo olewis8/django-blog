@@ -65,6 +65,14 @@
   font-size: 18px;
 }
 
+.like-button{
+  margin-right: 3px;
+}
+
+.post-controls{
+  display: flex;
+}
+
 .profile-link:hover + .hidden-card{
   position: absolute;
   box-shadow: 0 3px 10px;
