@@ -44,6 +44,17 @@ const loadPostPreviews = function(postListElement, username){
   xhr.open(method, url)
   xhr.onload = function(){
     var listedItems = xhr.response.response
+
+    if (listedItems.length === 0){
+      if (requestUser === username){
+        // if you're looking at your own profile
+        postListElement.append(formatProfilePostPrompt())
+      }
+      else{
+        postListElement.append(formatUserHasNoPosts(username))
+      }
+    }
+
     for(var i=listedItems.length-1; i>=0; i--){
       postListElement.append(formatPostPreview(listedItems[i]))
     }
@@ -297,6 +308,44 @@ const formatProfileCard = function(profile){
   return profileCard
 }
 
+const formatUserHasNoPosts = function(username){
+  var noPostsMessageCard = document.createElement('div')
+  var noPostsMessageCardBody = document.createElement('div')
+  var noPostsMessageCardText = document.createElement('p')
+
+  noPostsMessageCard.classList.add('card', 'no-posts-message-card')
+  noPostsMessageCardBody.classList.add('card-body')
+  noPostsMessageCardText.classList.add('card-text')
+
+  noPostsMessageCardText.innerText = String(username) + " doesn't seem to have very much to say :/"
+
+  noPostsMessageCardBody.append(noPostsMessageCardText)
+  noPostsMessageCard.append(noPostsMessageCardBody)
+
+  return noPostsMessageCard
+}
+
+const formatProfilePostPrompt = function(){
+  var noPostsMessageCard = document.createElement('div')
+  var noPostsMessageCardBody = document.createElement('div')
+  var noPostsMessageCardText = document.createElement('p')
+  var noPostMessageCardLink = document.createElement('a')
+
+  noPostsMessageCard.classList.add('card', 'new-post-prompt-card')
+  noPostsMessageCardBody.classList.add('card-body')
+  noPostsMessageCardText.classList.add('card-text')
+  noPostMessageCardLink.classList.add('stretched-link')
+
+  noPostMessageCardLink.setAttribute('href', '/blog/new/')
+
+  noPostsMessageCardText.innerText = 'your posts will appear here once you have some. click here to get started.'
+
+  noPostsMessageCardBody.append(noPostsMessageCardText)
+  noPostsMessageCard.append(noPostsMessageCardBody, noPostMessageCardLink)
+
+  return noPostsMessageCard
+}
+
 const handleDidClickFollow = function(){
   const xhr = new XMLHttpRequest()
   const method = 'POST'
@@ -326,7 +375,6 @@ const handleDidClickSave = function(editForm){
 }
 
 const updateUserBio = function(formData, editForm){
-
   const xhr = new XMLHttpRequest()
   const method = 'POST'
   const url = '/api' + requestPath + 'update-bio/'

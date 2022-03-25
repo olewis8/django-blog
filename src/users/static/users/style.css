@@ -47,3 +47,15 @@
   font-family: lora-italic;
   color: #989898;
 }
+
+.new-post-prompt-card{
+  margin: 5px;
+}
+
+.new-post-prompt-card:hover{
+  transform: scale(1.01);
+}
+
+.no-posts-message-card{
+  margin-top: 5px;
+}
