@@ -1,4 +1,6 @@
 <form class='form' method='POST' action='/blog/results/' id='search-bar-form'> {% csrf_token %}
-  <input type='search' name='query' placeholder='search'>
-  <button id='search-button' type='submit' value='search' class='btn btn-outline-primary'>go</button>
+  <div class='input-group'>
+    <input type='search' name='query' placeholder='search' class='form-control'>
+    <button id='search-button' type='submit' value='search' class='btn btn-outline-primary'>go</button>
+  </div>
 </form>

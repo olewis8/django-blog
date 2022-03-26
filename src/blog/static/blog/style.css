@@ -8,6 +8,10 @@
   display: none;
 }
 
+.bottom-elements{
+  transform: translateY(60vh);
+}
+
 .card-body h1{
   font-family: playfair-display;
   font-size: 45px;
@@ -85,6 +89,7 @@
 }
 
 .on-canvas-menu{
+  height: 100%;
   margin-top: 5px;
 }
 
