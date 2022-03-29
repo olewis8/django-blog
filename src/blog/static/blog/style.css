@@ -1,3 +1,12 @@
+#menu{
+  background-color: #F6F4EE;
+}
+
+#menu h1{
+  font-family: manrope-regular;
+  font-size: 50px;
+}
+
 #posts, #discover-posts, #search-results{
   height: 90vh;
   overflow-y: auto;
@@ -6,6 +15,18 @@
 
 #posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar, #search-results::-webkit-scrollbar{
   display: none;
+}
+
+.back-button{
+  padding: 0;
+}
+
+.back-icon{
+  background-image: url('back.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
 }
 
 .bottom-elements{
@@ -88,17 +109,16 @@
   margin-right: 5px;
 }
 
-/* .offcanvas{
-  background-color: #F6F4EE;
-} */
-
-#menu{
-  background-color: #F6F4EE;
+.menu-button{
+  padding: 0;
 }
 
-#menu h1{
-  font-family: manrope-regular;
-  font-size: 50px;
+.menu-icon{
+  background-image: url('burger.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
 }
 
 .offcanvas-header{
