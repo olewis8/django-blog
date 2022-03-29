@@ -421,7 +421,6 @@ const loadFollowButton = function(){
 }
 
 const updateBioCardAfterFollow = function(){
-  // THIS DOESN'T WORK
   const xhr = new XMLHttpRequest()
   const method = 'GET'
   const url = 'refresh_bio_card/'
