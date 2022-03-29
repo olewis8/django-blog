@@ -1,39 +1,37 @@
 {% load staticfiles %}
 
 <div id='menu-button'>
-  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
+  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
     menu
   </button>
 </div>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="menu">
 
+  {% if request.user.is_authenticated %}
   <div class="offcanvas-header">
-    {% if request.user.is_authenticated %}
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-primary" onclick="location.href='/users/{{request.user}}'">{{request.user}}</button>
-      <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+    <h1>menu</h1>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <div class="btn-group mb-2 w-100" role="group">
+      <button type="button" class="btn btn-outline-primary w-100" onclick="location.href='/users/{{request.user}}'">{{request.user}}</button>
+      <button type="button" class="btn btn-lg btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
         <span class="visually-hidden">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu">
         <li><a class='dropdown-item' href='/users/logout/'>log out</a></li>
       </ul>
     </div>
-    {% else %}
-    <a href='/users/login/'>log in</a>
-    <a href='/users/register/'>register</a>
-    {% endif %}
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-  </div>
 
-  <div class="offcanvas-body">
-    <div class="btn-group-vertical mb-2">
-      <a type="button" class="btn btn-primary" id='for-you-button' href='/blog/'>for you</a>
-      <a type="button" class="btn btn-primary" id='dicsover-button' href='/blog/discover/'>discover</a>
+    <div class="btn-group-vertical mb-2 w-100">
+      <a type="button" class="btn btn-outline-primary w-100" id='for-you-button' href='/blog/'>for you</a>
+      <a type="button" class="btn btn-outline-primary w-100" id='dicsover-button' href='/blog/discover/'>discover</a>
     </div>
 
     <div class='mb-2' id='new-post-button'>
-      <a type='button' class='btn btn-primary' href="/blog/new/">new post</a>
+      <a type='button' class='btn btn-outline-primary w-100' href="/blog/new/">new post</a>
     </div>
 
     <div id='search-bar'>
@@ -44,6 +42,20 @@
       <a href='../'>return to owenlewis.ca</a>
     </div>
   </div>
+  {% else %}
+    <div class='offcanvas-header'>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class='btn-group w-100'>
+        <a class='btn btn-outline-primary w-100' href='/users/login/'>log in</a>
+        <a class='btn btn-outline-primary w-100' href='/users/register/'>register</a>
+      </div>
+      <div>
+        <a href='../'>return to owenlewis.ca</a>
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 <script>

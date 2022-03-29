@@ -12,7 +12,7 @@
       <div class='card-body'>
 
         <h1 class='card-title'>delete post</h1>
-        <h4>are you sure you want to delete the post "{{post.title}}"?</h4>
+        <p class='card-text'>are you sure you want to delete the post "{{post.title}}"?</p>
 
         <form method='POST'> {% csrf_token %}
           <button class='btn btn-outline-danger' value='yes' name='next'>yes</button>

@@ -88,6 +88,24 @@
   margin-right: 5px;
 }
 
+/* .offcanvas{
+  background-color: #F6F4EE;
+} */
+
+#menu{
+  background-color: #F6F4EE;
+}
+
+#menu h1{
+  font-family: manrope-regular;
+  font-size: 50px;
+}
+
+.offcanvas-header{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .on-canvas-menu{
   height: 100%;
   margin-top: 5px;

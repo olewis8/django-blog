@@ -85,7 +85,7 @@ const loadUserFollows = function(userElement, page){
   xhr.onload = function(){
     var titleElement = document.getElementById('follows-page-title')
     var titleH1Element = document.createElement('h1')
-    titleH1Element.classList.add('page-title', 'text-end')
+    titleH1Element.classList.add('page-title')
     titleH1Element.innerText = title
     titleElement.append(titleH1Element)
 

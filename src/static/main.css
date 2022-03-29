@@ -9,6 +9,11 @@
 }
 
 @font-face{
+  font-family: manrope-regular;
+  src: url(fonts/Manrope-Regular.ttf);
+}
+
+@font-face{
   font-family: lora-italic;
   src: url(fonts/Lora-Italic.ttf);
 }
@@ -28,6 +33,7 @@ body {
 }
 
 .page-title{
+  font-family: manrope-regular;
   font-size: 60px;
 }
 
@@ -37,14 +43,21 @@ body {
 }
 
 .btn-outline-primary{
+  background-color: white;
   border-color: #365587;
   color: #365587;
 }
 
 .btn-outline-primary.active{
+  /* for example on search page when you're looking at users this highlights the users button at the top */
   background-color: #365587;
   border-color: #365587;
 }
+
+/* .dropdown-toggle-split:active, .show .dropdown-toggle-split{
+  background-color: #365587;
+  border-color: #365587;
+} */
 
 .btn-outline-danger:hover{
   boder-color: #b0132d;

@@ -27,7 +27,7 @@ const loadPostPreviews = function(postListElement, page){
     var listedItems = xhr.response.response
 
     titleElement.innerHTML = ''
-    titleElement.append(formatTitle(page))
+    titleElement.append(formatTitle(page, requestUser))
 
     postListElement.innerHTML = ''
 
@@ -178,15 +178,26 @@ const formatPostPreview = function(post){
   return postPreviewCard
 }
 
-const formatTitle = function(page){
+const formatTitle = function(page, username){
   var titleH1 = document.createElement('h1')
-  titleH1.classList.add('page-title', 'text-end')
+  titleH1.classList.add('page-title')
 
   if(page == 'disc'){
     titleH1.innerText = 'discover'
   }
   else if(page == 'fy'){
-    titleH1.innerText = 'for you'
+    var d = new Date()
+    var hour = d.getHours()
+
+    if (hour >= 3 && hour < 12){
+      titleH1.innerText = 'good morning, ' + String(username)
+    }
+    else if (hour >= 12 && hour < 18){
+      titleH1.innerText = 'good afternoon, ' + String(username)
+    }
+    else if (hour >= 18 || hour < 3){
+      titleH1.innerText = 'good morning, ' + String(username)
+    }
   }
 
   return titleH1

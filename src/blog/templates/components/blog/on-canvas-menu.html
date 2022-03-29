@@ -1,8 +1,8 @@
 <div class='on-canvas-menu'>
   <div class='row'>
     <div class="btn-group mb-2 w-100" role="group">
-      <button type="button" class="btn btn-primary w-100" onclick="location.href='/users/{{request.user}}'">{{request.user}}</button>
-      <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown"><span class="visually-hidden">Toggle Dropdown</span></button>
+      <button type="button" class="btn btn-outline-primary w-100" onclick="location.href='/users/{{request.user}}'">your profile</button>
+      <button type="button" class="btn btn-lg btn-outline-primary dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown"><span class="visually-hidden">Toggle Dropdown</span></button>
       <ul class="dropdown-menu">
         <li><a class='dropdown-item' href='/users/logout/'>log out</a></li>
       </ul>
@@ -11,14 +11,14 @@
 
   <div class='row'>
     <div id='new-post-button'>
-      <a type='button' class='btn btn-primary w-100 mb-2' href="/blog/new/">new post</a>
+      <a type='button' class='btn btn-outline-primary w-100 mb-2' href="/blog/new/">new post</a>
     </div>
   </div>
 
   <div class='row'>
     <div class="btn-group-vertical mb-2 w-100">
-      <a type="button" class="btn btn-primary w-100" id='for-you-button' href='/blog/'>for you</a>
-      <a type="button" class="btn btn-primary w-100" id='dicsover-button' href='/blog/discover/'>discover</a>
+      <a type="button" class="btn btn-outline-primary w-100" id='for-you-button' href='/blog/'>for you</a>
+      <a type="button" class="btn btn-outline-primary w-100" id='dicsover-button' href='/blog/discover/'>discover</a>
     </div>
   </div>
 
