@@ -2,13 +2,14 @@
 
 {% block content %}
 
+<div class='nav-buttons'>
+  {% include 'components/blog/off-canvas-menu.html' %}
+  {% include 'components/blog/back-button.html' %}
+</div>
+
 <div class='container'>
-  <div class='row'>
-    {% include 'components/blog/off-canvas-menu.html' %}
-    {% include 'components/blog/back-button.html' %}
   <div class='col'>
     <h1 class='page-title'>new post</h1>
-  </div>
   </div>
   <div class='row'>
     <div class='card'>

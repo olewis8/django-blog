@@ -121,6 +121,11 @@
   width: 40px;
 }
 
+.nav-buttons{
+  position: absolute;
+  margin-left: 15px;
+}
+
 .offcanvas-header{
   padding-top: 0;
   padding-bottom: 0;

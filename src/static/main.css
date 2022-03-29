@@ -32,11 +32,6 @@ body {
   background-color: #F6F4EE;
 }
 
-.page-title{
-  font-family: manrope-regular;
-  font-size: 60px;
-}
-
 .btn-outline-danger{
   boder-color: #b0132d;
   color: #b0132d;
@@ -69,4 +64,13 @@ body {
   border-color: #365587;
   background-color: #365587;
   color: white;
+}
+
+.container{
+  margin-top: 10px;
+}
+
+.page-title{
+  font-family: manrope-regular;
+  font-size: 60px;
 }

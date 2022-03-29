@@ -3,14 +3,13 @@
 
 {% block content %}
 
+<div class='nav-buttons'>
+  {% include 'components/blog/off-canvas-menu.html' %}
+  {% include 'components/blog/back-button.html' %}
+</div>
+
 <div class='container'>
   <div class='row'>
-    {% include 'components/blog/off-canvas-menu.html' %}
-    {% include 'components/blog/back-button.html' %}
-  </div>
-
-  <div class='row'>
-
     <div class='col-md-3'>
       <div id='bio-card'></div>
       <div id='edit-bio-card'>
