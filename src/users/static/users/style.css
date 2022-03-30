@@ -12,6 +12,10 @@
   margin-top: 5px;
 }
 
+form p{
+  margin-bottom: 0;
+}
+
 .bio-card-bio-text{
   margin-top: 3px;
   margin-bottom: 5px;

@@ -9,13 +9,13 @@
       <h1 class='card-title'>log in</h1>
 
       <form method="POST" action=""> {% csrf_token %}
-        <input type='text' class='form-control' name='username' placeholder='username'>
-        <input type='password' class='form-control' name='password' placeholder='password'>
-        <button type='submit' class='btn btn-outline-primary'>log in</button>
+        <input type='text' class='form-control my-2' name='username' placeholder='username'>
+        <input type='password' class='form-control my-2' name='password' placeholder='password'>
+        <button type='submit' class='btn btn-outline-primary mb-2'>log in</button>
       </form>
 
-      <p class='card-text'>don't have an account? <a href='/users/register/'>register here</a></p>
-      <p class='card-text'>don't want an account? log in with username demo (no password)</p>
+      <p class='card-text mb-1'>don't have an account? <a href='/users/register/'>register here</a></p>
+      <p class='card-text'>don't want an account? log in to the demo account with both the username and password <i>demo</i></p>
 
     </div>
   </div>

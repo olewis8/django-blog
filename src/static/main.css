@@ -68,9 +68,12 @@ body {
 
 .container{
   margin-top: 10px;
+  padding: 0;
 }
 
 .page-title{
   font-family: manrope-regular;
   font-size: 60px;
+  padding-left: 2px;
+  padding-right: 2px;
 }

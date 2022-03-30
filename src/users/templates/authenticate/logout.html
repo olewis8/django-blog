@@ -7,7 +7,7 @@
     <div class='card-body'>
 
       <h1 class='card-title'>log out</h1>
-      <h5 class='card-subtitle'> are you sure you want to log out?</h5>
+      <p class='card-text'> are you sure you want to log out?</p>
 
       <form method="POST" action='/users/logout/'> {% csrf_token %}
         <button type="submit" name='next' value='yes' class='btn btn-outline-primary'>yes</button>

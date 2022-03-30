@@ -343,52 +343,6 @@ const formatSuggestedFollows = function(userList){
   return suggestedFollowsCard
 }
 
-const updateLikeButton = function(){
-  const xhr = new XMLHttpRequest()
-  const method = 'GET'
-  const url = '/api' + requestPath + 'get'
-  const responseType = 'json'
-
-  xhr.responseType = responseType
-  xhr.open(method, url)
-  xhr.onload = function(){
-    var likeButtonElement = document.querySelector('.like-button')
-    likeButtonElement.innerHTML = ''
-    likeButtonElement.append(formatLikeButton(xhr.response))
-  }
-  xhr.send()
-}
-
-const handleDidLike = function(postId){
-  const xhr = new XMLHttpRequest()
-  const method = 'POST'
-  const url = '/api/blog/'+ postId +'/like'
-
-  xhr.open(method, url)
-  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-  xhr.onload = function(){
-    updateLikeButton()
-  }
-  xhr.send()
-}
-
-const handleDidClickFollow = function(username){
-  const xhr = new XMLHttpRequest()
-  const method = 'POST'
-  const url = '/api/users/'+ String(username) +'/follow/'
-
-  xhr.open(method, url)
-  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-  xhr.onload = function(){
-    console.log('awooga')
-  }
-  xhr.send()
-}
-
-// helpers
-
 const formatSearchResultsPageToggleButton = function(current, searchResultsElement, query){
   // current must be set to 'profiles' or 'posts'
 
@@ -396,7 +350,7 @@ const formatSearchResultsPageToggleButton = function(current, searchResultsEleme
   var searchResultsProfilesToggleButton = document.createElement('button')
   var searchResultsPostsToggleButton = document.createElement('button')
 
-  searchResultsButtonGroup.classList.add('btn-group', 'w-100', 'py-2')
+  searchResultsButtonGroup.classList.add('btn-group', 'search-results-buttons', 'w-100')
   searchResultsProfilesToggleButton.classList.add('btn', 'btn-outline-primary', 'w-100')
   searchResultsPostsToggleButton.classList.add('btn', 'btn-outline-primary', 'w-100')
 
@@ -462,5 +416,50 @@ const formatSuggestedUserCard = function(profile){
 
   return card
 }
+
+const updateLikeButton = function(){
+  const xhr = new XMLHttpRequest()
+  const method = 'GET'
+  const url = '/api' + requestPath + 'get'
+  const responseType = 'json'
+
+  xhr.responseType = responseType
+  xhr.open(method, url)
+  xhr.onload = function(){
+    var likeButtonElement = document.querySelector('.like-button')
+    likeButtonElement.innerHTML = ''
+    likeButtonElement.append(formatLikeButton(xhr.response))
+  }
+  xhr.send()
+}
+
+const handleDidLike = function(postId){
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api/blog/'+ postId +'/like'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    updateLikeButton()
+  }
+  xhr.send()
+}
+
+const handleDidClickFollow = function(username){
+  const xhr = new XMLHttpRequest()
+  const method = 'POST'
+  const url = '/api/users/'+ String(username) +'/follow/'
+
+  xhr.open(method, url)
+  xhr.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest')
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+  xhr.onload = function(){
+    console.log('awooga')
+  }
+  xhr.send()
+}
+
 
 export { loadPostPreviews, formatPostPreview, formatTitle, handleDidLike, loadBlogPost, formatBlogPost, loadSearchProfileResults, loadSearchPostResults, updateLikeButton }

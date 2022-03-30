@@ -8,8 +8,8 @@
       <div class='card-body'>
         <h1 class='card-title'>create your profile</h1>
         <form method="POST" action='{{request.path}}'> {% csrf_token %}
-          <input type='text' class='form-control' name='location' placeholder='location'>
-          <textarea type='text' class='form-control' name='bio' placeholder='write about yourself'></textarea>
+          <input type='text' class='form-control mb-2' name='location' placeholder='location'>
+          <textarea type='text' class='form-control mb-2' name='bio' style='resize: none;' placeholder='write about yourself'></textarea>
           <button type='submit' class='btn btn-outline-primary'>done</button>
         </form>
       </div>
