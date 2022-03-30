@@ -196,7 +196,7 @@ const formatTitle = function(page, username){
       titleH1.innerText = 'good afternoon, ' + String(username)
     }
     else if (hour >= 18 || hour < 3){
-      titleH1.innerText = 'good morning, ' + String(username)
+      titleH1.innerText = 'good evening, ' + String(username)
     }
   }
 
