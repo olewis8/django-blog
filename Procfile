@@ -1,1 +1,1 @@
-web: gunicorn owenlewis.wsgi
+web: sh -c "cd src && gunicorn owenlewis.wsgi"
