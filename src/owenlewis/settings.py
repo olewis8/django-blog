@@ -25,7 +25,7 @@ SECRET_KEY = 'bn8#%%6z)jygepzlr1%r7l25)w-wa$*f7-4uh7-&a_m&uka9z$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['infinite-mountain-24270.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['infinite-mountain-24270.herokuapp.com', '127.0.0.1', '0.0.0.0']
 
 LOGIN_URL = '/users/login'
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'blog',
     'comments',
     'users',
+    'owenlewis',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'owenlewis.urls'
