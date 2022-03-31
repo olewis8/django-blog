@@ -1,0 +1,192 @@
+#menu{
+  background-color: #F6F4EE;
+}
+
+#menu h1{
+  font-family: manrope-regular;
+  font-size: 50px;
+}
+
+#posts, #discover-posts, #search-results{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar, #search-results::-webkit-scrollbar{
+  display: none;
+}
+
+.back-button{
+  padding: 0;
+}
+
+.back-icon{
+  background-image: url('back.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.bottom-elements{
+  transform: translateY(60vh);
+}
+
+.card-body h1{
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.card-body h3{
+  font-family: playfair-display;
+  font-size: 36px;
+}
+
+.card-body h5{
+  font-family: lora-regular;
+  font-size: 18px;
+}
+
+.card-body h6{
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.card-body p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.col-md-3{
+  padding-right: 6px;
+}
+
+.col-md-9{
+  padding-left: 6px;
+}
+
+.form-control:focus{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.title-input{
+  border: 0;
+  padding: 0;
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.content-input{
+  border: 0;
+  padding: 0;
+  font-family: manrope-light;
+  font-size: 18px;
+  height: 500px;
+  resize: none;
+  box-shadow:none;
+}
+
+.hidden-card{
+  display: none;
+}
+
+.hidden-card h3{
+  font-family: playfair-display;
+  font-size: 24px;
+}
+
+.hidden-card h5{
+  font-family: lora-italic;
+  font-size: 15px;
+  color: #989898;
+}
+
+.hidden-card p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.like-button{
+  margin-right: 3px;
+}
+
+.menu-buttons{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.menu-button{
+  padding: 0;
+}
+
+.menu-icon{
+  background-image: url('burger.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.nav-buttons{
+  position: absolute;
+  margin-left: 15px;
+}
+
+.offcanvas-header{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.on-canvas-menu{
+  height: 100%;
+  margin-top: 5px;
+}
+
+.post-controls{
+  display: flex;
+}
+
+.post-edit-card{
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.profile-link:hover + .hidden-card{
+  position: absolute;
+  box-shadow: 0 3px 10px;
+  display: block;
+  z-index: 10;
+}
+
+.profile-link{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.preview-card{
+  margin: 5px;
+  transition: transform 50ms;
+}
+
+.preview-card:hover{
+  transform: scale(1.01);
+}
+
+.search-results-buttons{
+  /* padding-left: 5px;
+  padding-right: 5px; */
+  padding: 5px;
+}
+
+.suggested-follow-button{
+  position: relative;
+  z-index: 2;
+}
+
+*, *:before, *:after {
+  box-sizing:border-box;
+}

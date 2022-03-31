@@ -1,0 +1,49 @@
+#comment-section{
+/*  */
+}
+
+.comment-section-card{
+  padding: 0;
+}
+
+.comment-section-body{
+  padding: 10px;
+  padding-bottom: 2px;
+}
+
+.comment-section-body h4{
+  font-family: lora-regular;
+}
+
+h5.comment-login-prompt{
+  font-family: manrope-light;
+}
+
+.comment-card-text{
+  margin-bottom: 0;
+}
+
+.comment-delete-button{
+  border: 0;
+  padding: 0;
+  color: #b0132d;
+  background-color: white;
+}
+
+.comment-delete-button:hover{
+  color: #b0132d;
+  background-color: white;
+}
+
+.comment-submit-button{
+  margin-left: 7px;
+}
+
+.comment-input{
+  font-family: manrope-light;
+  resize: none;
+}
+
+.create-comment-form{
+  display: flex;
+}

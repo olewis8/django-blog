@@ -1,0 +1,79 @@
+@font-face{
+  font-family: playfair-display;
+  src: url(fonts/PlayfairDisplay-Regular.ttf);
+}
+
+@font-face{
+  font-family: manrope-light;
+  src: url(fonts/Manrope-Light.ttf);
+}
+
+@font-face{
+  font-family: manrope-regular;
+  src: url(fonts/Manrope-Regular.ttf);
+}
+
+@font-face{
+  font-family: lora-italic;
+  src: url(fonts/Lora-Italic.ttf);
+}
+
+@font-face {
+  font-family: lora-regular;
+  src: url(fonts/Lora-Regular.ttf);
+}
+
+a {
+  color: #365587;
+  text-decoration-thickness: 1px;
+}
+
+body {
+  background-color: #F6F4EE;
+}
+
+.btn-outline-danger{
+  boder-color: #b0132d;
+  color: #b0132d;
+}
+
+.btn-outline-primary{
+  background-color: white;
+  border-color: #365587;
+  color: #365587;
+}
+
+.btn-outline-primary.active{
+  /* for example on search page when you're looking at users this highlights the users button at the top */
+  background-color: #365587;
+  border-color: #365587;
+}
+
+/* .dropdown-toggle-split:active, .show .dropdown-toggle-split{
+  background-color: #365587;
+  border-color: #365587;
+} */
+
+.btn-outline-danger:hover{
+  boder-color: #b0132d;
+  background-color: #b0132d;
+  color: white;
+}
+
+.btn-outline-primary:hover{
+  border-color: #365587;
+  background-color: #365587;
+  color: white;
+}
+
+.container{
+  margin-top: 10px;
+  padding: 0;
+}
+
+.page-title{
+  font-family: manrope-regular;
+  font-size: 60px;
+  padding-left: 2px;
+  padding-right: 2px;
+}

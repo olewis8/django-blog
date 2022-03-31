@@ -1,0 +1,65 @@
+#user-posts, #follows{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#user-posts::-webkit-scrollbar, #follows::-webkit-scrollbar{
+  display: none;
+}
+
+#bio-card{
+  margin-top: 5px;
+}
+
+form p{
+  margin-bottom: 0;
+}
+
+.bio-card-bio-text{
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+.bio-card-button-group{
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.bio-card-button-group button{
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.bio-input{
+  padding: 0;
+  resize: none;
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.follows-count{
+  display: block;
+}
+
+.follows-count p{
+  margin-bottom: 0;
+}
+
+.location-input{
+  padding: 0;
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.new-post-prompt-card{
+  margin: 5px;
+}
+
+.new-post-prompt-card:hover{
+  transform: scale(1.01);
+}
+
+.no-posts-message-card{
+  margin-top: 5px;
+}
