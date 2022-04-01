@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
@@ -56,7 +56,7 @@ def create_post_page(request):
 
         new_post_url = next_url + f'/{post.id}'
 
-        if next_url is not None and is_safe_url(new_post_url, settings.ALLOWED_HOSTS):
+        if next_url is not None and url_has_allowed_host_and_scheme(new_post_url, settings.ALLOWED_HOSTS):
             return redirect(new_post_url)
 
     template_name = 'pages/create_post.html'
@@ -85,7 +85,7 @@ def update_post_page(request, post_id):
 
         new_post_url = next_url + f'/{post_id}'
 
-        if next_url is not None and is_safe_url(new_post_url, settings.ALLOWED_HOSTS):
+        if next_url is not None and url_has_allowed_host_and_scheme(new_post_url, settings.ALLOWED_HOSTS):
             return redirect(new_post_url)
 
     template_name = 'pages/update_post.html'
