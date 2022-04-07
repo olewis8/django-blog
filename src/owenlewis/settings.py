@@ -82,18 +82,18 @@ WSGI_APPLICATION = 'owenlewis.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
     # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'df7ld1vvghd2ue',
-    #     'HOST': 'ec2-54-160-109-68.compute-1.amazonaws.com',
-    #     'PORT': 5432,
-    #     'USER': 'rjdjdjgyymbutw',
-    #     'PASSWORD': '52bb9a1188f113c273449b56dca7f68d19a91f51a8e223b1487d9ab95be9a577',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'df7ld1vvghd2ue',
+        'HOST': 'ec2-54-160-109-68.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'rjdjdjgyymbutw',
+        'PASSWORD': '52bb9a1188f113c273449b56dca7f68d19a91f51a8e223b1487d9ab95be9a577',
+    }
 }
 
 # Password validation
