@@ -1,21 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel='stylesheet' type='text/css' href='{% static "home.css" %}'>
+{% endblock %}
 
 {% block content %}
 
-<nav class="navbar navbar-expand navbar-light bg-light">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse">
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/projects">Projects</a>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<div class='text-center'>
+<div id='main' class='h-100 d-flex justify-content-center align-items-center flex-column'>
   <h1>Owen's Website</h1>
   <p>
-    <a href='https://www.linkedin.com/in/owenlewis902' target='_blank'>linkedin</a> // <a href='https://www.github.com/olewis8' target='_blank'>github</a>
+    <a href='https://www.linkedin.com/in/owenlewis902' target='_blank'>LinkedIn</a> // <a href='https://www.github.com/olewis8' target='_blank'>GitHub</a> // <a href='/projects'>Projects</a>
   </p>
 </div>
 
