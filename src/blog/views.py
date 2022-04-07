@@ -164,7 +164,7 @@ def retrieve_posts(request, page):
 
     qs = []
     if page == 'fy':
-        qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())
+        qs = BlogPost.objects.all().filter(author__in=user.profile.following.all())[:100]
     elif page == 'disc':
         qs = BlogPost.objects.all().annotate(num_likes=Count('liked_by')).order_by('-num_likes')[:10]
     else:
