@@ -1,0 +1,393 @@
+/* BLOG */
+
+@font-face{
+  font-family: playfair-display;
+  src: url(fonts/PlayfairDisplay-Regular.ttf);
+}
+
+@font-face{
+  font-family: manrope-light;
+  src: url(fonts/Manrope-Light.ttf);
+}
+
+@font-face{
+  font-family: manrope-regular;
+  src: url(fonts/Manrope-Regular.ttf);
+}
+
+@font-face{
+  font-family: lora-italic;
+  src: url(fonts/Lora-Italic.ttf);
+}
+
+@font-face {
+  font-family: lora-regular;
+  src: url(fonts/Lora-Regular.ttf);
+}
+
+
+#menu{
+  background-color: #F6F4EE;
+}
+
+#menu h1{
+  font-family: manrope-regular;
+  font-size: 50px;
+}
+
+#posts, #discover-posts, #search-results{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#posts::-webkit-scrollbar, #discover-posts::-webkit-scrollbar, #search-results::-webkit-scrollbar{
+  display: none;
+}
+
+
+*, *:before, *:after {
+  box-sizing:border-box;
+}
+
+a {
+  color: #365587;
+  text-decoration-thickness: 1px;
+}
+
+body {
+  background-color: #F6F4EE;
+}
+
+
+.back-button{
+  padding: 0;
+}
+
+.back-icon{
+  background-image: url('back.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.bottom-elements{
+  transform: translateY(60vh);
+}
+
+.btn-outline-danger{
+  boder-color: #b0132d;
+  color: #b0132d;
+}
+
+.btn-outline-danger:hover{
+  boder-color: #b0132d;
+  background-color: #b0132d;
+  color: white;
+}
+
+.btn-outline-primary{
+  background-color: white;
+  border-color: #365587;
+  color: #365587;
+}
+
+.btn-outline-primary.active{
+  /* for example on search page when you're looking at users this highlights the users button at the top */
+  background-color: #365587;
+  border-color: #365587;
+}
+
+.btn-outline-primary:hover{
+  border-color: #365587;
+  background-color: #365587;
+  color: white;
+}
+
+.card-body h1{
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+.card-body h3{
+  font-family: playfair-display;
+  font-size: 36px;
+}
+
+.card-body h5{
+  font-family: lora-regular;
+  font-size: 18px;
+}
+
+.card-body h6{
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.card-body p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.col-md-3{
+  padding-right: 6px;
+}
+
+.col-md-9{
+  padding-left: 6px;
+}
+
+.container{
+  margin-top: 10px;
+  padding: 0;
+}
+
+.content-input{
+  border: 0;
+  padding: 0;
+  font-family: manrope-light;
+  font-size: 18px;
+  height: 500px;
+  resize: none;
+  box-shadow:none;
+}
+
+.form-control:focus{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.hidden-card{
+  display: none;
+}
+
+.hidden-card h3{
+  font-family: playfair-display;
+  font-size: 24px;
+}
+
+.hidden-card h5{
+  font-family: lora-italic;
+  font-size: 15px;
+  color: #989898;
+}
+
+.hidden-card p{
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.like-button{
+  margin-right: 3px;
+}
+
+.menu-buttons{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.menu-button{
+  padding: 0;
+}
+
+.menu-icon{
+  background-image: url('burger.png');
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.nav-buttons{
+  position: absolute;
+  margin-left: 15px;
+}
+
+.offcanvas-header{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.on-canvas-menu{
+  height: 100%;
+  margin-top: 5px;
+}
+
+.page-title{
+  font-family: manrope-regular;
+  font-size: 60px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.post-controls{
+  display: flex;
+}
+
+.post-edit-card{
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.profile-link:hover + .hidden-card{
+  position: absolute;
+  box-shadow: 0 3px 10px;
+  display: block;
+  z-index: 10;
+}
+
+.profile-link{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.preview-card{
+  margin: 5px;
+  transition: transform 50ms;
+}
+
+.preview-card:hover{
+  transform: scale(1.01);
+}
+
+.search-results-buttons{
+  /* padding-left: 5px;
+  padding-right: 5px; */
+  padding: 5px;
+}
+
+.suggested-follow-button{
+  position: relative;
+  z-index: 2;
+}
+
+.title-input{
+  border: 0;
+  padding: 0;
+  font-family: playfair-display;
+  font-size: 45px;
+}
+
+
+
+/* COMMENTS */
+
+.comment-card-text{
+  margin-bottom: 0;
+}
+
+.comment-delete-button{
+  border: 0;
+  padding: 0;
+  color: #b0132d;
+  background-color: white;
+}
+
+.comment-delete-button:hover{
+  color: #b0132d;
+  background-color: white;
+}
+
+.comment-input{
+  font-family: manrope-light;
+  resize: none;
+}
+
+.comment-section-body{
+  padding: 10px;
+  padding-bottom: 2px;
+}
+
+.comment-section-body h4{
+  font-family: lora-regular;
+}
+
+.comment-section-card{
+  padding: 0;
+}
+
+.comment-submit-button{
+  margin-left: 7px;
+}
+
+.create-comment-form{
+  display: flex;
+}
+
+h5.comment-login-prompt{
+  font-family: manrope-light;
+}
+
+
+
+/* USERS */
+#bio-card{
+  margin-top: 5px;
+}
+
+#user-posts, #follows{
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#user-posts::-webkit-scrollbar, #follows::-webkit-scrollbar{
+  display: none;
+}
+
+
+form p{
+  margin-bottom: 0;
+}
+
+
+.bio-card-bio-text{
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+.bio-card-button-group{
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.bio-card-button-group button{
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.bio-input{
+  padding: 0;
+  resize: none;
+  font-family: manrope-light;
+  font-size: 18px;
+}
+
+.follows-count{
+  display: block;
+}
+
+.follows-count p{
+  margin-bottom: 0;
+}
+
+.location-input{
+  padding: 0;
+  font-family: lora-italic;
+  color: #989898;
+}
+
+.new-post-prompt-card{
+  margin: 5px;
+}
+
+.new-post-prompt-card:hover{
+  transform: scale(1.01);
+}
+
+.no-posts-message-card{
+  margin-top: 5px;
+}
