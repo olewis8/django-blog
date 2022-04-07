@@ -2,8 +2,8 @@
 1. [Introduction](#Introduction)
 2. [Features](#Features)
 3. [Demo](#Demo)
-4. [Built With](#BuiltWith)
-5. [Setup & Usage](#Setup&Usage)
+4. [Built With](#Built-With)
+5. [Setup & Usage](#Setup-&-Usage)
 
 # Introduction
 Welcome! This project is a social media-esque blogging platform which I built to teach myself the fundamentals of web-app developement. It employs a Django back-end and a vanilla JavaScript front-end with a custom-built REST API to interface between them. This was a lot of fun to work on and I'm looking forward to using what I've learned in future projects.
@@ -44,12 +44,14 @@ There is a live demo available at https://owenlewis.ca/blog
 
 # Setup & Usage
 To run this app locally, first make sure you have Python 3.8 or higher installed. Then, simply clone the repository, install the requirements, and run it through the Django development server.
-`$ git clone bla bla bla`
-`$ cd bla bla bla`
-`$ pipenv shell`
-`$ pipenv install -r requirements.txt`
-`$ cd src`
-`$ python manage.py runserver`
+```
+$ git clone bla bla bla
+$ cd bla bla bla
+$ pipenv shell
+$ pipenv install -r requirements.txt
+$ cd src
+$ python manage.py runserver
+```
 You can then access the app through your browser at http://127.0.0.1:8000
 If you do not have `pipenv` installed then you can install it through your favourite Python package manager. For example, by running 
 `$ pip install pipenv`
