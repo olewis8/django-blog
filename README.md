@@ -2,8 +2,8 @@
 1. [Introduction](#Introduction)
 2. [Features](#Features)
 3. [Demo](#Demo)
-4. [Built With](#Built With)
-5. [Setup & Usage](#Setup & Usage)
+4. [Built With](#BuiltWith)
+5. [Setup & Usage](#Setup&Usage)
 
 # Introduction
 Welcome! This project is a social media-esque blogging platform which I built to teach myself the fundamentals of web-app developement. It employs a Django back-end and a vanilla JavaScript front-end with a custom-built REST API to interface between them. This was a lot of fun to work on and I'm looking forward to using what I've learned in future projects.
