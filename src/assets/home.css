@@ -21,15 +21,16 @@
   text-decoration: none;
 }
 
-a:hover{
+#main a:hover{
   color: silver;
 }
 
 body{
   /* background-color: #F6DC32; */
   /* background-color: green; */
-  background-color: #A2BA58;
+  /* background-color: #A2BA58; */
   /* background-color: #758C32; */
+  background-color: #284B1A;
 }
 
 h1{
