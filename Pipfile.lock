@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "877e6cf5195675c130e364d8cd20d727b5391e27b24b9d0a7e9e90331e06f136"
+            "sha256": "86b121e815fa153c4d0319183b0170e6f73d7109c9060359d3afdb7a20526011"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -21,6 +21,7 @@
                 "sha256:2f8abc20f7248433085eda803936d98992f1343ddb022065779f37c5da0181d0",
                 "sha256:88d59c13d634dcffe0510be048210188edd79aeccb6a6c9028cdad6f31d730a9"
             ],
+            "index": "pypi",
             "version": "==3.5.0"
         },
         "backports.zoneinfo": {
@@ -42,7 +43,7 @@
                 "sha256:f04e857b59d9d1ccc39ce2da1021d196e47234873820cbeaad210724b1ee28ac",
                 "sha256:fadbfe37f74051d024037f223b8e001611eac868b5c5b06144ef4d8b799862f2"
             ],
-            "markers": "python_version < '3.9'",
+            "index": "pypi",
             "version": "==0.2.1"
         },
         "dj-database-url": {
@@ -154,6 +155,14 @@
             ],
             "index": "pypi",
             "version": "==2021.3"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8",
+                "sha256:47c7b0c0f8fc10eec4cf1e71c6fdadf8decaa74ffa087e68cd1c20db7ad6a592"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==62.1.0"
         },
         "sqlparse": {
             "hashes": [
