@@ -18,7 +18,7 @@ Welcome! This project is a social media-esque blogging platform which I built to
 
 ## Commenting System
 * Fully plugable commenting system
-* Authenticated users can post and delete comments asynchronously through AJAX 
+* Authenticated users can post and delete comments asynchronously through AJAX
 
 ## User Profiles
 * User authentication via Django's built-in user model
@@ -37,7 +37,7 @@ Welcome! This project is a social media-esque blogging platform which I built to
 There is a live demo available at https://owenlewis.ca/blog
 
 # Built With
-* Django 4.0.3
+* Django 4.0.4
 * Bootstrap 5.1.3
 * PostgreSQL
 * Demo deployed to Heroku
@@ -45,13 +45,13 @@ There is a live demo available at https://owenlewis.ca/blog
 # Setup & Usage
 To run this app locally, first make sure you have Python 3.8 or higher installed. Then, simply clone the repository, install the requirements, and run it through the Django development server.
 ```
-$ git clone bla bla bla
-$ cd bla bla bla
+$ git clone https://github.com/olewis8/django-blog.git
+$ cd django-blog
 $ pipenv shell
 $ pipenv install -r requirements.txt
 $ cd src
 $ python manage.py runserver
 ```
 You can then access the app through your browser at http://127.0.0.1:8000
-If you do not have `pipenv` installed then you can install it through your favourite Python package manager. For example, by running 
-`$ pip install pipenv`
+If you do not have `pipenv` installed then you can install it through your favourite Python package manager (for example, by running
+`$ pip install pipenv`)
