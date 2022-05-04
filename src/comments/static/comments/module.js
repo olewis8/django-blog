@@ -41,8 +41,8 @@ const formatComment = function(comment){
 
   commentDeleteButton.addEventListener('click', function(){handleDeleteComment(comment.id)})
 
-  commentUserProfileLink.innerText = comment.user
-  commentCreatedDateSmall.innerText = comment.created
+  commentUserProfileLink.innerText = String(comment.user).toLowerCase()
+  commentCreatedDateSmall.innerText = String(comment.created).toLowerCase()
   commentCardText.innerText = String(comment.text).toLowerCase()
   commentDeleteButton.innerText = 'delete'
 
