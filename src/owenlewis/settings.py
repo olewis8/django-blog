@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['infinite-mountain-24270.herokuapp.com', 'owenlewis.ca', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['infinite-mountain-24270.herokuapp.com', 'owenlewis.ca', 'www.owenlewis.ca', '127.0.0.1', '0.0.0.0']
 
 LOGIN_URL = '/users/login'
 
