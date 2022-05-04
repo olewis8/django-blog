@@ -134,8 +134,8 @@ const formatPostPreview = function(post){
   postPreviewCardLink.setAttribute('href', '/blog/' + String(post.id))
 
   postPreviewCardTitle.innerText = String(post.title).toLowerCase()
-  postPreviewCardCreatedDate.innerText = String(post.created)
-  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content)
+  postPreviewCardCreatedDate.innerText = String(post.created).toLowerCase()
+  postPreviewCardText.innerText = String(post.content).length >= 280 ? String(post.content).substring(0, 280).toLowerCase() + '...' : String(post.content).toLowerCase()
 
   postPreviewCardBody.append(postPreviewCardTitle, postPreviewCardCreatedDate, postPreviewCardText, postPreviewCardLink)
   postPreviewCard.append(postPreviewCardBody)
@@ -184,9 +184,9 @@ const formatBioCard = function(bioData, editForm){
   bioCardFollowButton.addEventListener('click', function(){handleDidClickFollow()})
   bioCardEditProfileButton.addEventListener('click', function(){handleDidClickEdit(editForm)})
 
-  bioCardTitle.innerText = bioData.username
-  bioCardLocation.innerText = bioData.location
-  bioCardBioText.innerText = bioData.bio
+  bioCardTitle.innerText = String(bioData.username).toLowerCase()
+  bioCardLocation.innerText = String(bioData.location).toLowerCase()
+  bioCardBioText.innerText = String(bioData.bio).toLowerCase()
   bioCardFollowButton.innerText = 'follow'
   bioCardEditProfileButton.innerText = 'edit profile'
   bioCardFollowersCount.innerText = String(bioData.followers_count) + ' '
@@ -263,7 +263,7 @@ const formatEditBioCard = function(bioData, editForm){
   bioCardFollowingCount.innerText = String(bioData.following_count) + ' '
   bioCardFollowersLink.innerText = 'followers'
   bioCardFollowingLink.innerText = 'following'
-  bioCardBioText.innerText = bioData.bio
+  bioCardBioText.innerText = String(bioData.bio).toLowerCase()
 
   if (requestUserIsAuthenticated && requestUser === bioData.username){
     bioCardButtonGroup.append(bioCardSaveButton)
@@ -298,9 +298,9 @@ const formatProfileCard = function(profile){
 
   profileCardLink.setAttribute('href', '/users/' + String(profile.username))
 
-  profileCardTitle.innerText = profile.username
-  profileCardLocation.innerText = profile.location
-  profileCardBioText.innerText = profile.bio
+  profileCardTitle.innerText = String(profile.username).toLowerCase()
+  profileCardLocation.innerText = String(profile.location).toLowerCase()
+  profileCardBioText.innerText = String(profile.bio).toLowerCase()
 
   profileCardBody.append(profileCardTitle, profileCardLocation, profileCardBioText, profileCardLink)
   profileCard.append(profileCardBody)
@@ -317,7 +317,7 @@ const formatUserHasNoPosts = function(username){
   noPostsMessageCardBody.classList.add('card-body')
   noPostsMessageCardText.classList.add('card-text')
 
-  noPostsMessageCardText.innerText = String(username) + " doesn't seem to have very much to say :/"
+  noPostsMessageCardText.innerText = String(username).toLowerCase() + " doesn't seem to have very much to say :/"
 
   noPostsMessageCardBody.append(noPostsMessageCardText)
   noPostsMessageCard.append(noPostsMessageCardBody)

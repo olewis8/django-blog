@@ -119,7 +119,7 @@ const formatNoResultsMessage = function(searchResultsElement){
   noResultsMessageCardBody.classList.add('card-body')
   noResultsMessageCardText.classList.add('card-text')
 
-  noResultsMessageCardText.innerText = 'no results matching "'+ query + '" :('
+  noResultsMessageCardText.innerText = 'no results matching "'+ String(query).toLowerCase() + '" :('
 
   noResultsMessageCardBody.append(noResultsMessageCardText)
   noResultsMessageCard.append(noResultsMessageCardBody)
@@ -190,13 +190,13 @@ const formatTitle = function(page, username){
     var hour = d.getHours()
 
     if (hour >= 3 && hour < 12){
-      titleH1.innerText = 'good morning, ' + String(username)
+      titleH1.innerText = 'good morning, ' + String(username).toLowerCase()
     }
     else if (hour >= 12 && hour < 18){
-      titleH1.innerText = 'good afternoon, ' + String(username)
+      titleH1.innerText = 'good afternoon, ' + String(username).toLowerCase()
     }
     else if (hour >= 18 || hour < 3){
-      titleH1.innerText = 'good evening, ' + String(username)
+      titleH1.innerText = 'good evening, ' + String(username).toLowerCase()
     }
   }
 
@@ -282,13 +282,13 @@ const formatBlogPost = function(post){
   postCardTitle.innerText = String(post.title).toLowerCase()
   postCreatedDate.innerText = post.created
   postUser.innerText = 'by '
-  postUserProfileLink.innerText = post.author
+  postUserProfileLink.innerText = String(post.author).toLowerCase()
   postCardText.innerText = String(post.content).toLowerCase()
   postEditButton.innerText = 'edit'
   postDeleteButton.innerText = 'delete'
-  hiddenBioPreviewCardUser.innerText = post.author
-  hiddenBioPreviewCardLocation.innerText = post.author_location
-  hiddenBioPreviewCardBio.innerText = post.author_bio
+  hiddenBioPreviewCardUser.innerText = String(post.author).toLowerCase()
+  hiddenBioPreviewCardLocation.innerText = String(post.author_location).toLowerCase()
+  hiddenBioPreviewCardBio.innerText = String(post.author_bio).toLowerCase()
 
   hiddenBioPreviewCardBody.append(hiddenBioPreviewCardUser, hiddenBioPreviewCardLocation, hiddenBioPreviewCardBio)
   hiddenBioPreviewCard.append(hiddenBioPreviewCardBody)
@@ -393,9 +393,9 @@ const formatProfileCard = function(profile){
 
   profileCardLink.setAttribute('href', '/users/' + String(profile.username))
 
-  profileCardTitle.innerText = profile.username
-  profileCardLocation.innerText = profile.location
-  profileCardBioText.innerText = profile.bio
+  profileCardTitle.innerText = String(profile.username).toLowerCase()
+  profileCardLocation.innerText = String(profile.location).toLowerCase()
+  profileCardBioText.innerText = String(profile.bio).toLowerCase()
 
   profileCardBody.append(profileCardTitle, profileCardLocation, profileCardBioText, profileCardLink)
   profileCard.append(profileCardBody)
